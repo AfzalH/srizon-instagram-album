@@ -19,7 +19,9 @@
   @import "components/navbar";
   //manually added fonts
   //@import "components/roboto";
-  @import "components/typography";
+}
+@import "components/typography";
+.srizon {
   @import "components/transitions";
   @import "components/cards";
   @import "components/toast";

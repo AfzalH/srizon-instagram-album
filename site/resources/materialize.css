@@ -3371,202 +3371,6 @@ html .srizon {
 
 .srizon {
   /* This is needed for some mobile phones to display the Google Icon font properly */
-  /*!
- * Waves v0.6.0
- * http://fian.my.id/Waves
- *
- * Copyright 2014 Alfiana E. Sibuea and other contributors
- * Released under the MIT license
- * https://github.com/fians/Waves/blob/master/LICENSE
- */
-  /* Firefox Bug: link not triggered */
-  /* Text Inputs + Textarea
-   ========================================================================== */
-  /* Style Placeholders */
-  /* Text inputs */
-  /* Search Field */
-  /* Textarea */
-  /* Autocomplete */
-  /* Radio Buttons
-   ========================================================================== */
-  /* Unchecked styles */
-  /* Checked styles */
-  /* Radio With gap */
-  /* Focused styles */
-  /* Disabled Radio With gap */
-  /* Disabled style */
-  /* Checkboxes
-   ========================================================================== */
-  /* CUSTOM CSS CHECKBOXES */
-  /* Remove default checkbox */
-  /* Indeterminate checkbox */
-  /* Switch
-   ========================================================================== */
-  /* Select Field
-   ========================================================================== */
-  /* File Input
-   ========================================================================== */
-  /* Range
-   ========================================================================== */
-  /***************
-    Nav List
-***************/
-  /*
-    @license
-    Copyright (c) 2014 The Polymer Project Authors. All rights reserved.
-    This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-    The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-    The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-    Code distributed by Google as part of the polymer project is also
-    subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
- */
-  /**************************/
-  /* STYLES FOR THE SPINNER */
-  /**************************/
-  /*
- * Constants:
- *      STROKEWIDTH = 3px
- *      ARCSIZE     = 270 degrees (amount of circle the arc takes up)
- *      ARCTIME     = 1333ms (time it takes to expand and contract arc)
- *      ARCSTARTROT = 216 degrees (how much the start location of the arc
- *                                should rotate each time, 216 gives us a
- *                                5 pointed star shape (it's 360/5 * 3).
- *                                For a 7 pointed star, we might do
- *                                360/7 * 3 = 154.286)
- *      CONTAINERWIDTH = 28px
- *      SHRINK_TIME = 400ms
- */
-  /**
- * IMPORTANT NOTE ABOUT CSS ANIMATION PROPERTIES (keanulee):
- *
- * iOS Safari (tested on iOS 8.1) does not handle animation-delay very well - it doesn't
- * guarantee that the animation will start _exactly_ after that value. So we avoid using
- * animation-delay and instead set custom keyframes for each color (as redundant as it
- * seems).
- *
- * We write out each animation in full (instead of separating animation-name,
- * animation-duration, etc.) because under the polyfill, Safari does not recognize those
- * specific properties properly, treats them as -webkit-animation, and overrides the
- * other animation rules. See https://github.com/Polymer/platform/issues/53.
- */
-  /**
- * Patch the gap that appear between the two adjacent div.circle-clipper while the
- * spinner is rotating (appears on Chrome 38, Safari 7.1, and IE 11).
- */
-  /* ==========================================================================
-   $BASE-PICKER
-   ========================================================================== */
-  /**
- * Note: the root picker element should *NOT* be styled more than what's here.
- */
-  /**
- * The picker input element.
- */
-  /**
- * When the picker is opened, the input element is "activated".
- */
-  /**
- * The holder is the only "scrollable" top-level container element.
- */
-  /*!
- * Default mobile-first, responsive styling for pickadate.js
- * Demo: http://amsul.github.io/pickadate.js
- */
-  /**
- * Note: the root picker element should *NOT* be styled more than what's here.
- */
-  /**
- * Make the holder and frame fullscreen.
- */
-  /**
- * The holder should overlay the entire screen.
- */
-  /**
- * The frame that bounds the box contents of the picker.
- */
-  /**
- * The wrapper sets the stage to vertically align the box contents.
- */
-  /**
- * The box contains all the picker contents.
- */
-  /**
- * When the picker opens...
- */
-  /**
- * For `large` screens, transform into an inline picker.
- */
-  /* ==========================================================================
-   CUSTOM MATERIALIZE STYLES
-   ========================================================================== */
-  /* ==========================================================================
-   $BASE-DATE-PICKER
-   ========================================================================== */
-  /**
- * The picker box.
- */
-  /**
- * The header containing the month and year stuff.
- */
-  /**
- * The month and year labels.
- */
-  /**
- * The month and year selectors.
- */
-  /**
- * The month navigation buttons.
- */
-  /**
- * The calendar table of dates
- */
-  /**
- * The weekday labels
- */
-  /**
- * The days on the calendar
- */
-  /**
- * The footer containing the "today", "clear", and "close" buttons.
- */
-  /* ==========================================================================
-   CUSTOM MATERIALIZE STYLES
-   ========================================================================== */
-  /*.picker__box {
-  border-radius: 2px;
-  overflow: hidden;
-}*/
-  /*.picker__box {
-  padding: 0;
-}*/
-  /* ==========================================================================
-   $BASE-TIME-PICKER
-   ========================================================================== */
-  /**
- * The list of times.
- */
-  /**
- * The times on the clock.
- */
-  /* Hovered time */
-  /* Highlighted and hovered/focused time */
-  /* Selected and hovered/focused time */
-  /* Disabled time */
-  /**
- * The clear button
- */
-  /* ==========================================================================
-   $DEFAULT-TIME-PICKER
-   ========================================================================== */
-  /**
- * The frame the bounds the time picker.
- */
-  /**
- * The picker box.
- */
-  /* ==========================================================================
-   $DEFAULT-TIME-PICKER
-   ========================================================================== */
 }
 
 .srizon span.badge {
@@ -4848,11 +4652,11 @@ html .srizon {
   }
 }
 
-.srizon .srizon a {
+.srizon a {
   text-decoration: none;
 }
 
-.srizon html .srizon {
+html .srizon {
   line-height: 1.5;
   font-family: "Roboto", sans-serif;
   font-weight: normal;
@@ -4860,233 +4664,432 @@ html .srizon {
 }
 
 @media only screen and (min-width: 0) {
-  .srizon html .srizon {
+  html .srizon {
     font-size: 14px;
   }
 }
 
 @media only screen and (min-width: 992px) {
-  .srizon html .srizon {
+  html .srizon {
     font-size: 14.5px;
   }
 }
 
 @media only screen and (min-width: 1200px) {
-  .srizon html .srizon {
+  html .srizon {
     font-size: 15px;
   }
 }
 
-.srizon .srizon h1,
-.srizon .srizon h2,
-.srizon .srizon h3,
-.srizon .srizon h4,
-.srizon .srizon h5,
-.srizon .srizon h6 {
+.srizon h1,
+.srizon h2,
+.srizon h3,
+.srizon h4,
+.srizon h5,
+.srizon h6 {
   font-weight: 400;
   line-height: 1.1;
 }
 
-.srizon .srizon h1 a,
-.srizon .srizon h2 a,
-.srizon .srizon h3 a,
-.srizon .srizon h4 a,
-.srizon .srizon h5 a,
-.srizon .srizon h6 a {
+.srizon h1 a,
+.srizon h2 a,
+.srizon h3 a,
+.srizon h4 a,
+.srizon h5 a,
+.srizon h6 a {
   font-weight: inherit;
 }
 
-.srizon .srizon h1 {
+.srizon h1 {
   font-size: 4.2rem;
   line-height: 110%;
   margin: 2.1rem 0 1.68rem 0;
 }
 
-.srizon .srizon h2 {
+.srizon h2 {
   font-size: 3.56rem;
   line-height: 110%;
   margin: 1.78rem 0 1.424rem 0;
 }
 
-.srizon .srizon h3 {
+.srizon h3 {
   font-size: 2.92rem;
   line-height: 110%;
   margin: 1.46rem 0 1.168rem 0;
 }
 
-.srizon .srizon h4 {
+.srizon h4 {
   font-size: 2.28rem;
   line-height: 110%;
   margin: 1.14rem 0 0.912rem 0;
 }
 
-.srizon .srizon h5 {
+.srizon h5 {
   font-size: 1.64rem;
   line-height: 110%;
   margin: 0.82rem 0 0.656rem 0;
 }
 
-.srizon .srizon h6 {
+.srizon h6 {
   font-size: 1rem;
   line-height: 110%;
   margin: 0.5rem 0 0.4rem 0;
 }
 
-.srizon .srizon em {
+.srizon em {
   font-style: italic;
 }
 
-.srizon .srizon strong {
+.srizon strong {
   font-weight: 500;
 }
 
-.srizon .srizon small {
+.srizon small {
   font-size: 75%;
 }
 
-.srizon .srizon-light,
+.srizon-light,
 .srizon .page-footer .footer-copyright {
   font-weight: 300;
 }
 
-.srizon .srizon-thin {
+.srizon-thin {
   font-weight: 200;
 }
 
-.srizon .srizon-flow-text {
+.srizon-flow-text {
   font-weight: 300;
 }
 
 @media only screen and (min-width: 360px) {
-  .srizon .srizon-flow-text {
+  .srizon-flow-text {
     font-size: 1.2rem;
   }
 }
 
 @media only screen and (min-width: 390px) {
-  .srizon .srizon-flow-text {
+  .srizon-flow-text {
     font-size: 1.224rem;
   }
 }
 
 @media only screen and (min-width: 420px) {
-  .srizon .srizon-flow-text {
+  .srizon-flow-text {
     font-size: 1.248rem;
   }
 }
 
 @media only screen and (min-width: 450px) {
-  .srizon .srizon-flow-text {
+  .srizon-flow-text {
     font-size: 1.272rem;
   }
 }
 
 @media only screen and (min-width: 480px) {
-  .srizon .srizon-flow-text {
+  .srizon-flow-text {
     font-size: 1.296rem;
   }
 }
 
 @media only screen and (min-width: 510px) {
-  .srizon .srizon-flow-text {
+  .srizon-flow-text {
     font-size: 1.32rem;
   }
 }
 
 @media only screen and (min-width: 540px) {
-  .srizon .srizon-flow-text {
+  .srizon-flow-text {
     font-size: 1.344rem;
   }
 }
 
 @media only screen and (min-width: 570px) {
-  .srizon .srizon-flow-text {
+  .srizon-flow-text {
     font-size: 1.368rem;
   }
 }
 
 @media only screen and (min-width: 600px) {
-  .srizon .srizon-flow-text {
+  .srizon-flow-text {
     font-size: 1.392rem;
   }
 }
 
 @media only screen and (min-width: 630px) {
-  .srizon .srizon-flow-text {
+  .srizon-flow-text {
     font-size: 1.416rem;
   }
 }
 
 @media only screen and (min-width: 660px) {
-  .srizon .srizon-flow-text {
+  .srizon-flow-text {
     font-size: 1.44rem;
   }
 }
 
 @media only screen and (min-width: 690px) {
-  .srizon .srizon-flow-text {
+  .srizon-flow-text {
     font-size: 1.464rem;
   }
 }
 
 @media only screen and (min-width: 720px) {
-  .srizon .srizon-flow-text {
+  .srizon-flow-text {
     font-size: 1.488rem;
   }
 }
 
 @media only screen and (min-width: 750px) {
-  .srizon .srizon-flow-text {
+  .srizon-flow-text {
     font-size: 1.512rem;
   }
 }
 
 @media only screen and (min-width: 780px) {
-  .srizon .srizon-flow-text {
+  .srizon-flow-text {
     font-size: 1.536rem;
   }
 }
 
 @media only screen and (min-width: 810px) {
-  .srizon .srizon-flow-text {
+  .srizon-flow-text {
     font-size: 1.56rem;
   }
 }
 
 @media only screen and (min-width: 840px) {
-  .srizon .srizon-flow-text {
+  .srizon-flow-text {
     font-size: 1.584rem;
   }
 }
 
 @media only screen and (min-width: 870px) {
-  .srizon .srizon-flow-text {
+  .srizon-flow-text {
     font-size: 1.608rem;
   }
 }
 
 @media only screen and (min-width: 900px) {
-  .srizon .srizon-flow-text {
+  .srizon-flow-text {
     font-size: 1.632rem;
   }
 }
 
 @media only screen and (min-width: 930px) {
-  .srizon .srizon-flow-text {
+  .srizon-flow-text {
     font-size: 1.656rem;
   }
 }
 
 @media only screen and (min-width: 960px) {
-  .srizon .srizon-flow-text {
+  .srizon-flow-text {
     font-size: 1.68rem;
   }
 }
 
 @media only screen and (max-width: 360px) {
-  .srizon .srizon-flow-text {
+  .srizon-flow-text {
     font-size: 1.2rem;
   }
+}
+
+.srizon {
+  /*!
+ * Waves v0.6.0
+ * http://fian.my.id/Waves
+ *
+ * Copyright 2014 Alfiana E. Sibuea and other contributors
+ * Released under the MIT license
+ * https://github.com/fians/Waves/blob/master/LICENSE
+ */
+  /* Firefox Bug: link not triggered */
+  /* Text Inputs + Textarea
+   ========================================================================== */
+  /* Style Placeholders */
+  /* Text inputs */
+  /* Search Field */
+  /* Textarea */
+  /* Autocomplete */
+  /* Radio Buttons
+   ========================================================================== */
+  /* Unchecked styles */
+  /* Checked styles */
+  /* Radio With gap */
+  /* Focused styles */
+  /* Disabled Radio With gap */
+  /* Disabled style */
+  /* Checkboxes
+   ========================================================================== */
+  /* CUSTOM CSS CHECKBOXES */
+  /* Remove default checkbox */
+  /* Indeterminate checkbox */
+  /* Switch
+   ========================================================================== */
+  /* Select Field
+   ========================================================================== */
+  /* File Input
+   ========================================================================== */
+  /* Range
+   ========================================================================== */
+  /***************
+    Nav List
+***************/
+  /*
+    @license
+    Copyright (c) 2014 The Polymer Project Authors. All rights reserved.
+    This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+    The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+    The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+    Code distributed by Google as part of the polymer project is also
+    subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+ */
+  /**************************/
+  /* STYLES FOR THE SPINNER */
+  /**************************/
+  /*
+ * Constants:
+ *      STROKEWIDTH = 3px
+ *      ARCSIZE     = 270 degrees (amount of circle the arc takes up)
+ *      ARCTIME     = 1333ms (time it takes to expand and contract arc)
+ *      ARCSTARTROT = 216 degrees (how much the start location of the arc
+ *                                should rotate each time, 216 gives us a
+ *                                5 pointed star shape (it's 360/5 * 3).
+ *                                For a 7 pointed star, we might do
+ *                                360/7 * 3 = 154.286)
+ *      CONTAINERWIDTH = 28px
+ *      SHRINK_TIME = 400ms
+ */
+  /**
+ * IMPORTANT NOTE ABOUT CSS ANIMATION PROPERTIES (keanulee):
+ *
+ * iOS Safari (tested on iOS 8.1) does not handle animation-delay very well - it doesn't
+ * guarantee that the animation will start _exactly_ after that value. So we avoid using
+ * animation-delay and instead set custom keyframes for each color (as redundant as it
+ * seems).
+ *
+ * We write out each animation in full (instead of separating animation-name,
+ * animation-duration, etc.) because under the polyfill, Safari does not recognize those
+ * specific properties properly, treats them as -webkit-animation, and overrides the
+ * other animation rules. See https://github.com/Polymer/platform/issues/53.
+ */
+  /**
+ * Patch the gap that appear between the two adjacent div.circle-clipper while the
+ * spinner is rotating (appears on Chrome 38, Safari 7.1, and IE 11).
+ */
+  /* ==========================================================================
+   $BASE-PICKER
+   ========================================================================== */
+  /**
+ * Note: the root picker element should *NOT* be styled more than what's here.
+ */
+  /**
+ * The picker input element.
+ */
+  /**
+ * When the picker is opened, the input element is "activated".
+ */
+  /**
+ * The holder is the only "scrollable" top-level container element.
+ */
+  /*!
+ * Default mobile-first, responsive styling for pickadate.js
+ * Demo: http://amsul.github.io/pickadate.js
+ */
+  /**
+ * Note: the root picker element should *NOT* be styled more than what's here.
+ */
+  /**
+ * Make the holder and frame fullscreen.
+ */
+  /**
+ * The holder should overlay the entire screen.
+ */
+  /**
+ * The frame that bounds the box contents of the picker.
+ */
+  /**
+ * The wrapper sets the stage to vertically align the box contents.
+ */
+  /**
+ * The box contains all the picker contents.
+ */
+  /**
+ * When the picker opens...
+ */
+  /**
+ * For `large` screens, transform into an inline picker.
+ */
+  /* ==========================================================================
+   CUSTOM MATERIALIZE STYLES
+   ========================================================================== */
+  /* ==========================================================================
+   $BASE-DATE-PICKER
+   ========================================================================== */
+  /**
+ * The picker box.
+ */
+  /**
+ * The header containing the month and year stuff.
+ */
+  /**
+ * The month and year labels.
+ */
+  /**
+ * The month and year selectors.
+ */
+  /**
+ * The month navigation buttons.
+ */
+  /**
+ * The calendar table of dates
+ */
+  /**
+ * The weekday labels
+ */
+  /**
+ * The days on the calendar
+ */
+  /**
+ * The footer containing the "today", "clear", and "close" buttons.
+ */
+  /* ==========================================================================
+   CUSTOM MATERIALIZE STYLES
+   ========================================================================== */
+  /*.picker__box {
+  border-radius: 2px;
+  overflow: hidden;
+}*/
+  /*.picker__box {
+  padding: 0;
+}*/
+  /* ==========================================================================
+   $BASE-TIME-PICKER
+   ========================================================================== */
+  /**
+ * The list of times.
+ */
+  /**
+ * The times on the clock.
+ */
+  /* Hovered time */
+  /* Highlighted and hovered/focused time */
+  /* Selected and hovered/focused time */
+  /* Disabled time */
+  /**
+ * The clear button
+ */
+  /* ==========================================================================
+   $DEFAULT-TIME-PICKER
+   ========================================================================== */
+  /**
+ * The frame the bounds the time picker.
+ */
+  /**
+ * The picker box.
+ */
+  /* ==========================================================================
+   $DEFAULT-TIME-PICKER
+   ========================================================================== */
 }
 
 .srizon .scale-transition {
