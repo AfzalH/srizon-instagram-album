@@ -3,3 +3,22 @@
     color: blue;
   }
 }
+
+@-webkit-keyframes autofill {
+  to {
+    color: darken(yellow, 10);
+    background: transparent;
+  }
+}
+
+input:-webkit-autofill {
+  -webkit-animation-name: autofill;
+  -webkit-animation-fill-mode: both;
+}
+
+#nano-bar-id {
+  .bar {
+    background-color: red;
+  }
+  z-index: 99999;
+}

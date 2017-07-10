@@ -1,1 +1,24 @@
-.test .test2{color:blue}
+.test .test2 {
+  color: blue;
+}
+
+@-webkit-keyframes autofill {
+  to {
+    color: #cccc00;
+    background: transparent;
+  }
+}
+
+input:-webkit-autofill {
+  -webkit-animation-name: autofill;
+  -webkit-animation-fill-mode: both;
+}
+
+#nano-bar-id {
+  z-index: 99999;
+}
+
+#nano-bar-id .bar {
+  background-color: red;
+}
+

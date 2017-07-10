@@ -8,8 +8,11 @@ import DumbValue from '../components/DumbValue';
 const Test = ({val, onIncrement, onDecrement}) => (
     <div>
         <DumbValue val={val}/>
-        <button onClick={onIncrement}>+</button>
-        <button onClick={onDecrement}>-</button>
+        <div>
+            <button className="btn" onClick={onIncrement}>+ (now)</button>
+            {' '}
+            <button className="btn" onClick={onDecrement}>- (async simulation)</button>
+        </div>
     </div>
 );
 
