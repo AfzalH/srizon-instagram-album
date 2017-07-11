@@ -1,7 +1,5 @@
-.test {
-  .test2 {
-    color: blue;
-  }
+.top50{
+  margin-top: 50px;
 }
 
 @-webkit-keyframes autofill {
@@ -21,4 +19,8 @@ input:-webkit-autofill {
     background-color: red;
   }
   z-index: 99999;
+}
+
+.thin{
+  font-weight: 100 !important;
 }

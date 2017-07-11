@@ -1,5 +1,5 @@
-.test .test2 {
-  color: blue;
+.top50 {
+  margin-top: 50px;
 }
 
 @-webkit-keyframes autofill {
@@ -20,5 +20,9 @@ input:-webkit-autofill {
 
 #nano-bar-id .bar {
   background-color: red;
+}
+
+.thin {
+  font-weight: 100 !important;
 }
 

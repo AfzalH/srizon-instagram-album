@@ -17,6 +17,7 @@ function srizon_instagram_album_load_textdomain() {
 add_action( 'plugins_loaded', 'srizon_instagram_album_load_textdomain' );
 
 // backend files
+require_once 'api/index.php';
 if ( is_admin() ) {
 	require_once 'admin/index.php';
 }
@@ -24,3 +25,5 @@ if ( is_admin() ) {
 function srizon_instagram_get_resource_url( $relativePath ) {
 	return plugins_url( $relativePath, plugin_basename( __FILE__ ) );
 }
+
+
