@@ -5,7 +5,11 @@ add_action( 'admin_init', 'srizon_save_access_token' );
 
 function srizon_save_access_token() {
 	if ( isset( $_REQUEST['access_token'] ) ) {
-		add_option( 'srizon_instagram_access_token', $_REQUEST['access_token'] );
+		//update_option( 'srizon_instagram_access_token', $_REQUEST['access_token'] );
+		update_option( 'srizon_instagram_access_token', '51101623.54da896.b05c668420034c76a237c869b15fecc5' );
+		//$user_self = wp_remote_get( 'https://api.instagram.com/v1/users/self/?access_token=' . $_REQUEST['access_token'] );
+		$user_self = wp_remote_get( 'https://api.instagram.com/v1/users/self/?access_token=51101623.54da896.b05c668420034c76a237c869b15fecc5' );
+		update_option( 'srizon_instagram_connected_user', isset( $user_self['body'] ) ? $user_self['body'] : false );
 	}
 }
 
@@ -30,13 +34,8 @@ function srizon_instagram_load_admin_resources() {
 function srizon_instagram_admin_page() {
 	// render admin
 	?>
-	<div class="srizon" style="padding: 0 10px">
-		<div class="row">
-			<div class="col s12">
-				<div class="center"><h5 class="thin">Srizon Instagram Album</h5></div>
-				<div id="srizon-instagram-admin"></div>
-			</div>
-		</div>
+	<div class="srizon">
+		<div id="srizon-instagram-admin"></div>
 	</div>
 
 	<?php

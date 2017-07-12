@@ -7,13 +7,22 @@ export function settingsReceived(settings) {
 
 export function loadSettings() {
     return dispatch => {
-        axios.get('http://wpp.dev/wp-json/srizon-instagram/v1/settings')
+        axios.get(wpApiSettings.root + 'srizon-instagram/v1/settings')
             .then((response)=> {
-                console.log(response);
                 dispatch({
                     type: 'SRIZON_INSTAGRAM_SETTINGS_RECEIVED',
                     payload: response.data
                 })
+            })
+    }
+}
+
+export function disconnectUser() {
+    return dispatch => {
+        dispatch({type: 'SRIZON_INSTAGRAM_SETTINGS_USER_REMOVEING'});
+        axios.get(wpApiSettings.root + 'srizon-instagram/v1/disconnect-user')
+            .then((response)=> {
+                dispatch(loadSettings())
             })
     }
 }

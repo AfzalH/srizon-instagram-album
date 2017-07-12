@@ -1,5 +1,22 @@
+.get-token-button {
+  width: 100%;
+  padding: 30px 0;
+}
+
+.get-token-button .btn {
+  height: 70px;
+  line-height: 70px;
+  padding-left: 20px;
+  padding-right: 30px;
+  text-transform: none;
+}
+
 .top50 {
   margin-top: 50px;
+}
+
+.pl0 {
+  padding-left: 0 !important;
 }
 
 @-webkit-keyframes autofill {
@@ -23,6 +40,26 @@ input:-webkit-autofill {
 }
 
 .thin {
-  font-weight: 100 !important;
+  font-weight: 200 !important;
+}
+
+.connected-user {
+  cursor: pointer;
+}
+
+.svg-button-icon {
+  line-height: 97px;
+  padding-right: 10px;
+}
+
+.svg-button-icon svg {
+  width: 40px;
+  height: 40px;
+  color: white;
+  fill: white;
+}
+
+.srizon {
+  margin-top: 10px !important;
 }
 

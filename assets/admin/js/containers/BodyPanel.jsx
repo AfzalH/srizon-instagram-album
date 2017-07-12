@@ -1,15 +1,11 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import CircularLoaderFull from '../components/CircularLoaderFull';
-import MainPanel from './MainPanel';
 
 // smart component with redux connect
 
-const Base = ({init}) => (
-    <div>
-        {init ?
-            <CircularLoaderFull /> : <MainPanel />
-        }
+const BodyPanel = ({init}) => (
+    <div className="row">
+        <div className="col s12">Body</div>
     </div>
 );
 
@@ -26,4 +22,4 @@ function mapDispatchToProps(dispatch) {
 }
 
 // connect and export
-export default connect(mapStateTopProps, mapDispatchToProps)(Base);
+export default connect(mapStateTopProps, mapDispatchToProps)(BodyPanel);

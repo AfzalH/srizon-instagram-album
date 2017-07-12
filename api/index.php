@@ -11,8 +11,19 @@ function srizon_instagram_get_settings() {
 	$settings['redirect_uri']  = 'https://srizon.com/instagram-api/';
 	$settings['response_type'] = 'token';
 	$settings['scope']         = 'public_content';
+	$connected_user_object     = json_decode( get_option( 'srizon_instagram_connected_user', false ) );
+	if ( $connected_user_object ) {
+		$settings['connected_user'] = isset( $connected_user_object->data ) ? $connected_user_object->data : false;
+	} else {
+		$settings['connected_user'] = false;
+	}
 
 	return $settings;
+}
+
+function srizon_instagram_disconnect_user() {
+	delete_option( 'srizon_instagram_access_token' );
+	delete_option( 'srizon_instagram_connected_user' );
 }
 
 add_action( 'rest_api_init', function () {
@@ -24,6 +35,11 @@ add_action( 'rest_api_init', function () {
 	register_rest_route( 'srizon-instagram/v1', '/settings/', [
 		'methods'  => 'GET',
 		'callback' => 'srizon_instagram_get_settings',
+	] );
+
+	register_rest_route( 'srizon-instagram/v1', '/disconnect-user/', [
+		'methods'  => 'GET',
+		'callback' => 'srizon_instagram_disconnect_user',
 	] );
 } );
 
