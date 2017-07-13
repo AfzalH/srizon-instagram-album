@@ -17,12 +17,12 @@ class AppTitle extends React.Component {
     render() {
         const {connected_user, disconnectUser, user_removing} = this.props;
         return (
-            <div className="row">
-                <div className="col m6">
+            <div className="row app-title">
+                <div className="col m6 title-col">
                     <h5 className="thin">Srizon Instagram Album</h5>
                 </div>
                 {connected_user ?
-                    <div className="col m6">
+                    <div className="col m6 chip-col">
                         <h5 className="right">
                             {user_removing ?
                                 <small>

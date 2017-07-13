@@ -1,19 +1,15 @@
 import React from 'react';
 import {connect} from 'react-redux';
-
+import AlbumList from './AlbumList';
 // smart component with redux connect
 
-const BodyPanel = ({init}) => (
-    <div className="row">
-        <div className="col s12">Body</div>
-    </div>
+const BodyPanel = () => (
+    <AlbumList />
 );
 
 // map state
 function mapStateTopProps(state) {
-    return {
-        init: state.settings.init
-    }
+    return {}
 }
 
 // map dispatch

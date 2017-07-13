@@ -26,3 +26,21 @@ export function disconnectUser() {
             })
     }
 }
+
+export function newUserAlbum() {
+    return {
+        type: 'SRIZON_INSTAGRAM_SETTINGS_NEW_USER_ALBUM'
+    }
+}
+
+export function cancelUserAlbum(){
+    return {
+        type: 'SRIZON_INSTAGRAM_SETTINGS_CANCEL_USER_ALBUM'
+    }
+}
+
+export function newHashtagAlbum() {
+    return {
+        type: 'SRIZON_INSTAGRAM_SETTINGS_NEW_HASHTAG_ALBUM'
+    }
+}

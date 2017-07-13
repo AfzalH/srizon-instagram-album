@@ -1,7 +1,14 @@
-@import "get_token_button";
+@import "_common";
+@import "_get_token_button";
+@import "_card_override";
+@import "app_title";
 
 .top50 {
   margin-top: 50px;
+}
+
+.top20{
+  margin-top: 20px;
 }
 
 .pl0 {
@@ -46,6 +53,6 @@ input:-webkit-autofill {
   }
 }
 
-.srizon{
+.srizon {
   margin-top: 10px !important;
 }

@@ -2,9 +2,11 @@ import React from 'react';
 
 // dumb component ... only props and presentation
 const GetTokenButton = ({options}) => (
-    <div className="get-token-button">
-        <a className="btn purple lighten-1"
-           href={
+    <div className="row">
+        <div className="col s12">
+            <div className="get-token-button">
+                <a className="btn purple lighten-1"
+                   href={
                options.oauth_url+'?client_id='+options.client_id+'&redirect_uri='
                +options.redirect_uri+'?return_url='+encodeURI(window.location.href)+'&response_type='
                +options.response_type+'&scope='+options.scope}><span className="left svg-button-icon">
@@ -13,6 +15,9 @@ const GetTokenButton = ({options}) => (
                 d="M256 164.1c-50.7 0-91.9 41.1-91.9 91.9s41.1 91.9 91.9 91.9 91.9-41.1 91.9-91.9S306.7 164.1 256 164.1zM256 315.6c-32.9 0-59.6-26.7-59.6-59.6s26.7-59.6 59.6-59.6 59.6 26.7 59.6 59.6S288.9 315.6 256 315.6z"/><circle
                 cx="351.5" cy="160.5" r="21.5"/></g></svg>
         </span> Connect your Instagram</a>
+            </div>
+
+        </div>
     </div>
 );
 

@@ -1,3 +1,25 @@
+.srizon a {
+  cursor: pointer;
+}
+
+.srizon a:hover {
+  text-decoration: underline;
+}
+
+.srizon .clickable {
+  cursor: pointer;
+}
+
+.srizon .clickable:hover h5 {
+  text-decoration: underline;
+  -webkit-text-decoration-color: #cfcfcf;
+          text-decoration-color: #cfcfcf;
+}
+
+.srizon .big-icon {
+  font-size: 98px;
+}
+
 .get-token-button {
   width: 100%;
   padding: 30px 0;
@@ -11,8 +33,22 @@
   text-transform: none;
 }
 
+.srizon .card {
+  border: 0;
+  padding: 0;
+}
+
+.srizon .app-title .chip-col h5 {
+  margin-top: 10px;
+  margin-bottom: 2px;
+}
+
 .top50 {
   margin-top: 50px;
+}
+
+.top20 {
+  margin-top: 20px;
 }
 
 .pl0 {

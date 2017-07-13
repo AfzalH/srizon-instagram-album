@@ -1,0 +1,21 @@
+.srizon {
+  a {
+    cursor: pointer;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+  .clickable {
+    cursor: pointer;
+    &:hover {
+      h5 {
+        text-decoration: underline;
+        text-decoration-color: #cfcfcf;
+      }
+    }
+  }
+  .big-icon {
+    font-size: 98px;
+  }
+}
+
