@@ -11710,19 +11710,13 @@ var AppTitle = function (_React$Component) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* unused harmony export settingsReceived */
 /* harmony export (immutable) */ __webpack_exports__["c"] = loadSettings;
 /* harmony export (immutable) */ __webpack_exports__["b"] = disconnectUser;
 /* harmony export (immutable) */ __webpack_exports__["e"] = newUserAlbum;
 /* harmony export (immutable) */ __webpack_exports__["a"] = cancelUserAlbum;
+/* harmony export (immutable) */ __webpack_exports__["f"] = saveUserAlbum;
 /* harmony export (immutable) */ __webpack_exports__["d"] = newHashtagAlbum;
-function settingsReceived(settings) {
-    return {
-        type: 'SRIZON_INSTAGRAM_SETTINGS_RECEIVED',
-        payload: settings
-    };
-}
-
+/* unused harmony export cancelHashtagAlbum */
 function loadSettings() {
     return function (dispatch) {
         axios.get(wpApiSettings.root + 'srizon-instagram/v1/settings').then(function (response) {
@@ -11755,9 +11749,25 @@ function cancelUserAlbum() {
     };
 }
 
+function saveUserAlbum(album) {
+    return function (dispatch) {
+        dispatch({ type: 'SRIZON_INSTAGRAM_SETTINGS_SAVING_USER_ALBUM' });
+        axios.post(wpApiSettings.root + 'srizon-instagram/v1/useralbum', { username: album.username, title: album.title }).then(function (response) {
+            console.log(response.data);
+            dispatch({ type: 'SRIZON_INSTAGRAM_SETTINGS_SAVED_USER_ALBUM' });
+        });
+    };
+}
+
 function newHashtagAlbum() {
     return {
         type: 'SRIZON_INSTAGRAM_SETTINGS_NEW_HASHTAG_ALBUM'
+    };
+}
+
+function cancelHashtagAlbum() {
+    return {
+        type: 'SRIZON_INSTAGRAM_SETTINGS_CANCEL_HASHTAG_ALBUM'
     };
 }
 
@@ -24792,6 +24802,8 @@ function settingsReducer() {
             return _extends({}, state, { open_user_album_form: false });
         case 'SRIZON_INSTAGRAM_SETTINGS_NEW_HASHTAG_ALBUM':
             return _extends({}, state, { open_hashtag_album_form: true });
+        case 'SRIZON_INSTAGRAM_SETTINGS_CANCEL_HASHTAG_ALBUM':
+            return _extends({}, state, { open_hashtag_album_form: false });
         default:
             return state;
     }
@@ -26813,6 +26825,8 @@ function mapDispatchToProps(dispatch) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_redux__ = __webpack_require__(34);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__actions_settingsAction__ = __webpack_require__(100);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_AddCardFront__ = __webpack_require__(275);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_AddCardForm__ = __webpack_require__(276);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -26820,6 +26834,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
 
 
 
@@ -26837,114 +26853,18 @@ var AddUserAlbumCard = function (_React$Component) {
     }
 
     _createClass(AddUserAlbumCard, [{
-        key: 'componentDidUpdate',
-        value: function componentDidUpdate() {
-            Materialize.updateTextFields();
-            this.userNameInput.focus();
-        }
-    }, {
         key: 'render',
         value: function render() {
-            var _this2 = this;
-
             var _props = this.props,
                 newUserAlbum = _props.newUserAlbum,
                 cancelUserAlbum = _props.cancelUserAlbum,
-                open_form = _props.open_form;
+                open_form = _props.open_form,
+                saveUserAlbum = _props.saveUserAlbum;
 
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
                 { className: 'col s12 l4 m6' },
-                !open_form ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'div',
-                    { className: 'card small clickable', onClick: newUserAlbum },
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'div',
-                        { className: 'card-content' },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'div',
-                            { className: 'row' },
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                'div',
-                                { className: 'col s12 center' },
-                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                    'span',
-                                    { className: 'green-text text-lighten-3 big-icon' },
-                                    '+'
-                                )
-                            ),
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                'div',
-                                { className: 's12 center' },
-                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                    'h5',
-                                    { className: 'thin' },
-                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                        'span',
-                                        {
-                                            className: 'green-text text-darken-3' },
-                                        'Add User Album'
-                                    )
-                                )
-                            )
-                        )
-                    )
-                ) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'div',
-                    { className: 'card small' },
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'div',
-                        { className: 'card-content' },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'div',
-                            { className: 'input-field col s12' },
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { placeholder: 'Enter username here', id: 'first_name', type: 'text',
-                                className: 'validate',
-                                ref: function ref(input) {
-                                    _this2.userNameInput = input;
-                                }
-                            }),
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                'label',
-                                { 'for': 'first_name' },
-                                'Instagram User Name'
-                            )
-                        ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'div',
-                            { className: 'input-field col s12' },
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: 'first_name', type: 'text',
-                                className: 'validate',
-                                ref: function ref(input) {
-                                    _this2.userTitleInput = input;
-                                }
-                            }),
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                'label',
-                                { 'for': 'first_name' },
-                                'Album Title (Optional)'
-                            )
-                        ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'div',
-                            { className: 'col s6 top20' },
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                'button',
-                                { className: 'btn grey', onClick: cancelUserAlbum },
-                                'Cancel'
-                            )
-                        ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'div',
-                            { className: 'col s6 top20' },
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                'button',
-                                { className: 'btn green' },
-                                'Submit'
-                            )
-                        )
-                    )
-                )
+                !open_form ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_AddCardFront__["a" /* default */], { newUserAlbum: newUserAlbum }) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__components_AddCardForm__["a" /* default */], { cancelUserAlbum: cancelUserAlbum, saveUserAlbum: saveUserAlbum })
             );
         }
     }]);
@@ -26969,6 +26889,9 @@ function mapDispatchToProps(dispatch) {
         },
         cancelUserAlbum: function cancelUserAlbum() {
             dispatch(__WEBPACK_IMPORTED_MODULE_2__actions_settingsAction__["a" /* cancelUserAlbum */]());
+        },
+        saveUserAlbum: function saveUserAlbum(album) {
+            dispatch(__WEBPACK_IMPORTED_MODULE_2__actions_settingsAction__["f" /* saveUserAlbum */](album));
         }
     };
 }
@@ -27060,6 +26983,208 @@ function mapDispatchToProps(dispatch) {
 
 // connect and export
 /* harmony default export */ __webpack_exports__["a"] = (__WEBPACK_IMPORTED_MODULE_1_react_redux__["b" /* connect */](mapStateTopProps, mapDispatchToProps)(AddUserAlbumCard));
+
+/***/ }),
+/* 275 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+var AddCardFront = function (_React$Component) {
+    _inherits(AddCardFront, _React$Component);
+
+    function AddCardFront() {
+        _classCallCheck(this, AddCardFront);
+
+        return _possibleConstructorReturn(this, (AddCardFront.__proto__ || Object.getPrototypeOf(AddCardFront)).apply(this, arguments));
+    }
+
+    _createClass(AddCardFront, [{
+        key: "render",
+        value: function render() {
+            var newUserAlbum = this.props.newUserAlbum;
+
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                "div",
+                { className: "card small clickable", onClick: newUserAlbum },
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    "div",
+                    { className: "card-content" },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        "div",
+                        { className: "row" },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            "div",
+                            { className: "col s12 center" },
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                "span",
+                                { className: "green-text text-lighten-3 big-icon" },
+                                "+"
+                            )
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            "div",
+                            { className: "s12 center" },
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                "h5",
+                                { className: "thin" },
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    "span",
+                                    {
+                                        className: "green-text text-darken-3" },
+                                    "Add User Album"
+                                )
+                            )
+                        )
+                    )
+                )
+            );
+        }
+    }]);
+
+    return AddCardFront;
+}(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Component);
+
+/* harmony default export */ __webpack_exports__["a"] = (AddCardFront);
+
+/***/ }),
+/* 276 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+var AddCardForm = function (_React$Component) {
+    _inherits(AddCardForm, _React$Component);
+
+    function AddCardForm(props) {
+        _classCallCheck(this, AddCardForm);
+
+        var _this = _possibleConstructorReturn(this, (AddCardForm.__proto__ || Object.getPrototypeOf(AddCardForm)).call(this, props));
+
+        _this.state = {
+            username: '',
+            title: ''
+        };
+        _this.handleInputChange = _this.handleInputChange.bind(_this);
+        return _this;
+    }
+
+    _createClass(AddCardForm, [{
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            Materialize.updateTextFields();
+            this.userNameInput.focus();
+        }
+    }, {
+        key: 'handleInputChange',
+        value: function handleInputChange(event) {
+            var target = event.target;
+            var value = target.type === 'checkbox' ? target.checked : target.value;
+            var name = target.name;
+
+            this.setState(_defineProperty({}, name, value));
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var _this2 = this;
+
+            var _props = this.props,
+                cancelUserAlbum = _props.cancelUserAlbum,
+                saveUserAlbum = _props.saveUserAlbum;
+
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'div',
+                { className: 'card small' },
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { className: 'card-content' },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'input-field col s12' },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { placeholder: 'Enter username here', id: 'first_name', type: 'text',
+                            name: 'username',
+                            value: this.state.username,
+                            onChange: this.handleInputChange,
+                            ref: function ref(input) {
+                                _this2.userNameInput = input;
+                            }
+                        }),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'label',
+                            { htmlFor: 'first_name' },
+                            'Instagram User Name'
+                        )
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'input-field col s12' },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: 'first_name', type: 'text',
+                            name: 'title',
+                            value: this.state.title,
+                            onChange: this.handleInputChange
+                        }),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'label',
+                            { htmlFor: 'first_name' },
+                            'Album Title (Optional)'
+                        )
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'col s6 top20' },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'button',
+                            { className: 'btn grey', onClick: cancelUserAlbum },
+                            'Cancel'
+                        )
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'col s6 top20' },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'button',
+                            {
+                                onClick: function onClick() {
+                                    saveUserAlbum(_this2.state);
+                                },
+                                className: 'btn green ' + (this.state.username.trim().length < 3 ? 'disabled' : '') },
+                            'Submit'
+                        )
+                    )
+                )
+            );
+        }
+    }]);
+
+    return AddCardForm;
+}(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Component);
+
+/* harmony default export */ __webpack_exports__["a"] = (AddCardForm);
 
 /***/ })
 /******/ ]);

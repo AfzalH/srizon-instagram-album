@@ -16,6 +16,8 @@ export default function settingsReducer(state = initial_state, action) {
             return {...state, open_user_album_form: false};
         case 'SRIZON_INSTAGRAM_SETTINGS_NEW_HASHTAG_ALBUM':
             return {...state, open_hashtag_album_form: true};
+        case 'SRIZON_INSTAGRAM_SETTINGS_CANCEL_HASHTAG_ALBUM':
+            return {...state, open_hashtag_album_form: false};
         default:
             return state;
     }
