@@ -4,6 +4,7 @@ import AppTitle from '../components/AppTitle';
 import GetTokenButton from '../components/GetTokenButton';
 import BodyPanel from './BodyPanel';
 import {disconnectUser} from '../actions/settingsAction';
+import FlashMessages from './FlashMessages';
 
 // smart component with redux connect
 
@@ -11,6 +12,7 @@ const MainPannel = ({options, disconnectUser, user_removing}) => (
     <div>
         <AppTitle connected_user={options.connected_user} user_removing={user_removing}
                   disconnectUser={disconnectUser}/>
+        <FlashMessages />
         {options.access_token ?
             <BodyPanel /> : <GetTokenButton options={options}/>
 

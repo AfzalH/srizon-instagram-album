@@ -38,4 +38,12 @@ CREATE TABLE ' . $t_albums . ' (
 
 		return $wpdb->insert_id;
 	}
+
+	static function GetAllAlbums() {
+		global $wpdb;
+		$table  = $wpdb->prefix . 'srzinst_albums';
+		$albums = $wpdb->get_results( "SELECT * FROM $table order by id desc" );
+
+		return $albums;
+	}
 }

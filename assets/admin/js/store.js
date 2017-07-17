@@ -1,10 +1,12 @@
 import {createStore, combineReducers, applyMiddleware} from 'redux';
-import counterReducer from './reducers/counterReducer';
 import settingsReducer from './reducers/settingsReducer';
+import albumsReducer from './reducers/albumsReducer';
+import messagesReducer from './reducers/messagesReducer';
 import logger from 'redux-logger';
 import thunk from 'redux-thunk';
 
 export default  createStore(combineReducers({
-    counterReducer,
-    settings: settingsReducer
+    settings: settingsReducer,
+    messages: messagesReducer,
+    albums: albumsReducer
 }), applyMiddleware(logger, thunk));

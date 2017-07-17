@@ -5,7 +5,23 @@ export function loadSettings() {
                 dispatch({
                     type: 'SRIZON_INSTAGRAM_SETTINGS_RECEIVED',
                     payload: response.data
+                });
+                dispatch(loadAlbums());
+            })
+    }
+}
+
+export function loadAlbums() {
+    return dispatch => {
+        axios.get(wpApiSettings.root + 'srizon-instagram/v1/album')
+            .then(response=> {
+                dispatch({
+                    type: 'SRIZON_INSTAGRAM_ALBUMS_RECEIVED',
+                    payload: response.data
                 })
+            })
+            .catch(error=> {
+                alert(error.response.message);
             })
     }
 }
@@ -37,8 +53,20 @@ export function saveUserAlbum(album) {
         dispatch({type: 'SRIZON_INSTAGRAM_SETTINGS_SAVING_USER_ALBUM'});
         axios.post(wpApiSettings.root + 'srizon-instagram/v1/useralbum', {username: album.username, title: album.title})
             .then((response)=> {
-                console.log(response.data);
-                dispatch({type: 'SRIZON_INSTAGRAM_SETTINGS_SAVED_USER_ALBUM'});
+                dispatch({type: 'SRIZON_INSTAGRAM_SETTINGS_SAVED_USER_ALBUM', payload: response.data});
+            })
+            .catch((error)=> {
+                if (error.response) {
+                    dispatch({
+                        type: 'SRIZON_INSTAGRAM_MESSAGE_RECEIVED',
+                        payload: {
+                            txt: error.response.data.message,
+                            type: 'error',
+                            expire_in: 5
+                        }
+                    });
+                    dispatch({type: 'SRIZON_INSTAGRAM_SETTINGS_CANCEL_USER_ALBUM'});
+                }
             })
     };
 }

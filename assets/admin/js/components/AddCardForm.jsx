@@ -8,6 +8,7 @@ class AddCardForm extends React.Component {
             title: ''
         };
         this.handleInputChange = this.handleInputChange.bind(this);
+        this.handleKeyPress = this.handleKeyPress.bind(this);
     }
 
     componentDidMount() {
@@ -26,27 +27,35 @@ class AddCardForm extends React.Component {
         });
     }
 
+    handleKeyPress(event) {
+        if (event.key === 'Enter' && this.state.username.trim().length > 2) {
+            this.props.saveUserAlbum(this.state);
+        }
+    }
+
     render() {
         const {cancelUserAlbum, saveUserAlbum} = this.props;
         return (
             <div className="card small">
                 <div className="card-content">
                     <div className="input-field col s12">
-                        <input placeholder="Enter username here" id="first_name" type="text"
+                        <input placeholder="Enter username here" id="username" type="text"
                                name="username"
                                value={this.state.username}
                                onChange={this.handleInputChange}
+                               onKeyPress={this.handleKeyPress}
                                ref={(input)=>{this.userNameInput = input}}
                         />
-                        <label htmlFor="first_name">Instagram User Name</label>
+                        <label htmlFor="username">Instagram User Name</label>
                     </div>
                     <div className="input-field col s12">
-                        <input id="first_name" type="text"
+                        <input id="title" type="text"
                                name="title"
                                value={this.state.title}
                                onChange={this.handleInputChange}
+                               onKeyPress={this.handleKeyPress}
                         />
-                        <label htmlFor="first_name">Album Title (Optional)</label>
+                        <label htmlFor="title">Album Title (Optional)</label>
                     </div>
                     <div className="col s6 top20">
                         <button className="btn grey" onClick={cancelUserAlbum}>Cancel</button>

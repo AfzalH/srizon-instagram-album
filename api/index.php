@@ -61,10 +61,21 @@ function srizon_instagram_save_user_album( $data ) {
 
 	//return $user_id;
 	if ( is_array( $user ) ) {
-		return 'got array';
+		return new WP_Error( 'user_not_found', 'User Not Found', [ 'status' => 404 ] );
 	} else {
+		if ( ! $user->id ) {
+			return new WP_Error( 'user_not_found', 'User Not Found', [ 'status' => 404 ] );
+		}
+		if ( trim( $json_data->title ) ) {
+			$title = trim( $json_data->title );
+		} else if ( trim( $user->full_name ) ) {
+			$title = 'Photos of ' . $user->full_name;
+		} else {
+			$title = 'Photos of ' . $user->username;
+		}
+
 		$payload                    = [ ];
-		$payload['title']           = $json_data->title;
+		$payload['title']           = $title;
 		$payload['type']            = 'user';
 		$payload['userid']          = $user->id;
 		$payload['username']        = $user->username;
@@ -74,16 +85,13 @@ function srizon_instagram_save_user_album( $data ) {
 
 		$insert_id = SrizonInstaDB::SaveAlbum( $payload );
 
-		$payload['added'] = true;
-		$payload['id']    = $insert_id;
-
-		return $payload;
+		return srizon_instagram_get_album_index();
 	}
 }
 
-//class myreq extends WP_REST_Request{
-//
-//}
+function srizon_instagram_get_album_index() {
+	return SrizonInstaDB::GetAllAlbums();
+}
 
 add_action( 'rest_api_init', function () {
 	register_rest_route( 'srizon-instagram/v1', '/test/', [
@@ -104,6 +112,10 @@ add_action( 'rest_api_init', function () {
 	register_rest_route( 'srizon-instagram/v1', '/useralbum/', [
 		'methods'  => 'POST',
 		'callback' => 'srizon_instagram_save_user_album',
+	] );
+	register_rest_route( 'srizon-instagram/v1', '/album/', [
+		'methods'  => 'GET',
+		'callback' => 'srizon_instagram_get_album_index',
 	] );
 } );
 
