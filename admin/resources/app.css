@@ -20,6 +20,14 @@
   font-size: 98px;
 }
 
+.fixed-bottom-right {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  width: 300px;
+  z-index: 9999;
+}
+
 .get-token-button {
   width: 100%;
   padding: 30px 0;
@@ -41,6 +49,75 @@
 .srizon .app-title .chip-col h5 {
   margin-top: 10px;
   margin-bottom: 2px;
+}
+
+.scale-enter {
+  -webkit-transition: all .5s ease-in-out;
+  transition: all .5s ease-in-out;
+  -webkit-transform: scale(0.6);
+          transform: scale(0.6);
+}
+
+.scale-enter.scale-enter-active {
+  -webkit-transform: scale(1);
+          transform: scale(1);
+}
+
+.scale-leave {
+  -webkit-transition: all .5s ease-in-out;
+  transition: all .5s ease-in-out;
+  -webkit-transform: scale(1);
+          transform: scale(1);
+}
+
+.scale-leave.scale-leave-active {
+  -webkit-transition: all .5s ease-in-out;
+  transition: all .5s ease-in-out;
+  -webkit-transform: scale(0);
+          transform: scale(0);
+}
+
+.slide-up-enter {
+  position: relative;
+  -webkit-transition: all .5s ease-in-out;
+  transition: all .5s ease-in-out;
+  top: 100px;
+  opacity: 0;
+}
+
+.slide-up-enter.slide-up-enter-active {
+  position: relative;
+  top: 0px;
+  opacity: 1;
+}
+
+.slide-up-leave {
+  -webkit-transition: all .5s ease-in-out;
+  transition: all .5s ease-in-out;
+  position: relative;
+  top: 0px;
+  opacity: 1;
+}
+
+.slide-up-leave.slide-up-leave-active {
+  -webkit-transition: all .5s ease-in-out;
+  transition: all .5s ease-in-out;
+  position: relative;
+  top: -100px;
+  opacity: 0;
+}
+
+.srizon .temp-msg {
+  padding: 10px;
+  margin: 10px;
+  -webkit-box-shadow: 2px 2px 7px black;
+          box-shadow: 2px 2px 7px black;
+}
+
+.srizon .temp-msg h5 {
+  font-size: 18px;
+  margin: 0;
+  padding: 0;
 }
 
 .top50 {

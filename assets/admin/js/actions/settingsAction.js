@@ -53,6 +53,14 @@ export function saveUserAlbum(album) {
         dispatch({type: 'SRIZON_INSTAGRAM_SETTINGS_SAVING_USER_ALBUM'});
         axios.post(wpApiSettings.root + 'srizon-instagram/v1/useralbum', {username: album.username, title: album.title})
             .then((response)=> {
+                dispatch({
+                    type: 'SRIZON_INSTAGRAM_MESSAGE_RECEIVED',
+                    payload: {
+                        txt: 'Album Saved!',
+                        type: 'success',
+                        expire_in: 3
+                    }
+                });
                 dispatch({type: 'SRIZON_INSTAGRAM_SETTINGS_SAVED_USER_ALBUM', payload: response.data});
             })
             .catch((error)=> {

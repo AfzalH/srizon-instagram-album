@@ -4,21 +4,25 @@ import AlbumListItem from './AlbumListItem';
 import AlbumListItemLoading from './AlbumListItemLoading';
 import AddUserAlbumCard from './AddUserAlbumCard';
 import AddHashtagAlbumCard from './AddHashtagAlbumCard';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+
 // smart component with redux connect
 
 const AlbumList = ({loaded, albums, saving_user}) => (
     <div className="row">
-        {saving_user ?
-            <AlbumListItemLoading title="Saving"/> :
-            <AddUserAlbumCard />
-        }
-        <AddHashtagAlbumCard />
-        {!loaded ?
-            <AlbumListItemLoading /> :
-            albums.map(album=>(
-                <AlbumListItem key={album.id} album={album}/>
-            ))
-        }
+        <ReactCSSTransitionGroup transitionName="scale" transitionEnterTimeout={500} transitionLeaveTimeout={500}>
+            {saving_user ?
+                <AlbumListItemLoading title="Saving"/> :
+                <AddUserAlbumCard />
+            }
+            <AddHashtagAlbumCard />
+            {!loaded ?
+                <AlbumListItemLoading /> :
+                albums.map(album=>(
+                    <AlbumListItem key={album.id} album={album}/>
+                ))
+            }
+        </ReactCSSTransitionGroup>
     </div>
 );
 

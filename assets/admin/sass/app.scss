@@ -2,16 +2,18 @@
 @import "_get_token_button";
 @import "_card_override";
 @import "app_title";
+@import "transitions";
+@import "flash_messages";
 
 .top50 {
   margin-top: 50px;
 }
 
-.top20{
+.top20 {
   margin-top: 20px;
 }
 
-.top10{
+.top10 {
   margin-top: 10px;
 }
 

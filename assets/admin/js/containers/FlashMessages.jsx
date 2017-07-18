@@ -1,19 +1,19 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import TempMessage from '../components/TempMessage';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 
 // smart component with redux connect
 
 const FlashMessages = ({count, messages, hidemsg}) => (
-    count ?
-        <div className="col s12">
+    <div className="fixed-bottom-right">
+        <ReactCSSTransitionGroup transitionName="slide-up" transitionEnterTimeout={500} transitionLeaveTimeout={500}>
             {
-                messages.map(msg=><TempMessage msg={msg} hidemsg={hidemsg}/>)
+                count ? messages.map(msg=><TempMessage key={msg.id} msg={msg} hidemsg={hidemsg}/>) : null
             }
-
-        </div> :
-        null
+        </ReactCSSTransitionGroup>
+    </div>
 );
 
 // map state
