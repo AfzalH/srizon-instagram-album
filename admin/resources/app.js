@@ -11768,15 +11768,22 @@ function saveUserAlbum(album) {
     return function (dispatch) {
         dispatch({ type: 'SRIZON_INSTAGRAM_SETTINGS_SAVING_USER_ALBUM' });
         axios.post(wpApiSettings.root + 'srizon-instagram/v1/useralbum', { username: album.username, title: album.title }).then(function (response) {
-            dispatch({
-                type: 'SRIZON_INSTAGRAM_MESSAGE_RECEIVED',
-                payload: {
-                    txt: 'Album Saved!',
-                    type: 'success',
-                    expire_in: 3
-                }
-            });
-            dispatch({ type: 'SRIZON_INSTAGRAM_SETTINGS_SAVED_USER_ALBUM', payload: response.data });
+            if (response.data.result == 'saved') {
+                dispatch({
+                    type: 'SRIZON_INSTAGRAM_MESSAGE_RECEIVED',
+                    payload: {
+                        txt: 'Album Saved!',
+                        type: 'success',
+                        expire_in: 3
+                    }
+                });
+                dispatch({ type: 'SRIZON_INSTAGRAM_SETTINGS_SAVED_USER_ALBUM', payload: response.data.albums });
+            } else if (response.data.result == 'selection') {
+                dispatch({ type: 'SRIZON_INSTAGRAM_SETTINGS_TEMP_ALBUM_TITLE', payload: album.title });
+                dispatch({ type: 'SRIZON_INSTAGRAM_SETTINGS_USER_SELECTION', payload: response.data.users });
+            } else {
+                dispatch({ type: 'SRIZON_INSTAGRAM_SETTINGS_CANCEL_USER_ALBUM' });
+            }
         }).catch(function (error) {
             if (error.response) {
                 dispatch({
@@ -24804,6 +24811,9 @@ var initial_state = {
     user_removing: false,
     open_user_album_form: false,
     open_hashtag_album_form: false,
+    show_user_selection_prompt: false,
+    users_to_select: false,
+    temp_album_title: '',
     saving_user_in_progress: false
 };
 function settingsReducer() {
@@ -24818,15 +24828,23 @@ function settingsReducer() {
         case 'SRIZON_INSTAGRAM_SETTINGS_NEW_USER_ALBUM':
             return _extends({}, state, { open_user_album_form: true });
         case 'SRIZON_INSTAGRAM_SETTINGS_CANCEL_USER_ALBUM':
-            return _extends({}, state, { open_user_album_form: false, saving_user_in_progress: false });
+            return _extends({}, state, {
+                open_user_album_form: false,
+                saving_user_in_progress: false,
+                show_user_selection_prompt: false
+            });
         case 'SRIZON_INSTAGRAM_SETTINGS_NEW_HASHTAG_ALBUM':
             return _extends({}, state, { open_hashtag_album_form: true });
         case 'SRIZON_INSTAGRAM_SETTINGS_CANCEL_HASHTAG_ALBUM':
             return _extends({}, state, { open_hashtag_album_form: false });
+        case 'SRIZON_INSTAGRAM_SETTINGS_TEMP_ALBUM_TITLE':
+            return _extends({}, state, { temp_album_title: action.payload });
         case 'SRIZON_INSTAGRAM_SETTINGS_SAVING_USER_ALBUM':
-            return _extends({}, state, { saving_user_in_progress: true });
+            return _extends({}, state, { saving_user_in_progress: true, show_user_selection_prompt: false });
         case 'SRIZON_INSTAGRAM_SETTINGS_SAVED_USER_ALBUM':
             return _extends({}, state, { open_user_album_form: false, saving_user_in_progress: false });
+        case 'SRIZON_INSTAGRAM_SETTINGS_USER_SELECTION':
+            return _extends({}, state, { show_user_selection_prompt: true, users_to_select: action.payload });
         default:
             return state;
     }
@@ -26756,6 +26774,10 @@ module.exports = function spread(callback) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__AddHashtagAlbumCard__ = __webpack_require__(274);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_react_addons_css_transition_group__ = __webpack_require__(285);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_react_addons_css_transition_group___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_react_addons_css_transition_group__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_SelectUser__ = __webpack_require__(297);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__actions_settingsAction__ = __webpack_require__(100);
+
+
 
 
 
@@ -26769,14 +26791,20 @@ module.exports = function spread(callback) {
 var AlbumList = function AlbumList(_ref) {
     var loaded = _ref.loaded,
         albums = _ref.albums,
-        saving_user = _ref.saving_user;
+        saving_user = _ref.saving_user,
+        select_user = _ref.select_user,
+        users = _ref.users,
+        cancelUserAlbum = _ref.cancelUserAlbum,
+        title = _ref.title,
+        saveUserAlbum = _ref.saveUserAlbum;
     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
         { className: 'row' },
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             __WEBPACK_IMPORTED_MODULE_6_react_addons_css_transition_group___default.a,
             { transitionName: 'scale', transitionEnterTimeout: 500, transitionLeaveTimeout: 500 },
-            saving_user ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__AlbumListItemLoading__["a" /* default */], { title: 'Saving' }) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__AddUserAlbumCard__["a" /* default */], null),
+            saving_user ? select_user ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_7__components_SelectUser__["a" /* default */], { key: 'select_user', users: users, cancelUserAlbum: cancelUserAlbum, title: title,
+                saveUserAlbum: saveUserAlbum }) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__AlbumListItemLoading__["a" /* default */], { title: 'Saving' }) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__AddUserAlbumCard__["a" /* default */], null),
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__AddHashtagAlbumCard__["a" /* default */], null),
             !loaded ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__AlbumListItemLoading__["a" /* default */], null) : albums.map(function (album) {
                 return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__AlbumListItem__["a" /* default */], { key: album.id, album: album });
@@ -26790,13 +26818,23 @@ function mapStateTopProps(state) {
     return {
         saving_user: state.settings.saving_user_in_progress,
         loaded: state.albums.initial_load,
-        albums: state.albums.albums
+        albums: state.albums.albums,
+        select_user: state.settings.show_user_selection_prompt,
+        users: state.settings.users_to_select,
+        title: state.settings.temp_album_title
     };
 }
 
 // map dispatch
 function mapDispatchToProps(dispatch) {
-    return {};
+    return {
+        cancelUserAlbum: function cancelUserAlbum() {
+            dispatch(__WEBPACK_IMPORTED_MODULE_8__actions_settingsAction__["a" /* cancelUserAlbum */]());
+        },
+        saveUserAlbum: function saveUserAlbum(album) {
+            dispatch(__WEBPACK_IMPORTED_MODULE_8__actions_settingsAction__["f" /* saveUserAlbum */](album));
+        }
+    };
 }
 
 // connect and export
@@ -26976,7 +27014,7 @@ function mapDispatchToProps(dispatch) {
 
 // smart component with redux connect
 
-var AddUserAlbumCard = function AddUserAlbumCard(_ref) {
+var AddHashTagAlbumCard = function AddHashTagAlbumCard(_ref) {
     var newHashtagAlbum = _ref.newHashtagAlbum,
         open_form = _ref.open_form;
     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -27044,7 +27082,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 // connect and export
-/* harmony default export */ __webpack_exports__["a"] = (__WEBPACK_IMPORTED_MODULE_1_react_redux__["b" /* connect */](mapStateTopProps, mapDispatchToProps)(AddUserAlbumCard));
+/* harmony default export */ __webpack_exports__["a"] = (__WEBPACK_IMPORTED_MODULE_1_react_redux__["b" /* connect */](mapStateTopProps, mapDispatchToProps)(AddHashTagAlbumCard));
 
 /***/ }),
 /* 275 */
@@ -28749,6 +28787,72 @@ function getTransitionProperties() {
 
   return { animationEnd: animationEnd, transitionEnd: transitionEnd, prefix: prefix };
 }
+
+/***/ }),
+/* 297 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_redux__ = __webpack_require__(34);
+
+
+
+// smart component with redux connect
+
+var SelectUser = function SelectUser(_ref) {
+    var users = _ref.users,
+        cancelUserAlbum = _ref.cancelUserAlbum,
+        title = _ref.title,
+        saveUserAlbum = _ref.saveUserAlbum;
+    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        'div',
+        { className: 'col s12' },
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            'div',
+            { className: 'card' },
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'div',
+                { className: 'card-content' },
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'h5',
+                    { className: 'thin' },
+                    'Username Not Found... Chose one from below or ',
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'span',
+                        {
+                            className: 'btn red', onClick: cancelUserAlbum },
+                        'Cancel'
+                    )
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', { className: 'row' }),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { className: 'row' },
+                    users.map(function (u, i) {
+                        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'div',
+                            { key: i, className: 'col s12 m6 l4 chip-col pl0' },
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                'div',
+                                { className: 'chip connected-user',
+                                    onClick: function onClick() {
+                                        return saveUserAlbum({ username: u.username, title: title });
+                                    } },
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { src: u.profile_picture, alt: u.username }),
+                                u.full_name ? u.full_name : u.username
+                            )
+                        );
+                    })
+                )
+            )
+        )
+    );
+};
+
+// connect and export
+/* harmony default export */ __webpack_exports__["a"] = (SelectUser);
 
 /***/ })
 /******/ ]);

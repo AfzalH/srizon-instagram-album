@@ -11,9 +11,7 @@
 }
 
 .srizon .clickable:hover h5 {
-  text-decoration: underline;
-  -webkit-text-decoration-color: #cfcfcf;
-          text-decoration-color: #cfcfcf;
+  font-weight: 300 !important;
 }
 
 .srizon .big-icon {
@@ -81,7 +79,7 @@
   position: relative;
   -webkit-transition: all .5s ease-in-out;
   transition: all .5s ease-in-out;
-  top: 100px;
+  top: 20px;
   opacity: 0;
 }
 
@@ -118,6 +116,11 @@
   font-size: 18px;
   margin: 0;
   padding: 0;
+}
+
+.srizon .card {
+  min-width: 50px;
+  max-width: 100%;
 }
 
 .top50 {

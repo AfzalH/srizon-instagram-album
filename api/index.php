@@ -61,7 +61,14 @@ function srizon_instagram_save_user_album( $data ) {
 
 	//return $user_id;
 	if ( is_array( $user ) ) {
-		return new WP_Error( 'user_not_found', 'User Not Found', [ 'status' => 404 ] );
+		if ( count( $user ) ) {
+			$ret['result'] = 'selection';
+			$ret['users']  = $user;
+
+			return $ret;
+		} else {
+			return new WP_Error( 'user_not_found', 'User Not Found', [ 'status' => 404 ] );
+		}
 	} else {
 		if ( ! $user->id ) {
 			return new WP_Error( 'user_not_found', 'User Not Found', [ 'status' => 404 ] );
@@ -83,9 +90,12 @@ function srizon_instagram_save_user_album( $data ) {
 		$payload['profile_picture'] = $user->profile_pic_url;
 		$payload['hashtag']         = '';
 
-		$insert_id = SrizonInstaDB::SaveAlbum( $payload );
+		SrizonInstaDB::SaveAlbum( $payload );
 
-		return srizon_instagram_get_album_index();
+		$ret['result'] = 'saved';
+		$ret['albums'] = srizon_instagram_get_album_index();
+
+		return $ret;
 	}
 }
 

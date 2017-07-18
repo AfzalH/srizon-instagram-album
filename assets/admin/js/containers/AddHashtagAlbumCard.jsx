@@ -5,7 +5,7 @@ import {newHashtagAlbum} from '../actions/settingsAction';
 
 // smart component with redux connect
 
-const AddUserAlbumCard = ({newHashtagAlbum, open_form}) => (
+const AddHashTagAlbumCard = ({newHashtagAlbum, open_form}) => (
     <div className="col s12 l4 m6">
         {!open_form ?
             <div className="card small clickable" onClick={newHashtagAlbum}>
@@ -48,4 +48,4 @@ function mapDispatchToProps(dispatch) {
 }
 
 // connect and export
-export default connect(mapStateTopProps, mapDispatchToProps)(AddUserAlbumCard);
+export default connect(mapStateTopProps, mapDispatchToProps)(AddHashTagAlbumCard);

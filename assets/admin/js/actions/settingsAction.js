@@ -53,15 +53,24 @@ export function saveUserAlbum(album) {
         dispatch({type: 'SRIZON_INSTAGRAM_SETTINGS_SAVING_USER_ALBUM'});
         axios.post(wpApiSettings.root + 'srizon-instagram/v1/useralbum', {username: album.username, title: album.title})
             .then((response)=> {
-                dispatch({
-                    type: 'SRIZON_INSTAGRAM_MESSAGE_RECEIVED',
-                    payload: {
-                        txt: 'Album Saved!',
-                        type: 'success',
-                        expire_in: 3
-                    }
-                });
-                dispatch({type: 'SRIZON_INSTAGRAM_SETTINGS_SAVED_USER_ALBUM', payload: response.data});
+                if (response.data.result == 'saved') {
+                    dispatch({
+                        type: 'SRIZON_INSTAGRAM_MESSAGE_RECEIVED',
+                        payload: {
+                            txt: 'Album Saved!',
+                            type: 'success',
+                            expire_in: 3
+                        }
+                    });
+                    dispatch({type: 'SRIZON_INSTAGRAM_SETTINGS_SAVED_USER_ALBUM', payload: response.data.albums});
+                }
+                else if (response.data.result == 'selection') {
+                    dispatch({type: 'SRIZON_INSTAGRAM_SETTINGS_TEMP_ALBUM_TITLE', payload: album.title});
+                    dispatch({type: 'SRIZON_INSTAGRAM_SETTINGS_USER_SELECTION', payload: response.data.users});
+                }
+                else {
+                    dispatch({type: 'SRIZON_INSTAGRAM_SETTINGS_CANCEL_USER_ALBUM'});
+                }
             })
             .catch((error)=> {
                 if (error.response) {

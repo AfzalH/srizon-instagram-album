@@ -9,8 +9,7 @@
     cursor: pointer;
     &:hover {
       h5 {
-        text-decoration: underline;
-        text-decoration-color: #cfcfcf;
+        font-weight: 300 !important;
       }
     }
   }
