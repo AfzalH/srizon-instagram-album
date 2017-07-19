@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {newHashtagAlbum} from '../actions/settingsAction';
+import {newHashtagAlbum} from '../actions/albumsAction';
 
 
 // smart component with redux connect

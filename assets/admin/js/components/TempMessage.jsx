@@ -14,19 +14,19 @@ class TempMessage extends React.Component {
         return (
             <div>
                 {msg.type.toLowerCase() == 'error' ?
-                    <div className="col s12 red lighten-4 red-text text-darken-4 temp-msg">
+                    <div className="col s12 red white-text temp-msg">
                         <h5>
                             {msg.txt}
                         </h5>
                     </div> :
                     msg.type.toLowerCase() == 'warning' ?
-                        <div className="col s12 yellow lighten-4 yellow-text text-darken-4 temp-msg">
+                        <div className="col s12 yellow white-text temp-msg">
                             <h5>
                                 {msg.txt}
                             </h5>
                         </div> :
                         msg.type.toLowerCase() == 'success' ?
-                            <div className="col s12 green lighten-4 green-text text-darken-4 temp-msg">
+                            <div className="col s12 green white-text temp-msg">
                                 <h5>
                                     {msg.txt}
                                 </h5>

@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import AppTitle from '../components/AppTitle';
 import GetTokenButton from '../components/GetTokenButton';
-import BodyPanel from './BodyPanel';
+import BodyPanel from '../components/BodyPanel';
 import {disconnectUser} from '../actions/settingsAction';
 import FlashMessages from './FlashMessages';
 

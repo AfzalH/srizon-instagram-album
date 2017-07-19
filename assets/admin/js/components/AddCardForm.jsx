@@ -28,7 +28,7 @@ class AddCardForm extends React.Component {
     }
 
     handleKeyPress(event) {
-        if (event.key === 'Enter' && this.state.username.trim().length > 2) {
+        if (event.key === 'Enter' && this.state.username.trim().length > 0) {
             this.props.saveUserAlbum(this.state);
         }
     }
@@ -63,7 +63,7 @@ class AddCardForm extends React.Component {
                     <div className="col s6 top20">
                         <button
                             onClick={()=>{saveUserAlbum(this.state)}}
-                            className={'btn green ' + (this.state.username.trim().length < 3 ? 'disabled' : '')}>
+                            className={'btn green ' + (this.state.username.trim().length < 1 ? 'disabled' : '')}>
                             Submit
                         </button>
                     </div>

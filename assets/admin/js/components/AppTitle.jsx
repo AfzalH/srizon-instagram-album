@@ -28,7 +28,7 @@ class AppTitle extends React.Component {
                                 <small>
                                     <small>Disconnecting ...</small>
                                 </small> :
-                                <div className="chip connected-user" onClick={disconnectUser}
+                                <div className="chip clickable" onClick={disconnectUser}
                                      onMouseEnter={this.userEntered.bind(this)} onMouseLeave={this.userLeft.bind(this)}>
                                     <img src={connected_user.profile_picture} alt={connected_user.username}/>
                                     {

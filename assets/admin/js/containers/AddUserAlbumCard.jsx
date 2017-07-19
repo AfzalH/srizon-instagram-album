@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {newUserAlbum, cancelUserAlbum, saveUserAlbum} from '../actions/settingsAction';
+import {newUserAlbum, cancelUserAlbum, saveUserAlbum} from '../actions/albumsAction';
 import AddCardFront from '../components/AddCardFront';
 import AddCardForm from '../components/AddCardForm';
 

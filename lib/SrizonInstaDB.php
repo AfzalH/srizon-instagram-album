@@ -7,14 +7,14 @@ class SrizonInstaDB{
 		$sql      = '
 CREATE TABLE ' . $t_albums . ' (
   id int(11) NOT NULL AUTO_INCREMENT,
-  title text CHARACTER SET utf8,
-  albumtype text CHARACTER SET utf8,
-  userid text CHARACTER SET utf8,
-  username text CHARACTER SET utf8,
-  full_name text CHARACTER SET utf8,
-  profile_picture text CHARACTER SET utf8,
-  hashtag text CHARACTER SET utf8,
-  options text CHARACTER SET utf8,
+  title text,
+  albumtype text,
+  userid text,
+  username text,
+  full_name text,
+  profile_picture text,
+  hashtag text,
+  options text,
   PRIMARY KEY (id)
 );
 	

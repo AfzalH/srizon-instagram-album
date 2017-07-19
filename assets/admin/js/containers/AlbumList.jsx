@@ -1,12 +1,12 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import AlbumListItem from './AlbumListItem';
-import AlbumListItemLoading from './AlbumListItemLoading';
+import AlbumListItem from '../components/AlbumListItem';
+import AlbumListItemLoading from '../components/AlbumListItemLoading';
 import AddUserAlbumCard from './AddUserAlbumCard';
 import AddHashtagAlbumCard from './AddHashtagAlbumCard';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import SelectUser from '../components/SelectUser';
-import {cancelUserAlbum, saveUserAlbum} from '../actions/settingsAction';
+import {cancelUserAlbum, saveUserAlbum} from '../actions/albumsAction';
 
 
 // smart component with redux connect

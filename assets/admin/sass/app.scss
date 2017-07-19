@@ -1,64 +1,12 @@
-@import "_common";
-@import "_get_token_button";
-@import "_card_override";
+@import "common";
+@import "fix";
+@import "card";
+@import "button";
+@import "get_token_button";
 @import "app_title";
 @import "transitions";
 @import "flash_messages";
-@import "panel";
-
-.top50 {
-  margin-top: 50px;
-}
-
-.top20 {
-  margin-top: 20px;
-}
-
-.top10 {
-  margin-top: 10px;
-}
-
-.pl0 {
-  padding-left: 0 !important;
-}
-
-@-webkit-keyframes autofill {
-  to {
-    color: darken(yellow, 10);
-    background: transparent;
-  }
-}
-
-input:-webkit-autofill {
-  -webkit-animation-name: autofill;
-  -webkit-animation-fill-mode: both;
-}
-
-#nano-bar-id {
-  .bar {
-    background-color: red;
-  }
-  z-index: 99999;
-}
-
-.thin {
-  font-weight: 200 !important;
-}
-
-.connected-user {
-  cursor: pointer;
-}
-
-.svg-button-icon {
-  line-height: 97px;
-  padding-right: 10px;
-  svg {
-    width: 40px;
-    height: 40px;
-    color: white;
-    fill: white;
-  }
-}
+@import "external_override";
 
 .srizon {
   margin-top: 10px !important;

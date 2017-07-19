@@ -18,12 +18,69 @@
   font-size: 98px;
 }
 
-.fixed-bottom-right {
+.srizon .top50 {
+  margin-top: 50px;
+}
+
+.srizon .top20 {
+  margin-top: 20px;
+}
+
+.srizon .top10 {
+  margin-top: 10px;
+}
+
+.srizon .pl0 {
+  padding-left: 0 !important;
+}
+
+.srizon .thin {
+  font-weight: 200 !important;
+}
+
+.srizon .fixed-bottom-right {
   position: fixed;
   bottom: 0;
   right: 0;
   width: 300px;
   z-index: 9999;
+}
+
+.srizon .fixed-top-right {
+  position: fixed;
+  top: 40px;
+  right: 0;
+  width: 300px;
+  z-index: 9999;
+}
+
+@-webkit-keyframes autofill {
+  to {
+    color: #cccc00;
+    background: transparent;
+  }
+}
+
+.srizon input:-webkit-autofill {
+  -webkit-animation-name: autofill;
+  -webkit-animation-fill-mode: both;
+}
+
+.srizon .card {
+  min-width: 50px;
+  max-width: 100%;
+}
+
+.srizon .svg-button-icon {
+  line-height: 97px;
+  padding-right: 10px;
+}
+
+.srizon .svg-button-icon svg {
+  width: 40px;
+  height: 40px;
+  color: white;
+  fill: white;
 }
 
 .get-token-button {
@@ -37,11 +94,6 @@
   padding-left: 20px;
   padding-right: 30px;
   text-transform: none;
-}
-
-.srizon .card {
-  border: 0;
-  padding: 0;
 }
 
 .srizon .app-title .chip-col h5 {
@@ -118,39 +170,6 @@
   padding: 0;
 }
 
-.srizon .card {
-  min-width: 50px;
-  max-width: 100%;
-}
-
-.top50 {
-  margin-top: 50px;
-}
-
-.top20 {
-  margin-top: 20px;
-}
-
-.top10 {
-  margin-top: 10px;
-}
-
-.pl0 {
-  padding-left: 0 !important;
-}
-
-@-webkit-keyframes autofill {
-  to {
-    color: #cccc00;
-    background: transparent;
-  }
-}
-
-input:-webkit-autofill {
-  -webkit-animation-name: autofill;
-  -webkit-animation-fill-mode: both;
-}
-
 #nano-bar-id {
   z-index: 99999;
 }
@@ -159,24 +178,9 @@ input:-webkit-autofill {
   background-color: red;
 }
 
-.thin {
-  font-weight: 200 !important;
-}
-
-.connected-user {
-  cursor: pointer;
-}
-
-.svg-button-icon {
-  line-height: 97px;
-  padding-right: 10px;
-}
-
-.svg-button-icon svg {
-  width: 40px;
-  height: 40px;
-  color: white;
-  fill: white;
+.srizon .card {
+  border: 0;
+  padding: 0;
 }
 
 .srizon {

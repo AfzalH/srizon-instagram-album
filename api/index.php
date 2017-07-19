@@ -94,6 +94,7 @@ function srizon_instagram_save_user_album( $data ) {
 
 		$ret['result'] = 'saved';
 		$ret['albums'] = srizon_instagram_get_album_index();
+		$ret['api']    = $payload;
 
 		return $ret;
 	}

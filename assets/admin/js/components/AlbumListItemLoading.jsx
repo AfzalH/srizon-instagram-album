@@ -1,8 +1,5 @@
 import React from 'react';
-import {connect} from 'react-redux';
-import CircularLoaderCard from '../components/CircularLoaderCard';
-
-// smart component with redux connect
+import CircularLoaderCard from './CircularLoaderCard';
 
 const AlbumListItemLoading = ({title}) => (
     <div className="col s12 l4 m6">
@@ -19,15 +16,6 @@ const AlbumListItemLoading = ({title}) => (
     </div>
 );
 
-// map state
-function mapStateTopProps(state) {
-    return {}
-}
-
-// map dispatch
-function mapDispatchToProps(dispatch) {
-    return {}
-}
 
 // connect and export
-export default connect(mapStateTopProps, mapDispatchToProps)(AlbumListItemLoading);
+export default AlbumListItemLoading;

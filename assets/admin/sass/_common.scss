@@ -16,12 +16,42 @@
   .big-icon {
     font-size: 98px;
   }
+
+  .top50 {
+    margin-top: 50px;
+  }
+
+  .top20 {
+    margin-top: 20px;
+  }
+
+  .top10 {
+    margin-top: 10px;
+  }
+
+  .pl0 {
+    padding-left: 0 !important;
+  }
+
+  .thin {
+    font-weight: 200 !important;
+  }
+
+  .fixed-bottom-right {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    width: 300px;
+    z-index: 9999;
+  }
+
+  .fixed-top-right {
+    position: fixed;
+    top: 40px;
+    right: 0;
+    width: 300px;
+    z-index: 9999;
+  }
 }
 
-.fixed-bottom-right {
-  position: fixed;
-  bottom: 0;
-  right: 0;
-  width: 300px;
-  z-index: 9999;
-}
+

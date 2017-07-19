@@ -11678,7 +11678,7 @@ var AppTitle = function (_React$Component) {
                             )
                         ) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             "div",
-                            { className: "chip connected-user", onClick: disconnectUser,
+                            { className: "chip clickable", onClick: disconnectUser,
                                 onMouseEnter: this.userEntered.bind(this), onMouseLeave: this.userLeft.bind(this) },
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("img", { src: connected_user.profile_picture, alt: connected_user.username }),
                             connected_user.full_name ? connected_user.full_name : connected_user.username,
@@ -11710,14 +11710,9 @@ var AppTitle = function (_React$Component) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (immutable) */ __webpack_exports__["c"] = loadSettings;
+/* harmony export (immutable) */ __webpack_exports__["b"] = loadSettings;
 /* unused harmony export loadAlbums */
-/* harmony export (immutable) */ __webpack_exports__["b"] = disconnectUser;
-/* harmony export (immutable) */ __webpack_exports__["e"] = newUserAlbum;
-/* harmony export (immutable) */ __webpack_exports__["a"] = cancelUserAlbum;
-/* harmony export (immutable) */ __webpack_exports__["f"] = saveUserAlbum;
-/* harmony export (immutable) */ __webpack_exports__["d"] = newHashtagAlbum;
-/* unused harmony export cancelHashtagAlbum */
+/* harmony export (immutable) */ __webpack_exports__["a"] = disconnectUser;
 function loadSettings() {
     return function (dispatch) {
         axios.get(wpApiSettings.root + 'srizon-instagram/v1/settings').then(function (response) {
@@ -11745,70 +11740,12 @@ function loadAlbums() {
 
 function disconnectUser() {
     return function (dispatch) {
-        dispatch({ type: 'SRIZON_INSTAGRAM_SETTINGS_USER_REMOVEING' });
-        axios.get(wpApiSettings.root + 'srizon-instagram/v1/disconnect-user').then(function (response) {
-            dispatch(loadSettings());
-        });
-    };
-}
-
-function newUserAlbum() {
-    return {
-        type: 'SRIZON_INSTAGRAM_SETTINGS_NEW_USER_ALBUM'
-    };
-}
-
-function cancelUserAlbum() {
-    return {
-        type: 'SRIZON_INSTAGRAM_SETTINGS_CANCEL_USER_ALBUM'
-    };
-}
-
-function saveUserAlbum(album) {
-    return function (dispatch) {
-        dispatch({ type: 'SRIZON_INSTAGRAM_SETTINGS_SAVING_USER_ALBUM' });
-        axios.post(wpApiSettings.root + 'srizon-instagram/v1/useralbum', { username: album.username, title: album.title }).then(function (response) {
-            if (response.data.result == 'saved') {
-                dispatch({
-                    type: 'SRIZON_INSTAGRAM_MESSAGE_RECEIVED',
-                    payload: {
-                        txt: 'Album Saved!',
-                        type: 'success',
-                        expire_in: 3
-                    }
-                });
-                dispatch({ type: 'SRIZON_INSTAGRAM_SETTINGS_SAVED_USER_ALBUM', payload: response.data.albums });
-            } else if (response.data.result == 'selection') {
-                dispatch({ type: 'SRIZON_INSTAGRAM_SETTINGS_TEMP_ALBUM_TITLE', payload: album.title });
-                dispatch({ type: 'SRIZON_INSTAGRAM_SETTINGS_USER_SELECTION', payload: response.data.users });
-            } else {
-                dispatch({ type: 'SRIZON_INSTAGRAM_SETTINGS_CANCEL_USER_ALBUM' });
-            }
-        }).catch(function (error) {
-            if (error.response) {
-                dispatch({
-                    type: 'SRIZON_INSTAGRAM_MESSAGE_RECEIVED',
-                    payload: {
-                        txt: error.response.data.message,
-                        type: 'error',
-                        expire_in: 5
-                    }
-                });
-                dispatch({ type: 'SRIZON_INSTAGRAM_SETTINGS_CANCEL_USER_ALBUM' });
-            }
-        });
-    };
-}
-
-function newHashtagAlbum() {
-    return {
-        type: 'SRIZON_INSTAGRAM_SETTINGS_NEW_HASHTAG_ALBUM'
-    };
-}
-
-function cancelHashtagAlbum() {
-    return {
-        type: 'SRIZON_INSTAGRAM_SETTINGS_CANCEL_HASHTAG_ALBUM'
+        if (window.confirm('Are you sure?')) {
+            dispatch({ type: 'SRIZON_INSTAGRAM_SETTINGS_USER_REMOVEING' });
+            axios.get(wpApiSettings.root + 'srizon-instagram/v1/disconnect-user').then(function () {
+                dispatch(loadSettings());
+            });
+        }
     };
 }
 
@@ -12124,7 +12061,7 @@ if (wpApiSettings) {
     window.axios.defaults.headers.common['X-WP-Nonce'] = wpApiSettings.nonce;
 }
 window.store = __WEBPACK_IMPORTED_MODULE_2__store__["a" /* default */];
-__WEBPACK_IMPORTED_MODULE_2__store__["a" /* default */].dispatch(__WEBPACK_IMPORTED_MODULE_5__actions_settingsAction__["c" /* loadSettings */]());
+__WEBPACK_IMPORTED_MODULE_2__store__["a" /* default */].dispatch(__WEBPACK_IMPORTED_MODULE_5__actions_settingsAction__["b" /* loadSettings */]());
 __WEBPACK_IMPORTED_MODULE_2__store__["a" /* default */].subscribe(render);
 render();
 
@@ -25739,7 +25676,7 @@ var CircularLoaderFull = function CircularLoaderFull() {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_redux__ = __webpack_require__(34);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_AppTitle__ = __webpack_require__(99);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_GetTokenButton__ = __webpack_require__(242);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__BodyPanel__ = __webpack_require__(243);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_BodyPanel__ = __webpack_require__(304);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__actions_settingsAction__ = __webpack_require__(100);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__FlashMessages__ = __webpack_require__(281);
 
@@ -25762,7 +25699,7 @@ var MainPannel = function MainPannel(_ref) {
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__components_AppTitle__["a" /* default */], { connected_user: options.connected_user, user_removing: user_removing,
             disconnectUser: disconnectUser }),
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6__FlashMessages__["a" /* default */], null),
-        options.access_token ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__BodyPanel__["a" /* default */], null) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_GetTokenButton__["a" /* default */], { options: options })
+        options.access_token ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__components_BodyPanel__["a" /* default */], null) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_GetTokenButton__["a" /* default */], { options: options })
     );
 };
 
@@ -25778,7 +25715,7 @@ function mapStateTopProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         disconnectUser: function disconnectUser() {
-            return dispatch(__WEBPACK_IMPORTED_MODULE_5__actions_settingsAction__["b" /* disconnectUser */]());
+            return dispatch(__WEBPACK_IMPORTED_MODULE_5__actions_settingsAction__["a" /* disconnectUser */]());
         }
     };
 }
@@ -25839,37 +25776,7 @@ var GetTokenButton = function GetTokenButton(_ref) {
 /* harmony default export */ __webpack_exports__["a"] = (GetTokenButton);
 
 /***/ }),
-/* 243 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_redux__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__AlbumList__ = __webpack_require__(270);
-
-
-
-// smart component with redux connect
-
-var BodyPanel = function BodyPanel() {
-    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__AlbumList__["a" /* default */], null);
-};
-
-// map state
-function mapStateTopProps(state) {
-    return {};
-}
-
-// map dispatch
-function mapDispatchToProps(dispatch) {
-    return {};
-}
-
-// connect and export
-/* harmony default export */ __webpack_exports__["a"] = (__WEBPACK_IMPORTED_MODULE_1_react_redux__["b" /* connect */](mapStateTopProps, mapDispatchToProps)(BodyPanel));
-
-/***/ }),
+/* 243 */,
 /* 244 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -26768,14 +26675,14 @@ module.exports = function spread(callback) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_redux__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__AlbumListItem__ = __webpack_require__(271);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__AlbumListItemLoading__ = __webpack_require__(278);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_AlbumListItem__ = __webpack_require__(302);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_AlbumListItemLoading__ = __webpack_require__(303);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__AddUserAlbumCard__ = __webpack_require__(273);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__AddHashtagAlbumCard__ = __webpack_require__(274);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_react_addons_css_transition_group__ = __webpack_require__(285);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_react_addons_css_transition_group___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_react_addons_css_transition_group__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_SelectUser__ = __webpack_require__(297);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__actions_settingsAction__ = __webpack_require__(100);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__actions_albumsAction__ = __webpack_require__(300);
 
 
 
@@ -26804,10 +26711,10 @@ var AlbumList = function AlbumList(_ref) {
             __WEBPACK_IMPORTED_MODULE_6_react_addons_css_transition_group___default.a,
             { transitionName: 'scale', transitionEnterTimeout: 500, transitionLeaveTimeout: 500 },
             saving_user ? select_user ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_7__components_SelectUser__["a" /* default */], { key: 'select_user', users: users, cancelUserAlbum: cancelUserAlbum, title: title,
-                saveUserAlbum: saveUserAlbum }) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__AlbumListItemLoading__["a" /* default */], { title: 'Saving' }) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__AddUserAlbumCard__["a" /* default */], null),
+                saveUserAlbum: saveUserAlbum }) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_AlbumListItemLoading__["a" /* default */], { title: 'Saving' }) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__AddUserAlbumCard__["a" /* default */], null),
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__AddHashtagAlbumCard__["a" /* default */], null),
-            !loaded ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__AlbumListItemLoading__["a" /* default */], null) : albums.map(function (album) {
-                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__AlbumListItem__["a" /* default */], { key: album.id, album: album });
+            !loaded ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_AlbumListItemLoading__["a" /* default */], null) : albums.map(function (album) {
+                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__components_AlbumListItem__["a" /* default */], { key: album.id, album: album });
             })
         )
     );
@@ -26829,10 +26736,10 @@ function mapStateTopProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         cancelUserAlbum: function cancelUserAlbum() {
-            dispatch(__WEBPACK_IMPORTED_MODULE_8__actions_settingsAction__["a" /* cancelUserAlbum */]());
+            dispatch(__WEBPACK_IMPORTED_MODULE_8__actions_albumsAction__["a" /* cancelUserAlbum */]());
         },
         saveUserAlbum: function saveUserAlbum(album) {
-            dispatch(__WEBPACK_IMPORTED_MODULE_8__actions_settingsAction__["f" /* saveUserAlbum */](album));
+            dispatch(__WEBPACK_IMPORTED_MODULE_8__actions_albumsAction__["d" /* saveUserAlbum */](album));
         }
     };
 }
@@ -26841,81 +26748,7 @@ function mapDispatchToProps(dispatch) {
 /* harmony default export */ __webpack_exports__["a"] = (__WEBPACK_IMPORTED_MODULE_1_react_redux__["b" /* connect */](mapStateTopProps, mapDispatchToProps)(AlbumList));
 
 /***/ }),
-/* 271 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_redux__ = __webpack_require__(34);
-
-
-
-// smart component with redux connect
-
-var AlbumListItem = function AlbumListItem(_ref) {
-    var key = _ref.key,
-        album = _ref.album;
-    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-        'div',
-        { className: 'col s12 l4 m6' },
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-            'div',
-            { className: 'card small' },
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                'div',
-                { className: 'card-content' },
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'span',
-                    { className: 'card-title' },
-                    album.title
-                ),
-                album.albumtype == 'user' ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'div',
-                    { className: 'col s12 chip-col pl0' },
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'div',
-                        { className: 'chip connected-user' },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { src: album.profile_picture, alt: album.username }),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'a',
-                            { target: '_blank', href: "https://www.instagram.com/" + album.username },
-                            album.full_name ? album.full_name : album.username
-                        )
-                    )
-                ) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'p',
-                    null,
-                    'hashtag album'
-                ),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'div',
-                    { className: 'col s12 pl0 top10' },
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'p',
-                        null,
-                        'I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.'
-                    )
-                )
-            )
-        )
-    );
-};
-
-// map state
-function mapStateTopProps(state) {
-    return {};
-}
-
-// map dispatch
-function mapDispatchToProps(dispatch) {
-    return {};
-}
-
-// connect and export
-/* harmony default export */ __webpack_exports__["a"] = (__WEBPACK_IMPORTED_MODULE_1_react_redux__["b" /* connect */](mapStateTopProps, mapDispatchToProps)(AlbumListItem));
-
-/***/ }),
+/* 271 */,
 /* 272 */,
 /* 273 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -26924,7 +26757,7 @@ function mapDispatchToProps(dispatch) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_redux__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__actions_settingsAction__ = __webpack_require__(100);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__actions_albumsAction__ = __webpack_require__(300);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_AddCardFront__ = __webpack_require__(275);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_AddCardForm__ = __webpack_require__(276);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -26985,13 +26818,13 @@ function mapStateTopProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         newUserAlbum: function newUserAlbum() {
-            dispatch(__WEBPACK_IMPORTED_MODULE_2__actions_settingsAction__["e" /* newUserAlbum */]());
+            dispatch(__WEBPACK_IMPORTED_MODULE_2__actions_albumsAction__["c" /* newUserAlbum */]());
         },
         cancelUserAlbum: function cancelUserAlbum() {
-            dispatch(__WEBPACK_IMPORTED_MODULE_2__actions_settingsAction__["a" /* cancelUserAlbum */]());
+            dispatch(__WEBPACK_IMPORTED_MODULE_2__actions_albumsAction__["a" /* cancelUserAlbum */]());
         },
         saveUserAlbum: function saveUserAlbum(album) {
-            dispatch(__WEBPACK_IMPORTED_MODULE_2__actions_settingsAction__["f" /* saveUserAlbum */](album));
+            dispatch(__WEBPACK_IMPORTED_MODULE_2__actions_albumsAction__["d" /* saveUserAlbum */](album));
         }
     };
 }
@@ -27007,7 +26840,7 @@ function mapDispatchToProps(dispatch) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_redux__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__actions_settingsAction__ = __webpack_require__(100);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__actions_albumsAction__ = __webpack_require__(300);
 
 
 
@@ -27076,7 +26909,7 @@ function mapStateTopProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         newHashtagAlbum: function newHashtagAlbum() {
-            dispatch(__WEBPACK_IMPORTED_MODULE_2__actions_settingsAction__["d" /* newHashtagAlbum */]());
+            dispatch(__WEBPACK_IMPORTED_MODULE_2__actions_albumsAction__["b" /* newHashtagAlbum */]());
         }
     };
 }
@@ -27212,7 +27045,7 @@ var AddCardForm = function (_React$Component) {
     }, {
         key: 'handleKeyPress',
         value: function handleKeyPress(event) {
-            if (event.key === 'Enter' && this.state.username.trim().length > 2) {
+            if (event.key === 'Enter' && this.state.username.trim().length > 0) {
                 this.props.saveUserAlbum(this.state);
             }
         }
@@ -27282,7 +27115,7 @@ var AddCardForm = function (_React$Component) {
                                 onClick: function onClick() {
                                     saveUserAlbum(_this2.state);
                                 },
-                                className: 'btn green ' + (this.state.username.trim().length < 3 ? 'disabled' : '') },
+                                className: 'btn green ' + (this.state.username.trim().length < 1 ? 'disabled' : '') },
                             'Submit'
                         )
                     )
@@ -27331,60 +27164,7 @@ function albumsReducer() {
 }
 
 /***/ }),
-/* 278 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_redux__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_CircularLoaderCard__ = __webpack_require__(279);
-
-
-
-
-// smart component with redux connect
-
-var AlbumListItemLoading = function AlbumListItemLoading(_ref) {
-    var title = _ref.title;
-    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-        'div',
-        { className: 'col s12 l4 m6' },
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-            'div',
-            { className: 'card small' },
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                'div',
-                { className: 'card-content' },
-                title ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'div',
-                    { className: 'center' },
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'h5',
-                        { className: 'thin' },
-                        title
-                    )
-                ) : '',
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__components_CircularLoaderCard__["a" /* default */], null)
-            )
-        )
-    );
-};
-
-// map state
-function mapStateTopProps(state) {
-    return {};
-}
-
-// map dispatch
-function mapDispatchToProps(dispatch) {
-    return {};
-}
-
-// connect and export
-/* harmony default export */ __webpack_exports__["a"] = (__WEBPACK_IMPORTED_MODULE_1_react_redux__["b" /* connect */](mapStateTopProps, mapDispatchToProps)(AlbumListItemLoading));
-
-/***/ }),
+/* 278 */,
 /* 279 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -27554,7 +27334,7 @@ var FlashMessages = function FlashMessages(_ref) {
         hidemsg = _ref.hidemsg;
     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
-        { className: 'fixed-bottom-right' },
+        { className: 'fixed-top-right' },
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             __WEBPACK_IMPORTED_MODULE_3_react_addons_css_transition_group___default.a,
             { transitionName: 'slide-up', transitionEnterTimeout: 500, transitionLeaveTimeout: 500 },
@@ -27636,7 +27416,7 @@ var TempMessage = function (_React$Component) {
                 null,
                 msg.type.toLowerCase() == 'error' ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'div',
-                    { className: 'col s12 red lighten-4 red-text text-darken-4 temp-msg' },
+                    { className: 'col s12 red white-text temp-msg' },
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'h5',
                         null,
@@ -27644,7 +27424,7 @@ var TempMessage = function (_React$Component) {
                     )
                 ) : msg.type.toLowerCase() == 'warning' ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'div',
-                    { className: 'col s12 yellow lighten-4 yellow-text text-darken-4 temp-msg' },
+                    { className: 'col s12 yellow white-text temp-msg' },
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'h5',
                         null,
@@ -27652,7 +27432,7 @@ var TempMessage = function (_React$Component) {
                     )
                 ) : msg.type.toLowerCase() == 'success' ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'div',
-                    { className: 'col s12 green lighten-4 green-text text-darken-4 temp-msg' },
+                    { className: 'col s12 green white-text temp-msg' },
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'h5',
                         null,
@@ -28853,6 +28633,215 @@ var SelectUser = function SelectUser(_ref) {
 
 // connect and export
 /* harmony default export */ __webpack_exports__["a"] = (SelectUser);
+
+/***/ }),
+/* 298 */,
+/* 299 */,
+/* 300 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (immutable) */ __webpack_exports__["b"] = newHashtagAlbum;
+/* unused harmony export cancelHashtagAlbum */
+/* harmony export (immutable) */ __webpack_exports__["c"] = newUserAlbum;
+/* harmony export (immutable) */ __webpack_exports__["a"] = cancelUserAlbum;
+/* harmony export (immutable) */ __webpack_exports__["d"] = saveUserAlbum;
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__messagesAction__ = __webpack_require__(301);
+
+
+function newHashtagAlbum() {
+    return {
+        type: 'SRIZON_INSTAGRAM_SETTINGS_NEW_HASHTAG_ALBUM'
+    };
+}
+
+function cancelHashtagAlbum() {
+    return {
+        type: 'SRIZON_INSTAGRAM_SETTINGS_CANCEL_HASHTAG_ALBUM'
+    };
+}
+
+function newUserAlbum() {
+    return {
+        type: 'SRIZON_INSTAGRAM_SETTINGS_NEW_USER_ALBUM'
+    };
+}
+
+function cancelUserAlbum() {
+    return {
+        type: 'SRIZON_INSTAGRAM_SETTINGS_CANCEL_USER_ALBUM'
+    };
+}
+
+function saveUserAlbum(album) {
+    return function (dispatch) {
+        dispatch({ type: 'SRIZON_INSTAGRAM_SETTINGS_SAVING_USER_ALBUM' });
+        axios.post(wpApiSettings.root + 'srizon-instagram/v1/useralbum', { username: album.username, title: album.title }).then(function (response) {
+            if (response.data.result == 'saved') {
+                dispatch(__WEBPACK_IMPORTED_MODULE_0__messagesAction__["b" /* successAlbumSaved */]());
+                dispatch({ type: 'SRIZON_INSTAGRAM_SETTINGS_SAVED_USER_ALBUM', payload: response.data.albums });
+            } else if (response.data.result == 'selection') {
+                dispatch({ type: 'SRIZON_INSTAGRAM_SETTINGS_TEMP_ALBUM_TITLE', payload: album.title });
+                dispatch({ type: 'SRIZON_INSTAGRAM_SETTINGS_USER_SELECTION', payload: response.data.users });
+            } else {
+                dispatch({ type: 'SRIZON_INSTAGRAM_SETTINGS_CANCEL_USER_ALBUM' });
+            }
+        }).catch(function (error) {
+            if (error.response) {
+                dispatch(__WEBPACK_IMPORTED_MODULE_0__messagesAction__["a" /* errorReceived */](error));
+                dispatch({ type: 'SRIZON_INSTAGRAM_SETTINGS_CANCEL_USER_ALBUM' });
+            }
+        });
+    };
+}
+
+/***/ }),
+/* 301 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (immutable) */ __webpack_exports__["b"] = successAlbumSaved;
+/* harmony export (immutable) */ __webpack_exports__["a"] = errorReceived;
+function successAlbumSaved() {
+    return {
+        type: 'SRIZON_INSTAGRAM_MESSAGE_RECEIVED',
+        payload: {
+            txt: 'Album Saved!',
+            type: 'success',
+            expire_in: 3
+        }
+
+    };
+}
+
+function errorReceived(error) {
+    return {
+        type: 'SRIZON_INSTAGRAM_MESSAGE_RECEIVED',
+        payload: {
+            txt: error.response.data.message,
+            type: 'error',
+            expire_in: 5
+        }
+    };
+}
+
+/***/ }),
+/* 302 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+
+
+var AlbumListItem = function AlbumListItem(_ref) {
+    var key = _ref.key,
+        album = _ref.album;
+    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        "div",
+        { className: "col s12 l4 m6" },
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            "div",
+            { className: "card small" },
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                "div",
+                { className: "card-content" },
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    "span",
+                    { className: "card-title" },
+                    album.title
+                ),
+                album.albumtype == 'user' ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    "div",
+                    { className: "col s12 chip-col pl0" },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        "div",
+                        { className: "chip connected-user" },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("img", { src: album.profile_picture, alt: album.username }),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            "a",
+                            { target: "_blank", href: "https://www.instagram.com/" + album.username },
+                            album.full_name ? album.full_name : album.username
+                        )
+                    )
+                ) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    "p",
+                    null,
+                    "hashtag album"
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    "div",
+                    { className: "col s12 pl0 top10" },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        "p",
+                        null,
+                        "I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively."
+                    )
+                )
+            )
+        )
+    );
+};
+
+// connect and export
+/* harmony default export */ __webpack_exports__["a"] = (AlbumListItem);
+
+/***/ }),
+/* 303 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__CircularLoaderCard__ = __webpack_require__(279);
+
+
+
+var AlbumListItemLoading = function AlbumListItemLoading(_ref) {
+    var title = _ref.title;
+    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        'div',
+        { className: 'col s12 l4 m6' },
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            'div',
+            { className: 'card small' },
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'div',
+                { className: 'card-content' },
+                title ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { className: 'center' },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'h5',
+                        { className: 'thin' },
+                        title
+                    )
+                ) : '',
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__CircularLoaderCard__["a" /* default */], null)
+            )
+        )
+    );
+};
+
+// connect and export
+/* harmony default export */ __webpack_exports__["a"] = (AlbumListItemLoading);
+
+/***/ }),
+/* 304 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__containers_AlbumList__ = __webpack_require__(270);
+
+
+
+var BodyPanel = function BodyPanel() {
+    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__containers_AlbumList__["a" /* default */], null);
+};
+
+/* harmony default export */ __webpack_exports__["a"] = (BodyPanel);
 
 /***/ })
 /******/ ]);
