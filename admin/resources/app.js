@@ -28616,7 +28616,7 @@ var SelectUser = function SelectUser(_ref) {
                             { key: i, className: 'col s12 m6 l4 chip-col pl0' },
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                 'div',
-                                { className: 'chip connected-user',
+                                { className: 'chip clickable',
                                     onClick: function onClick() {
                                         return saveUserAlbum({ username: u.username, title: title });
                                     } },

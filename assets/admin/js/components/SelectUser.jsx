@@ -14,7 +14,7 @@ const SelectUser = ({users, cancelUserAlbum, title, saveUserAlbum}) => (
                 <div className="row">
                     {users.map((u, i)=>(
                         <div key={i} className="col s12 m6 l4 chip-col pl0">
-                            <div className="chip connected-user"
+                            <div className="chip clickable"
                                  onClick={()=>saveUserAlbum({username:u.username,title:title})}>
                                 <img src={u.profile_picture} alt={u.username}/>
                                 {u.full_name ? u.full_name : u.username}
