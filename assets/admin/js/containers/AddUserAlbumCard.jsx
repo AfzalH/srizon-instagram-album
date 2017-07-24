@@ -1,8 +1,8 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {newUserAlbum, cancelUserAlbum, saveUserAlbum} from '../actions/albumsAction';
-import AddUserAlbumFront from '../components/AddUserAlbumFront';
-import AddUserAlbumForm from '../components/AddUserAlbumForm';
+import AddUserAlbumFront from '../components/add-new/AddUserAlbumFront';
+import AddUserAlbumForm from '../components/add-new/AddUserAlbumForm';
 
 // smart component with redux connect
 

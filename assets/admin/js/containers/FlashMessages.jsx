@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import TempMessage from '../components/TempMessage';
+import TempMessage from '../components/partials/TempMessage';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 

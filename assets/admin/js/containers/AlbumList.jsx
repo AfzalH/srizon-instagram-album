@@ -1,11 +1,11 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import AlbumListItem from '../components/AlbumListItem';
-import AlbumListItemLoading from '../components/AlbumListItemLoading';
+import AlbumListItem from '../components/album-list/AlbumListItem';
+import AlbumListItemLoading from '../components/album-list/AlbumListItemLoading';
 import AddUserAlbumCard from './AddUserAlbumCard';
 import AddHashtagAlbumCard from './AddHashtagAlbumCard';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
-import SelectUser from '../components/SelectUser';
+import SelectUser from '../components/add-new/SelectUser';
 import {cancelUserAlbum, saveUserAlbum} from '../actions/albumsAction';
 
 

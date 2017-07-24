@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import CircularLoaderFull from '../components/CircularLoaderFull';
+import CircularLoaderFull from '../components/partials/CircularLoaderFull';
 import MainPanel from './MainPanel';
 
 // smart component with redux connect

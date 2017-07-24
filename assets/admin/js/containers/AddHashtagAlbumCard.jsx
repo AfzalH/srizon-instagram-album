@@ -1,8 +1,8 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {newHashtagAlbum, cancelHashtagAlbum, saveHashtagAlbum} from '../actions/albumsAction';
-import AddHashtagAlbumFront from '../components/AddHashtagAlbumFront'
-import AddHashtagAlbumForm from '../components/AddhasHtagAlbumForm'
+import AddHashtagAlbumFront from '../components/add-new/AddHashtagAlbumFront'
+import AddHashtagAlbumForm from '../components/add-new/AddHashtagAlbumForm'
 
 
 // smart component with redux connect

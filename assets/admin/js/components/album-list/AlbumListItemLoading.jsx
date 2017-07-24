@@ -1,5 +1,5 @@
 import React from 'react';
-import CircularLoaderCard from './CircularLoaderCard';
+import CircularLoaderCard from '../partials/CircularLoaderCard';
 
 const AlbumListItemLoading = ({title}) => (
     <div className="col s12 l4 m6">
