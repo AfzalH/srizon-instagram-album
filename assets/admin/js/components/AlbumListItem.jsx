@@ -15,7 +15,13 @@ const AlbumListItem = ({key, album}) => (
                         </div>
                     </div>
                     :
-                    <p>hashtag album</p>
+                    <div className="col s12 chip-col pl0">
+                        <div className="chip connected-user">
+                            <a target="_blank" href={"https://www.instagram.com/explore/tags/"+album.hashtag}>
+                                #{album.hashtag}
+                            </a>
+                        </div>
+                    </div>
                 }
                 <div className="col s12 pl0 top10">
                     <p>I am a very simple card. I am good at containing small bits of information.

@@ -6,7 +6,8 @@ const initial_state = {
     show_user_selection_prompt: false,
     users_to_select: false,
     temp_album_title: '',
-    saving_user_in_progress: false
+    saving_user_in_progress: false,
+    saving_hashtag_in_progress: false
 };
 export default function settingsReducer(state = initial_state, action) {
     switch (action.type) {
@@ -15,7 +16,7 @@ export default function settingsReducer(state = initial_state, action) {
         case 'SRIZON_INSTAGRAM_SETTINGS_USER_REMOVEING':
             return {...state, user_removing: true};
         case 'SRIZON_INSTAGRAM_SETTINGS_NEW_USER_ALBUM':
-            return {...state, open_user_album_form: true};
+            return {...state, open_user_album_form: true, saving_user_in_progress: false};
         case 'SRIZON_INSTAGRAM_SETTINGS_CANCEL_USER_ALBUM':
             return {
                 ...state,
@@ -24,15 +25,19 @@ export default function settingsReducer(state = initial_state, action) {
                 show_user_selection_prompt: false
             };
         case 'SRIZON_INSTAGRAM_SETTINGS_NEW_HASHTAG_ALBUM':
-            return {...state, open_hashtag_album_form: true};
+            return {...state, open_hashtag_album_form: true, saving_hashtag_in_progress: false};
         case 'SRIZON_INSTAGRAM_SETTINGS_CANCEL_HASHTAG_ALBUM':
-            return {...state, open_hashtag_album_form: false};
+            return {...state, open_hashtag_album_form: false, saving_hashtag_in_progress: false};
         case 'SRIZON_INSTAGRAM_SETTINGS_TEMP_ALBUM_TITLE':
             return {...state, temp_album_title: action.payload};
         case 'SRIZON_INSTAGRAM_SETTINGS_SAVING_USER_ALBUM':
             return {...state, saving_user_in_progress: true, show_user_selection_prompt: false};
+        case 'SRIZON_INSTAGRAM_SETTINGS_SAVING_HASHTAG_ALBUM':
+            return {...state, saving_hashtag_in_progress: true};
         case 'SRIZON_INSTAGRAM_SETTINGS_SAVED_USER_ALBUM':
             return {...state, open_user_album_form: false, saving_user_in_progress: false};
+        case 'SRIZON_INSTAGRAM_SETTINGS_SAVED_HASHTAG_ALBUM':
+            return {...state, open_hashtag_album_form: false, saving_hashtag_in_progress: false};
         case 'SRIZON_INSTAGRAM_SETTINGS_USER_SELECTION':
             return {...state, show_user_selection_prompt: true, users_to_select: action.payload};
         default:

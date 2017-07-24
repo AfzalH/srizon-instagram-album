@@ -1,4 +1,4 @@
-import {successAlbumSaved, errorReceived} from './messagesAction';
+import {successAlbumSaved, errorReceived, errorRequesting} from './messagesAction';
 
 export function newHashtagAlbum() {
     return {
@@ -9,6 +9,36 @@ export function newHashtagAlbum() {
 export function cancelHashtagAlbum() {
     return {
         type: 'SRIZON_INSTAGRAM_SETTINGS_CANCEL_HASHTAG_ALBUM'
+    }
+}
+
+export function saveHashtagAlbum(album) {
+    return (dispatch)=> {
+        dispatch({type: 'SRIZON_INSTAGRAM_SETTINGS_SAVING_HASHTAG_ALBUM'});
+        console.log(album);
+        axios.post(wpApiSettings.root + 'srizon-instagram/v1/hashtagalbum', {
+            hashtag: album.hashtag,
+            title: album.title
+        })
+            .then((response)=> {
+                if (response.data.result == 'saved') {
+                    dispatch(successAlbumSaved());
+                    dispatch({type: 'SRIZON_INSTAGRAM_SETTINGS_SAVED_HASHTAG_ALBUM', payload: response.data.albums});
+                }
+                else {
+                    dispatch({type: 'SRIZON_INSTAGRAM_SETTINGS_CANCEL_HASHTAG_ALBUM'});
+                }
+            })
+            .catch((error)=> {
+                if (error.response) {
+                    dispatch(errorReceived(error));
+                    dispatch({type: 'SRIZON_INSTAGRAM_SETTINGS_NEW_HASHTAG_ALBUM'});
+                }
+                else if (error.request) {
+                    dispatch(errorRequesting(error));
+                    dispatch({type: 'SRIZON_INSTAGRAM_SETTINGS_NEW_HASHTAG_ALBUM'});
+                }
+            })
     }
 }
 
@@ -44,7 +74,11 @@ export function saveUserAlbum(album) {
             .catch((error)=> {
                 if (error.response) {
                     dispatch(errorReceived(error));
-                    dispatch({type: 'SRIZON_INSTAGRAM_SETTINGS_CANCEL_USER_ALBUM'});
+                    dispatch({type: 'SRIZON_INSTAGRAM_SETTINGS_NEW_USER_ALBUM'});
+                }
+                else if (error.request) {
+                    dispatch(errorRequesting(error));
+                    dispatch({type: 'SRIZON_INSTAGRAM_SETTINGS_NEW_USER_ALBUM'});
                 }
             })
     };

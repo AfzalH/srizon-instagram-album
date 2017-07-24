@@ -20,3 +20,14 @@ export function errorReceived(error) {
         }
     }
 }
+
+export function errorRequesting(error) {
+    return {
+        type: 'SRIZON_INSTAGRAM_MESSAGE_RECEIVED',
+        payload: {
+            txt: 'Error occurred while connecting to server',
+            type: 'error',
+            expire_in: 5
+        }
+    }
+}

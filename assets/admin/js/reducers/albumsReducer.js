@@ -12,6 +12,8 @@ export default function albumsReducer(state = initial_state, action) {
             return {...state, albums: [...albums, action.payload]};
         case 'SRIZON_INSTAGRAM_SETTINGS_SAVED_USER_ALBUM':
             return {...state, albums: action.payload};
+        case 'SRIZON_INSTAGRAM_SETTINGS_SAVED_HASHTAG_ALBUM':
+            return {...state, albums: action.payload};
         default:
             return state;
     }

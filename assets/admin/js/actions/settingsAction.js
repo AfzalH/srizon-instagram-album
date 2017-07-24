@@ -1,3 +1,5 @@
+import {errorReceived,errorRequesting} from './messagesAction';
+
 export function loadSettings() {
     return dispatch => {
         axios.get(wpApiSettings.root + 'srizon-instagram/v1/settings')
@@ -20,8 +22,13 @@ export function loadAlbums() {
                     payload: response.data
                 })
             })
-            .catch(error=> {
-                alert(error.response.message);
+            .catch((error)=> {
+                if (error.response) {
+                    dispatch(errorReceived(error));
+                }
+                else if (error.request) {
+                    dispatch(errorRequesting(error));
+                }
             })
     }
 }
@@ -33,6 +40,14 @@ export function disconnectUser() {
             axios.get(wpApiSettings.root + 'srizon-instagram/v1/disconnect-user')
                 .then(()=> {
                     dispatch(loadSettings())
+                })
+                .catch((error)=> {
+                    if (error.response) {
+                        dispatch(errorReceived(error));
+                    }
+                    else if (error.request) {
+                        dispatch(errorRequesting(error));
+                    }
                 })
         }
     }

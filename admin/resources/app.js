@@ -11713,6 +11713,9 @@ var AppTitle = function (_React$Component) {
 /* harmony export (immutable) */ __webpack_exports__["b"] = loadSettings;
 /* unused harmony export loadAlbums */
 /* harmony export (immutable) */ __webpack_exports__["a"] = disconnectUser;
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__messagesAction__ = __webpack_require__(301);
+
+
 function loadSettings() {
     return function (dispatch) {
         axios.get(wpApiSettings.root + 'srizon-instagram/v1/settings').then(function (response) {
@@ -11733,7 +11736,11 @@ function loadAlbums() {
                 payload: response.data
             });
         }).catch(function (error) {
-            alert(error.response.message);
+            if (error.response) {
+                dispatch(__WEBPACK_IMPORTED_MODULE_0__messagesAction__["a" /* errorReceived */](error));
+            } else if (error.request) {
+                dispatch(__WEBPACK_IMPORTED_MODULE_0__messagesAction__["b" /* errorRequesting */](error));
+            }
         });
     };
 }
@@ -11744,6 +11751,12 @@ function disconnectUser() {
             dispatch({ type: 'SRIZON_INSTAGRAM_SETTINGS_USER_REMOVEING' });
             axios.get(wpApiSettings.root + 'srizon-instagram/v1/disconnect-user').then(function () {
                 dispatch(loadSettings());
+            }).catch(function (error) {
+                if (error.response) {
+                    dispatch(__WEBPACK_IMPORTED_MODULE_0__messagesAction__["a" /* errorReceived */](error));
+                } else if (error.request) {
+                    dispatch(__WEBPACK_IMPORTED_MODULE_0__messagesAction__["b" /* errorRequesting */](error));
+                }
             });
         }
     };
@@ -24751,7 +24764,8 @@ var initial_state = {
     show_user_selection_prompt: false,
     users_to_select: false,
     temp_album_title: '',
-    saving_user_in_progress: false
+    saving_user_in_progress: false,
+    saving_hashtag_in_progress: false
 };
 function settingsReducer() {
     var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initial_state;
@@ -24763,7 +24777,7 @@ function settingsReducer() {
         case 'SRIZON_INSTAGRAM_SETTINGS_USER_REMOVEING':
             return _extends({}, state, { user_removing: true });
         case 'SRIZON_INSTAGRAM_SETTINGS_NEW_USER_ALBUM':
-            return _extends({}, state, { open_user_album_form: true });
+            return _extends({}, state, { open_user_album_form: true, saving_user_in_progress: false });
         case 'SRIZON_INSTAGRAM_SETTINGS_CANCEL_USER_ALBUM':
             return _extends({}, state, {
                 open_user_album_form: false,
@@ -24771,15 +24785,19 @@ function settingsReducer() {
                 show_user_selection_prompt: false
             });
         case 'SRIZON_INSTAGRAM_SETTINGS_NEW_HASHTAG_ALBUM':
-            return _extends({}, state, { open_hashtag_album_form: true });
+            return _extends({}, state, { open_hashtag_album_form: true, saving_hashtag_in_progress: false });
         case 'SRIZON_INSTAGRAM_SETTINGS_CANCEL_HASHTAG_ALBUM':
-            return _extends({}, state, { open_hashtag_album_form: false });
+            return _extends({}, state, { open_hashtag_album_form: false, saving_hashtag_in_progress: false });
         case 'SRIZON_INSTAGRAM_SETTINGS_TEMP_ALBUM_TITLE':
             return _extends({}, state, { temp_album_title: action.payload });
         case 'SRIZON_INSTAGRAM_SETTINGS_SAVING_USER_ALBUM':
             return _extends({}, state, { saving_user_in_progress: true, show_user_selection_prompt: false });
+        case 'SRIZON_INSTAGRAM_SETTINGS_SAVING_HASHTAG_ALBUM':
+            return _extends({}, state, { saving_hashtag_in_progress: true });
         case 'SRIZON_INSTAGRAM_SETTINGS_SAVED_USER_ALBUM':
             return _extends({}, state, { open_user_album_form: false, saving_user_in_progress: false });
+        case 'SRIZON_INSTAGRAM_SETTINGS_SAVED_HASHTAG_ALBUM':
+            return _extends({}, state, { open_hashtag_album_form: false, saving_hashtag_in_progress: false });
         case 'SRIZON_INSTAGRAM_SETTINGS_USER_SELECTION':
             return _extends({}, state, { show_user_selection_prompt: true, users_to_select: action.payload });
         default:
@@ -26699,6 +26717,7 @@ var AlbumList = function AlbumList(_ref) {
     var loaded = _ref.loaded,
         albums = _ref.albums,
         saving_user = _ref.saving_user,
+        saving_hashtag = _ref.saving_hashtag,
         select_user = _ref.select_user,
         users = _ref.users,
         cancelUserAlbum = _ref.cancelUserAlbum,
@@ -26712,7 +26731,7 @@ var AlbumList = function AlbumList(_ref) {
             { transitionName: 'scale', transitionEnterTimeout: 500, transitionLeaveTimeout: 500 },
             saving_user ? select_user ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_7__components_SelectUser__["a" /* default */], { key: 'select_user', users: users, cancelUserAlbum: cancelUserAlbum, title: title,
                 saveUserAlbum: saveUserAlbum }) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_AlbumListItemLoading__["a" /* default */], { title: 'Saving' }) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__AddUserAlbumCard__["a" /* default */], null),
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__AddHashtagAlbumCard__["a" /* default */], null),
+            saving_hashtag ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_AlbumListItemLoading__["a" /* default */], { title: 'Saving' }) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__AddHashtagAlbumCard__["a" /* default */], null),
             !loaded ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_AlbumListItemLoading__["a" /* default */], null) : albums.map(function (album) {
                 return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__components_AlbumListItem__["a" /* default */], { key: album.id, album: album });
             })
@@ -26724,6 +26743,7 @@ var AlbumList = function AlbumList(_ref) {
 function mapStateTopProps(state) {
     return {
         saving_user: state.settings.saving_user_in_progress,
+        saving_hashtag: state.settings.saving_hashtag_in_progress,
         loaded: state.albums.initial_load,
         albums: state.albums.albums,
         select_user: state.settings.show_user_selection_prompt,
@@ -26736,10 +26756,10 @@ function mapStateTopProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         cancelUserAlbum: function cancelUserAlbum() {
-            dispatch(__WEBPACK_IMPORTED_MODULE_8__actions_albumsAction__["a" /* cancelUserAlbum */]());
+            dispatch(__WEBPACK_IMPORTED_MODULE_8__actions_albumsAction__["b" /* cancelUserAlbum */]());
         },
         saveUserAlbum: function saveUserAlbum(album) {
-            dispatch(__WEBPACK_IMPORTED_MODULE_8__actions_albumsAction__["d" /* saveUserAlbum */](album));
+            dispatch(__WEBPACK_IMPORTED_MODULE_8__actions_albumsAction__["f" /* saveUserAlbum */](album));
         }
     };
 }
@@ -26758,8 +26778,8 @@ function mapDispatchToProps(dispatch) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_redux__ = __webpack_require__(34);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__actions_albumsAction__ = __webpack_require__(300);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_AddCardFront__ = __webpack_require__(275);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_AddCardForm__ = __webpack_require__(276);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_AddUserAlbumFront__ = __webpack_require__(305);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_AddUserAlbumForm__ = __webpack_require__(306);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -26797,7 +26817,7 @@ var AddUserAlbumCard = function (_React$Component) {
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
                 { className: 'col s12 l4 m6' },
-                !open_form ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_AddCardFront__["a" /* default */], { newUserAlbum: newUserAlbum }) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__components_AddCardForm__["a" /* default */], { cancelUserAlbum: cancelUserAlbum, saveUserAlbum: saveUserAlbum })
+                !open_form ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_AddUserAlbumFront__["a" /* default */], { newUserAlbum: newUserAlbum }) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__components_AddUserAlbumForm__["a" /* default */], { cancelUserAlbum: cancelUserAlbum, saveUserAlbum: saveUserAlbum })
             );
         }
     }]);
@@ -26818,13 +26838,13 @@ function mapStateTopProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         newUserAlbum: function newUserAlbum() {
-            dispatch(__WEBPACK_IMPORTED_MODULE_2__actions_albumsAction__["c" /* newUserAlbum */]());
+            dispatch(__WEBPACK_IMPORTED_MODULE_2__actions_albumsAction__["d" /* newUserAlbum */]());
         },
         cancelUserAlbum: function cancelUserAlbum() {
-            dispatch(__WEBPACK_IMPORTED_MODULE_2__actions_albumsAction__["a" /* cancelUserAlbum */]());
+            dispatch(__WEBPACK_IMPORTED_MODULE_2__actions_albumsAction__["b" /* cancelUserAlbum */]());
         },
         saveUserAlbum: function saveUserAlbum(album) {
-            dispatch(__WEBPACK_IMPORTED_MODULE_2__actions_albumsAction__["d" /* saveUserAlbum */](album));
+            dispatch(__WEBPACK_IMPORTED_MODULE_2__actions_albumsAction__["f" /* saveUserAlbum */](album));
         }
     };
 }
@@ -26841,6 +26861,10 @@ function mapDispatchToProps(dispatch) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_redux__ = __webpack_require__(34);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__actions_albumsAction__ = __webpack_require__(300);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_AddHashtagAlbumFront__ = __webpack_require__(307);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_AddhasHtagAlbumForm__ = __webpack_require__(309);
+
+
 
 
 
@@ -26849,52 +26873,13 @@ function mapDispatchToProps(dispatch) {
 
 var AddHashTagAlbumCard = function AddHashTagAlbumCard(_ref) {
     var newHashtagAlbum = _ref.newHashtagAlbum,
-        open_form = _ref.open_form;
+        open_form = _ref.open_form,
+        saveHashtagAlbum = _ref.saveHashtagAlbum,
+        cancelHashtagAlbum = _ref.cancelHashtagAlbum;
     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
         { className: 'col s12 l4 m6' },
-        !open_form ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-            'div',
-            { className: 'card small clickable', onClick: newHashtagAlbum },
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                'div',
-                { className: 'card-content' },
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'div',
-                    { className: 'row' },
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'div',
-                        { className: 'col s12 center' },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'span',
-                            { className: 'blue-text text-lighten-3 big-icon' },
-                            '+'
-                        )
-                    ),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'div',
-                        { className: 's12 center' },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'h5',
-                            { className: 'thin' },
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                'span',
-                                { className: 'blue-text text-darken-4' },
-                                'Add #hashtag Album'
-                            )
-                        )
-                    )
-                )
-            )
-        ) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-            'div',
-            { className: 'card small' },
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                'div',
-                { className: 'card-content' },
-                'form here'
-            )
-        )
+        !open_form ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_AddHashtagAlbumFront__["a" /* default */], { newHashtagAlbum: newHashtagAlbum }) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__components_AddhasHtagAlbumForm__["a" /* default */], { cancelHashtagAlbum: cancelHashtagAlbum, saveHashtagAlbum: saveHashtagAlbum })
     );
 };
 
@@ -26909,7 +26894,13 @@ function mapStateTopProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         newHashtagAlbum: function newHashtagAlbum() {
-            dispatch(__WEBPACK_IMPORTED_MODULE_2__actions_albumsAction__["b" /* newHashtagAlbum */]());
+            dispatch(__WEBPACK_IMPORTED_MODULE_2__actions_albumsAction__["c" /* newHashtagAlbum */]());
+        },
+        cancelHashtagAlbum: function cancelHashtagAlbum() {
+            dispatch(__WEBPACK_IMPORTED_MODULE_2__actions_albumsAction__["a" /* cancelHashtagAlbum */]());
+        },
+        saveHashtagAlbum: function saveHashtagAlbum(album) {
+            dispatch(__WEBPACK_IMPORTED_MODULE_2__actions_albumsAction__["e" /* saveHashtagAlbum */](album));
         }
     };
 }
@@ -26918,218 +26909,8 @@ function mapDispatchToProps(dispatch) {
 /* harmony default export */ __webpack_exports__["a"] = (__WEBPACK_IMPORTED_MODULE_1_react_redux__["b" /* connect */](mapStateTopProps, mapDispatchToProps)(AddHashTagAlbumCard));
 
 /***/ }),
-/* 275 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-
-
-var AddCardFront = function (_React$Component) {
-    _inherits(AddCardFront, _React$Component);
-
-    function AddCardFront() {
-        _classCallCheck(this, AddCardFront);
-
-        return _possibleConstructorReturn(this, (AddCardFront.__proto__ || Object.getPrototypeOf(AddCardFront)).apply(this, arguments));
-    }
-
-    _createClass(AddCardFront, [{
-        key: "render",
-        value: function render() {
-            var newUserAlbum = this.props.newUserAlbum;
-
-            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                "div",
-                { className: "card small clickable", onClick: newUserAlbum },
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    "div",
-                    { className: "card-content" },
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        "div",
-                        { className: "row" },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            "div",
-                            { className: "col s12 center" },
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                "span",
-                                { className: "green-text text-lighten-3 big-icon" },
-                                "+"
-                            )
-                        ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            "div",
-                            { className: "s12 center" },
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                "h5",
-                                { className: "thin" },
-                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                    "span",
-                                    {
-                                        className: "green-text text-darken-3" },
-                                    "Add User Album"
-                                )
-                            )
-                        )
-                    )
-                )
-            );
-        }
-    }]);
-
-    return AddCardFront;
-}(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Component);
-
-/* harmony default export */ __webpack_exports__["a"] = (AddCardFront);
-
-/***/ }),
-/* 276 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-
-
-var AddCardForm = function (_React$Component) {
-    _inherits(AddCardForm, _React$Component);
-
-    function AddCardForm(props) {
-        _classCallCheck(this, AddCardForm);
-
-        var _this = _possibleConstructorReturn(this, (AddCardForm.__proto__ || Object.getPrototypeOf(AddCardForm)).call(this, props));
-
-        _this.state = {
-            username: '',
-            title: ''
-        };
-        _this.handleInputChange = _this.handleInputChange.bind(_this);
-        _this.handleKeyPress = _this.handleKeyPress.bind(_this);
-        return _this;
-    }
-
-    _createClass(AddCardForm, [{
-        key: 'componentDidMount',
-        value: function componentDidMount() {
-            Materialize.updateTextFields();
-            this.userNameInput.focus();
-        }
-    }, {
-        key: 'handleInputChange',
-        value: function handleInputChange(event) {
-            var target = event.target;
-            var value = target.type === 'checkbox' ? target.checked : target.value;
-            var name = target.name;
-
-            this.setState(_defineProperty({}, name, value));
-        }
-    }, {
-        key: 'handleKeyPress',
-        value: function handleKeyPress(event) {
-            if (event.key === 'Enter' && this.state.username.trim().length > 0) {
-                this.props.saveUserAlbum(this.state);
-            }
-        }
-    }, {
-        key: 'render',
-        value: function render() {
-            var _this2 = this;
-
-            var _props = this.props,
-                cancelUserAlbum = _props.cancelUserAlbum,
-                saveUserAlbum = _props.saveUserAlbum;
-
-            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                'div',
-                { className: 'card small' },
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'div',
-                    { className: 'card-content' },
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'div',
-                        { className: 'input-field col s12' },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { placeholder: 'Enter username here', id: 'username', type: 'text',
-                            name: 'username',
-                            value: this.state.username,
-                            onChange: this.handleInputChange,
-                            onKeyPress: this.handleKeyPress,
-                            ref: function ref(input) {
-                                _this2.userNameInput = input;
-                            }
-                        }),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'label',
-                            { htmlFor: 'username' },
-                            'Instagram User Name'
-                        )
-                    ),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'div',
-                        { className: 'input-field col s12' },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: 'title', type: 'text',
-                            name: 'title',
-                            value: this.state.title,
-                            onChange: this.handleInputChange,
-                            onKeyPress: this.handleKeyPress
-                        }),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'label',
-                            { htmlFor: 'title' },
-                            'Album Title (Optional)'
-                        )
-                    ),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'div',
-                        { className: 'col s6 top20' },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'button',
-                            { className: 'btn grey', onClick: cancelUserAlbum },
-                            'Cancel'
-                        )
-                    ),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'div',
-                        { className: 'col s6 top20' },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'button',
-                            {
-                                onClick: function onClick() {
-                                    saveUserAlbum(_this2.state);
-                                },
-                                className: 'btn green ' + (this.state.username.trim().length < 1 ? 'disabled' : '') },
-                            'Submit'
-                        )
-                    )
-                )
-            );
-        }
-    }]);
-
-    return AddCardForm;
-}(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Component);
-
-/* harmony default export */ __webpack_exports__["a"] = (AddCardForm);
-
-/***/ }),
+/* 275 */,
+/* 276 */,
 /* 277 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -27157,6 +26938,8 @@ function albumsReducer() {
         case 'SRIZON_INSTAGRAM_ALBUM_ADDED':
             return _extends({}, state, { albums: [].concat(_toConsumableArray(albums), [action.payload]) });
         case 'SRIZON_INSTAGRAM_SETTINGS_SAVED_USER_ALBUM':
+            return _extends({}, state, { albums: action.payload });
+        case 'SRIZON_INSTAGRAM_SETTINGS_SAVED_HASHTAG_ALBUM':
             return _extends({}, state, { albums: action.payload });
         default:
             return state;
@@ -28641,11 +28424,12 @@ var SelectUser = function SelectUser(_ref) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (immutable) */ __webpack_exports__["b"] = newHashtagAlbum;
-/* unused harmony export cancelHashtagAlbum */
-/* harmony export (immutable) */ __webpack_exports__["c"] = newUserAlbum;
-/* harmony export (immutable) */ __webpack_exports__["a"] = cancelUserAlbum;
-/* harmony export (immutable) */ __webpack_exports__["d"] = saveUserAlbum;
+/* harmony export (immutable) */ __webpack_exports__["c"] = newHashtagAlbum;
+/* harmony export (immutable) */ __webpack_exports__["a"] = cancelHashtagAlbum;
+/* harmony export (immutable) */ __webpack_exports__["e"] = saveHashtagAlbum;
+/* harmony export (immutable) */ __webpack_exports__["d"] = newUserAlbum;
+/* harmony export (immutable) */ __webpack_exports__["b"] = cancelUserAlbum;
+/* harmony export (immutable) */ __webpack_exports__["f"] = saveUserAlbum;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__messagesAction__ = __webpack_require__(301);
 
 
@@ -28658,6 +28442,32 @@ function newHashtagAlbum() {
 function cancelHashtagAlbum() {
     return {
         type: 'SRIZON_INSTAGRAM_SETTINGS_CANCEL_HASHTAG_ALBUM'
+    };
+}
+
+function saveHashtagAlbum(album) {
+    return function (dispatch) {
+        dispatch({ type: 'SRIZON_INSTAGRAM_SETTINGS_SAVING_HASHTAG_ALBUM' });
+        console.log(album);
+        axios.post(wpApiSettings.root + 'srizon-instagram/v1/hashtagalbum', {
+            hashtag: album.hashtag,
+            title: album.title
+        }).then(function (response) {
+            if (response.data.result == 'saved') {
+                dispatch(__WEBPACK_IMPORTED_MODULE_0__messagesAction__["c" /* successAlbumSaved */]());
+                dispatch({ type: 'SRIZON_INSTAGRAM_SETTINGS_SAVED_HASHTAG_ALBUM', payload: response.data.albums });
+            } else {
+                dispatch({ type: 'SRIZON_INSTAGRAM_SETTINGS_CANCEL_HASHTAG_ALBUM' });
+            }
+        }).catch(function (error) {
+            if (error.response) {
+                dispatch(__WEBPACK_IMPORTED_MODULE_0__messagesAction__["a" /* errorReceived */](error));
+                dispatch({ type: 'SRIZON_INSTAGRAM_SETTINGS_NEW_HASHTAG_ALBUM' });
+            } else if (error.request) {
+                dispatch(__WEBPACK_IMPORTED_MODULE_0__messagesAction__["b" /* errorRequesting */](error));
+                dispatch({ type: 'SRIZON_INSTAGRAM_SETTINGS_NEW_HASHTAG_ALBUM' });
+            }
+        });
     };
 }
 
@@ -28678,7 +28488,7 @@ function saveUserAlbum(album) {
         dispatch({ type: 'SRIZON_INSTAGRAM_SETTINGS_SAVING_USER_ALBUM' });
         axios.post(wpApiSettings.root + 'srizon-instagram/v1/useralbum', { username: album.username, title: album.title }).then(function (response) {
             if (response.data.result == 'saved') {
-                dispatch(__WEBPACK_IMPORTED_MODULE_0__messagesAction__["b" /* successAlbumSaved */]());
+                dispatch(__WEBPACK_IMPORTED_MODULE_0__messagesAction__["c" /* successAlbumSaved */]());
                 dispatch({ type: 'SRIZON_INSTAGRAM_SETTINGS_SAVED_USER_ALBUM', payload: response.data.albums });
             } else if (response.data.result == 'selection') {
                 dispatch({ type: 'SRIZON_INSTAGRAM_SETTINGS_TEMP_ALBUM_TITLE', payload: album.title });
@@ -28689,7 +28499,10 @@ function saveUserAlbum(album) {
         }).catch(function (error) {
             if (error.response) {
                 dispatch(__WEBPACK_IMPORTED_MODULE_0__messagesAction__["a" /* errorReceived */](error));
-                dispatch({ type: 'SRIZON_INSTAGRAM_SETTINGS_CANCEL_USER_ALBUM' });
+                dispatch({ type: 'SRIZON_INSTAGRAM_SETTINGS_NEW_USER_ALBUM' });
+            } else if (error.request) {
+                dispatch(__WEBPACK_IMPORTED_MODULE_0__messagesAction__["b" /* errorRequesting */](error));
+                dispatch({ type: 'SRIZON_INSTAGRAM_SETTINGS_NEW_USER_ALBUM' });
             }
         });
     };
@@ -28700,8 +28513,9 @@ function saveUserAlbum(album) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (immutable) */ __webpack_exports__["b"] = successAlbumSaved;
+/* harmony export (immutable) */ __webpack_exports__["c"] = successAlbumSaved;
 /* harmony export (immutable) */ __webpack_exports__["a"] = errorReceived;
+/* harmony export (immutable) */ __webpack_exports__["b"] = errorRequesting;
 function successAlbumSaved() {
     return {
         type: 'SRIZON_INSTAGRAM_MESSAGE_RECEIVED',
@@ -28719,6 +28533,17 @@ function errorReceived(error) {
         type: 'SRIZON_INSTAGRAM_MESSAGE_RECEIVED',
         payload: {
             txt: error.response.data.message,
+            type: 'error',
+            expire_in: 5
+        }
+    };
+}
+
+function errorRequesting(error) {
+    return {
+        type: 'SRIZON_INSTAGRAM_MESSAGE_RECEIVED',
+        payload: {
+            txt: 'Error occurred while connecting to server',
             type: 'error',
             expire_in: 5
         }
@@ -28765,9 +28590,18 @@ var AlbumListItem = function AlbumListItem(_ref) {
                         )
                     )
                 ) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    "p",
-                    null,
-                    "hashtag album"
+                    "div",
+                    { className: "col s12 chip-col pl0" },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        "div",
+                        { className: "chip connected-user" },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            "a",
+                            { target: "_blank", href: "https://www.instagram.com/explore/tags/" + album.hashtag },
+                            "#",
+                            album.hashtag
+                        )
+                    )
                 ),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     "div",
@@ -28842,6 +28676,432 @@ var BodyPanel = function BodyPanel() {
 };
 
 /* harmony default export */ __webpack_exports__["a"] = (BodyPanel);
+
+/***/ }),
+/* 305 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+var AddCardFront = function (_React$Component) {
+    _inherits(AddCardFront, _React$Component);
+
+    function AddCardFront() {
+        _classCallCheck(this, AddCardFront);
+
+        return _possibleConstructorReturn(this, (AddCardFront.__proto__ || Object.getPrototypeOf(AddCardFront)).apply(this, arguments));
+    }
+
+    _createClass(AddCardFront, [{
+        key: "render",
+        value: function render() {
+            var newUserAlbum = this.props.newUserAlbum;
+
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                "div",
+                { className: "card small clickable", onClick: newUserAlbum },
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    "div",
+                    { className: "card-content" },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        "div",
+                        { className: "row" },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            "div",
+                            { className: "col s12 center" },
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                "span",
+                                { className: "green-text text-lighten-3 big-icon" },
+                                "+"
+                            )
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            "div",
+                            { className: "s12 center" },
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                "h5",
+                                { className: "thin" },
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    "span",
+                                    {
+                                        className: "green-text text-darken-3" },
+                                    "Add User Album"
+                                )
+                            )
+                        )
+                    )
+                )
+            );
+        }
+    }]);
+
+    return AddCardFront;
+}(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Component);
+
+/* harmony default export */ __webpack_exports__["a"] = (AddCardFront);
+
+/***/ }),
+/* 306 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+var AddCardForm = function (_React$Component) {
+    _inherits(AddCardForm, _React$Component);
+
+    function AddCardForm(props) {
+        _classCallCheck(this, AddCardForm);
+
+        var _this = _possibleConstructorReturn(this, (AddCardForm.__proto__ || Object.getPrototypeOf(AddCardForm)).call(this, props));
+
+        _this.state = {
+            username: '',
+            title: ''
+        };
+        _this.handleInputChange = _this.handleInputChange.bind(_this);
+        _this.handleKeyPress = _this.handleKeyPress.bind(_this);
+        return _this;
+    }
+
+    _createClass(AddCardForm, [{
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            Materialize.updateTextFields();
+            this.userNameInput.focus();
+        }
+    }, {
+        key: 'handleInputChange',
+        value: function handleInputChange(event) {
+            var target = event.target;
+            var value = target.type === 'checkbox' ? target.checked : target.value;
+            var name = target.name;
+
+            this.setState(_defineProperty({}, name, value));
+        }
+    }, {
+        key: 'handleKeyPress',
+        value: function handleKeyPress(event) {
+            if (event.key === 'Enter' && this.state.username.trim().length > 0) {
+                this.props.saveUserAlbum(this.state);
+            }
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var _this2 = this;
+
+            var _props = this.props,
+                cancelUserAlbum = _props.cancelUserAlbum,
+                saveUserAlbum = _props.saveUserAlbum;
+
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'div',
+                { className: 'card small' },
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { className: 'card-content' },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'input-field col s12' },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { placeholder: 'Enter username here', id: 'username', type: 'text',
+                            name: 'username',
+                            value: this.state.username,
+                            onChange: this.handleInputChange,
+                            onKeyPress: this.handleKeyPress,
+                            ref: function ref(input) {
+                                _this2.userNameInput = input;
+                            }
+                        }),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'label',
+                            { htmlFor: 'username' },
+                            'Instagram User Name'
+                        )
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'input-field col s12' },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: 'title', type: 'text',
+                            name: 'title',
+                            value: this.state.title,
+                            onChange: this.handleInputChange,
+                            onKeyPress: this.handleKeyPress
+                        }),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'label',
+                            { htmlFor: 'title' },
+                            'Album Title (Optional)'
+                        )
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'col s6 top20' },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'button',
+                            { className: 'btn grey', onClick: cancelUserAlbum },
+                            'Cancel'
+                        )
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'col s6 top20' },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'button',
+                            {
+                                onClick: function onClick() {
+                                    saveUserAlbum(_this2.state);
+                                },
+                                className: 'btn green ' + (this.state.username.trim().length < 1 ? 'disabled' : '') },
+                            'Submit'
+                        )
+                    )
+                )
+            );
+        }
+    }]);
+
+    return AddCardForm;
+}(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Component);
+
+/* harmony default export */ __webpack_exports__["a"] = (AddCardForm);
+
+/***/ }),
+/* 307 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+var AddHashtagAlbumFront = function (_React$Component) {
+    _inherits(AddHashtagAlbumFront, _React$Component);
+
+    function AddHashtagAlbumFront() {
+        _classCallCheck(this, AddHashtagAlbumFront);
+
+        return _possibleConstructorReturn(this, (AddHashtagAlbumFront.__proto__ || Object.getPrototypeOf(AddHashtagAlbumFront)).apply(this, arguments));
+    }
+
+    _createClass(AddHashtagAlbumFront, [{
+        key: "render",
+        value: function render() {
+            var newHashtagAlbum = this.props.newHashtagAlbum;
+
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                "div",
+                { className: "card small clickable", onClick: newHashtagAlbum },
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    "div",
+                    { className: "card-content" },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        "div",
+                        { className: "row" },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            "div",
+                            { className: "col s12 center" },
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                "span",
+                                { className: "blue-text text-lighten-3 big-icon" },
+                                "+"
+                            )
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            "div",
+                            { className: "s12 center" },
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                "h5",
+                                { className: "thin" },
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    "span",
+                                    { className: "blue-text text-darken-4" },
+                                    "Add #hashtag Album"
+                                )
+                            )
+                        )
+                    )
+                )
+            );
+        }
+    }]);
+
+    return AddHashtagAlbumFront;
+}(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Component);
+
+/* harmony default export */ __webpack_exports__["a"] = (AddHashtagAlbumFront);
+
+/***/ }),
+/* 308 */,
+/* 309 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+var AddHashtagAlbumForm = function (_React$Component) {
+    _inherits(AddHashtagAlbumForm, _React$Component);
+
+    function AddHashtagAlbumForm(props) {
+        _classCallCheck(this, AddHashtagAlbumForm);
+
+        var _this = _possibleConstructorReturn(this, (AddHashtagAlbumForm.__proto__ || Object.getPrototypeOf(AddHashtagAlbumForm)).call(this, props));
+
+        _this.state = {
+            hashtag: '',
+            title: ''
+        };
+        _this.handleInputChange = _this.handleInputChange.bind(_this);
+        _this.handleKeyPress = _this.handleKeyPress.bind(_this);
+        return _this;
+    }
+
+    _createClass(AddHashtagAlbumForm, [{
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            Materialize.updateTextFields();
+            this.hashtagInput.focus();
+        }
+    }, {
+        key: 'handleInputChange',
+        value: function handleInputChange(event) {
+            var target = event.target;
+            var value = target.type === 'checkbox' ? target.checked : target.value;
+            var name = target.name;
+
+            if (name == 'hashtag' && /[^a-zA-Z0-9_]/.test(value)) return;
+
+            this.setState(_defineProperty({}, name, value));
+        }
+    }, {
+        key: 'handleKeyPress',
+        value: function handleKeyPress(event) {
+            if (event.key === 'Enter' && this.state.hashtag.trim().length > 0) {
+                this.props.saveHashtagAlbum(this.state);
+            }
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var _this2 = this;
+
+            var _props = this.props,
+                saveHashtagAlbum = _props.saveHashtagAlbum,
+                cancelHashtagAlbum = _props.cancelHashtagAlbum;
+
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'div',
+                { className: 'card small' },
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { className: 'card-content' },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'input-field col s12' },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { placeholder: 'Enter hashtag here (without hash)', id: 'hashtag', type: 'text',
+                            name: 'hashtag',
+                            value: this.state.hashtag,
+                            onChange: this.handleInputChange,
+                            onKeyPress: this.handleKeyPress,
+                            ref: function ref(input) {
+                                _this2.hashtagInput = input;
+                            }
+                        }),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'label',
+                            { htmlFor: 'hashtag' },
+                            'Instagram Hashtag'
+                        )
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'input-field col s12' },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { id: 'title', type: 'text',
+                            name: 'title',
+                            value: this.state.title,
+                            onChange: this.handleInputChange,
+                            onKeyPress: this.handleKeyPress
+                        }),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'label',
+                            { htmlFor: 'title' },
+                            'Album Title (Optional)'
+                        )
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'col s6 top20' },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'button',
+                            { className: 'btn grey', onClick: cancelHashtagAlbum },
+                            'Cancel'
+                        )
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'col s6 top20' },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'button',
+                            {
+                                onClick: function onClick() {
+                                    saveHashtagAlbum(_this2.state);
+                                },
+                                className: 'btn green ' + (this.state.hashtag.trim().length < 1 ? 'disabled' : '') },
+                            'Submit'
+                        )
+                    )
+                )
+            );
+        }
+    }]);
+
+    return AddHashtagAlbumForm;
+}(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Component);
+
+/* harmony default export */ __webpack_exports__["a"] = (AddHashtagAlbumForm);
 
 /***/ })
 /******/ ]);

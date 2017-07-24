@@ -1,8 +1,8 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {newUserAlbum, cancelUserAlbum, saveUserAlbum} from '../actions/albumsAction';
-import AddCardFront from '../components/AddCardFront';
-import AddCardForm from '../components/AddCardForm';
+import AddUserAlbumFront from '../components/AddUserAlbumFront';
+import AddUserAlbumForm from '../components/AddUserAlbumForm';
 
 // smart component with redux connect
 
@@ -12,8 +12,8 @@ class AddUserAlbumCard extends React.Component {
         return (
             <div className="col s12 l4 m6">
                 {!open_form ?
-                    <AddCardFront newUserAlbum={newUserAlbum}/> :
-                    <AddCardForm cancelUserAlbum={cancelUserAlbum} saveUserAlbum={saveUserAlbum}/>
+                    <AddUserAlbumFront newUserAlbum={newUserAlbum}/> :
+                    <AddUserAlbumForm cancelUserAlbum={cancelUserAlbum} saveUserAlbum={saveUserAlbum}/>
                 }
             </div>
         )

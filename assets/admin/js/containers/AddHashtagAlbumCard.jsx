@@ -1,32 +1,19 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {newHashtagAlbum} from '../actions/albumsAction';
+import {newHashtagAlbum, cancelHashtagAlbum, saveHashtagAlbum} from '../actions/albumsAction';
+import AddHashtagAlbumFront from '../components/AddHashtagAlbumFront'
+import AddHashtagAlbumForm from '../components/AddhasHtagAlbumForm'
 
 
 // smart component with redux connect
 
-const AddHashTagAlbumCard = ({newHashtagAlbum, open_form}) => (
+const AddHashTagAlbumCard = ({newHashtagAlbum, open_form, saveHashtagAlbum, cancelHashtagAlbum}) => (
     <div className="col s12 l4 m6">
         {!open_form ?
-            <div className="card small clickable" onClick={newHashtagAlbum}>
-                <div className="card-content">
-                    <div className="row">
-                        <div className="col s12 center">
-                            <span className="blue-text text-lighten-3 big-icon">+</span>
-                        </div>
-                        <div className="s12 center">
-                            <h5 className="thin"><span className="blue-text text-darken-4">Add #hashtag Album</span>
-                            </h5>
+            <AddHashtagAlbumFront newHashtagAlbum={newHashtagAlbum}/>
+            :
+            <AddHashtagAlbumForm cancelHashtagAlbum={cancelHashtagAlbum} saveHashtagAlbum={saveHashtagAlbum}/>
 
-                        </div>
-                    </div>
-                </div>
-            </div> :
-            <div className="card small">
-                <div className="card-content">
-                    form here
-                </div>
-            </div>
         }
     </div>
 );
@@ -43,6 +30,12 @@ function mapDispatchToProps(dispatch) {
     return {
         newHashtagAlbum: ()=> {
             dispatch(newHashtagAlbum())
+        },
+        cancelHashtagAlbum: ()=> {
+            dispatch(cancelHashtagAlbum())
+        },
+        saveHashtagAlbum: (album)=> {
+            dispatch(saveHashtagAlbum(album))
         }
     }
 }

@@ -11,7 +11,7 @@ import {cancelUserAlbum, saveUserAlbum} from '../actions/albumsAction';
 
 // smart component with redux connect
 
-const AlbumList = ({loaded, albums, saving_user, select_user, users, cancelUserAlbum, title, saveUserAlbum}) => (
+const AlbumList = ({loaded, albums, saving_user, saving_hashtag, select_user, users, cancelUserAlbum, title, saveUserAlbum}) => (
     <div className="row">
         <ReactCSSTransitionGroup transitionName="scale" transitionEnterTimeout={500} transitionLeaveTimeout={500}>
             {saving_user ?
@@ -21,7 +21,10 @@ const AlbumList = ({loaded, albums, saving_user, select_user, users, cancelUserA
                     <AlbumListItemLoading title="Saving"/> :
                 <AddUserAlbumCard />
             }
-            <AddHashtagAlbumCard />
+            {saving_hashtag ?
+                <AlbumListItemLoading title="Saving"/> :
+                <AddHashtagAlbumCard />
+            }
             {!loaded ?
                 <AlbumListItemLoading /> :
                 albums.map(album=>(
@@ -36,6 +39,7 @@ const AlbumList = ({loaded, albums, saving_user, select_user, users, cancelUserA
 function mapStateTopProps(state) {
     return {
         saving_user: state.settings.saving_user_in_progress,
+        saving_hashtag: state.settings.saving_hashtag_in_progress,
         loaded: state.albums.initial_load,
         albums: state.albums.albums,
         select_user: state.settings.show_user_selection_prompt,
