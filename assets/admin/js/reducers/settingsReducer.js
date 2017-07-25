@@ -7,6 +7,7 @@ const initial_state = {
     users_to_select: false,
     temp_album_title: '',
     saving_user_in_progress: false,
+    show_settings: false,
     saving_hashtag_in_progress: false
 };
 export default function settingsReducer(state = initial_state, action) {
@@ -15,6 +16,8 @@ export default function settingsReducer(state = initial_state, action) {
             return {...state, init: false, options: action.payload, user_removing: false};
         case 'SRIZON_INSTAGRAM_SETTINGS_USER_REMOVEING':
             return {...state, user_removing: true};
+        case 'SRIZON_INSTAGRAM_SETTINGS_TOGGLE_SETTINGS_PANEL':
+            return {...state, show_settings: !state.show_settings};
         case 'SRIZON_INSTAGRAM_SETTINGS_NEW_USER_ALBUM':
             return {...state, open_user_album_form: true, saving_user_in_progress: false};
         case 'SRIZON_INSTAGRAM_SETTINGS_CANCEL_USER_ALBUM':
@@ -40,6 +43,10 @@ export default function settingsReducer(state = initial_state, action) {
             return {...state, open_hashtag_album_form: false, saving_hashtag_in_progress: false};
         case 'SRIZON_INSTAGRAM_SETTINGS_USER_SELECTION':
             return {...state, show_user_selection_prompt: true, users_to_select: action.payload};
+        case 'SRIZON_INSTAGRAM_SETTINGS_SAVING_GLOBAL':
+            return {...state};
+        case 'SRIZON_INSTAGRAM_SETTINGS_SAVED_GLOBAL':
+            return {...state};
         default:
             return state;
     }

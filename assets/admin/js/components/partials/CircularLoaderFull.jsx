@@ -1,5 +1,5 @@
 import React from 'react';
-import AppTitle from '../AppTitle';
+import AppTitle from '../../containers/AppTitle';
 
 const CircularLoaderFull = () => (
     <div>

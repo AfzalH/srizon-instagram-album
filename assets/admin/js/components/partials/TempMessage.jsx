@@ -12,7 +12,7 @@ class TempMessage extends React.Component {
     render() {
         const {msg}= this.props;
         return (
-            <div>
+            <div className="temp-msg-container">
                 {msg.type.toLowerCase() == 'error' ?
                     <div className="col s12 red white-text temp-msg">
                         <h5>

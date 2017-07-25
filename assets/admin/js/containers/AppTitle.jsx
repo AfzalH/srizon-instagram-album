@@ -1,4 +1,6 @@
 import React from 'react';
+import {connect} from 'react-redux';
+import {toggleSettingsPanel} from '../actions/settingsAction';
 
 class AppTitle extends React.Component {
     constructor() {
@@ -15,14 +17,21 @@ class AppTitle extends React.Component {
     }
 
     render() {
-        const {connected_user, disconnectUser, user_removing} = this.props;
+        const {connected_user, disconnectUser, user_removing, toggleSettingsPanel, show_settings} = this.props;
+        const settings_btn_bg = show_settings ? "grey" : "blue";
         return (
             <div className="row app-title">
-                <div className="col m6 title-col">
-                    <h5 className="thin">Srizon Instagram Album</h5>
+                <div className="col m7 title-col">
+                    <h5 className="thin main-title">Srizon Instagram Album
+                        {connected_user ?
+                            <a
+                                className={"ml10 btn-floating btn-spin btn-small waves-effect waves-light "+ settings_btn_bg + " darken-3"}
+                                onClick={toggleSettingsPanel}><i
+                                className="material-icons">settings</i></a> : null}
+                    </h5>
                 </div>
                 {connected_user ?
-                    <div className="col m6 chip-col">
+                    <div className="col m5 chip-col">
                         <h5 className="right">
                             {user_removing ?
                                 <small>
@@ -50,4 +59,21 @@ class AppTitle extends React.Component {
     }
 }
 
-export default AppTitle;
+// map state
+function mapStateToProps(state) {
+    return {
+        show_settings: state.settings.show_settings
+    }
+}
+
+// map dispatch
+function mapDispatchToProps(dispatch) {
+    return {
+        toggleSettingsPanel: ()=> {
+            dispatch(toggleSettingsPanel())
+        }
+    }
+}
+
+// connect and export
+export default connect(mapStateToProps, mapDispatchToProps)(AppTitle);

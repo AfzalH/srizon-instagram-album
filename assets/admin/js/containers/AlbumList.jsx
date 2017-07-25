@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import AlbumListItem from '../components/album-list/AlbumListItem';
-import AlbumListItemLoading from '../components/album-list/AlbumListItemLoading';
+import AlbumListItem from './AlbumListItem';
+import CardLoading from '../components/partials/CardLoading';
 import AddUserAlbumCard from './AddUserAlbumCard';
 import AddHashtagAlbumCard from './AddHashtagAlbumCard';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
@@ -18,15 +18,15 @@ const AlbumList = ({loaded, albums, saving_user, saving_hashtag, select_user, us
                 select_user ?
                     <SelectUser key="select_user" users={users} cancelUserAlbum={cancelUserAlbum} title={title}
                                 saveUserAlbum={saveUserAlbum}/> :
-                    <AlbumListItemLoading title="Saving"/> :
+                    <CardLoading title="Saving"/> :
                 <AddUserAlbumCard />
             }
             {saving_hashtag ?
-                <AlbumListItemLoading title="Saving"/> :
+                <CardLoading title="Saving"/> :
                 <AddHashtagAlbumCard />
             }
             {!loaded ?
-                <AlbumListItemLoading /> :
+                <CardLoading title="Loading Albums" /> :
                 albums.map(album=>(
                     <AlbumListItem key={album.id} album={album}/>
                 ))
@@ -36,7 +36,7 @@ const AlbumList = ({loaded, albums, saving_user, saving_hashtag, select_user, us
 );
 
 // map state
-function mapStateTopProps(state) {
+function mapStateToProps(state) {
     return {
         saving_user: state.settings.saving_user_in_progress,
         saving_hashtag: state.settings.saving_hashtag_in_progress,
@@ -61,4 +61,4 @@ function mapDispatchToProps(dispatch) {
 }
 
 // connect and export
-export default connect(mapStateTopProps, mapDispatchToProps)(AlbumList);
+export default connect(mapStateToProps, mapDispatchToProps)(AlbumList);

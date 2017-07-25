@@ -19,7 +19,7 @@ const AddHashTagAlbumCard = ({newHashtagAlbum, open_form, saveHashtagAlbum, canc
 );
 
 // map state
-function mapStateTopProps(state) {
+function mapStateToProps(state) {
     return {
         open_form: state.settings.open_hashtag_album_form
     }
@@ -41,4 +41,4 @@ function mapDispatchToProps(dispatch) {
 }
 
 // connect and export
-export default connect(mapStateTopProps, mapDispatchToProps)(AddHashTagAlbumCard);
+export default connect(mapStateToProps, mapDispatchToProps)(AddHashTagAlbumCard);

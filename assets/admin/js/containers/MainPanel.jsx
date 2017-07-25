@@ -1,8 +1,8 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import AppTitle from '../components/AppTitle';
+import AppTitle from './AppTitle';
 import GetTokenButton from '../components/GetTokenButton';
-import BodyPanel from '../components/BodyPanel';
+import BodyPanel from './BodyPanel';
 import {disconnectUser} from '../actions/settingsAction';
 import FlashMessages from './FlashMessages';
 
@@ -21,7 +21,7 @@ const MainPannel = ({options, disconnectUser, user_removing}) => (
 );
 
 // map state
-function mapStateTopProps(state) {
+function mapStateToProps(state) {
     return {
         options: state.settings.options,
         user_removing: state.settings.user_removing
@@ -36,4 +36,4 @@ function mapDispatchToProps(dispatch) {
 }
 
 // connect and export
-export default connect(mapStateTopProps, mapDispatchToProps)(MainPannel);
+export default connect(mapStateToProps, mapDispatchToProps)(MainPannel);

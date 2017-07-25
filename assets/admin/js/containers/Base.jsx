@@ -14,7 +14,7 @@ const Base = ({init}) => (
 );
 
 // map state
-function mapStateTopProps(state) {
+function mapStateToProps(state) {
     return {
         init: state.settings.init
     }
@@ -26,4 +26,4 @@ function mapDispatchToProps(dispatch) {
 }
 
 // connect and export
-export default connect(mapStateTopProps, mapDispatchToProps)(Base);
+export default connect(mapStateToProps, mapDispatchToProps)(Base);

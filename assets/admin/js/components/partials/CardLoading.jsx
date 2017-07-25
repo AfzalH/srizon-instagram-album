@@ -1,7 +1,7 @@
 import React from 'react';
-import CircularLoaderCard from '../partials/CircularLoaderCard';
+import CircularLoaderCard from './CircularLoaderCard';
 
-const AlbumListItemLoading = ({title}) => (
+const CardLoading = ({title}) => (
     <div className="col s12 l4 m6">
         <div className="card small">
             <div className="card-content">
@@ -18,4 +18,4 @@ const AlbumListItemLoading = ({title}) => (
 
 
 // connect and export
-export default AlbumListItemLoading;
+export default CardLoading;

@@ -31,3 +31,27 @@ export function errorRequesting(error) {
         }
     }
 }
+
+export function successCopy() {
+    return {
+        type: 'SRIZON_INSTAGRAM_MESSAGE_RECEIVED',
+        payload: {
+            txt: 'Successfully Copied... Now paste it on a Page or Post',
+            type: 'success',
+            expire_in: 5
+        }
+
+    }
+}
+
+export function errorCopy() {
+    return {
+        type: 'SRIZON_INSTAGRAM_MESSAGE_RECEIVED',
+        payload: {
+            txt: 'Couldn\'t Select and Copy. Try to Select and Copy manually!',
+            type: 'error',
+            expire_in: 5
+        }
+
+    }
+}

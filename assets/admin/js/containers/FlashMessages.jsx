@@ -17,7 +17,7 @@ const FlashMessages = ({count, messages, hidemsg}) => (
 );
 
 // map state
-function mapStateTopProps(state) {
+function mapStateToProps(state) {
     return {
         count: state.messages.count,
         messages: state.messages.messages
@@ -37,4 +37,4 @@ function mapDispatchToProps(dispatch) {
 }
 
 // connect and export
-export default connect(mapStateTopProps, mapDispatchToProps)(FlashMessages);
+export default connect(mapStateToProps, mapDispatchToProps)(FlashMessages);

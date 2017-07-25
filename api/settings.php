@@ -21,7 +21,25 @@ function srizon_instagram_get_settings() {
 	} else {
 		$settings['connected_user'] = false;
 	}
-	
+
+	$global_settings = get_option( 'srizon_instagram_global_settings', false );
+	if ( $global_settings ) {
+		$settings['global'] = $global_settings;
+	} else {
+		$settings['global'] = [
+			'cache_time'         => 600,
+			'load_more_text'     => 'Load More...',
+			'lightbox'           => 'built_in',
+			'lightbox_attribute' => 'class="lightbox" rel="lightbox"',
+			'sorting'            => 'default',
+			'max_image'          => 1000,
+			'initial_load'       => 20,
+			'load_more_load'     => 20,
+			'layout'             => 'collage',
+			'collage_row_height' => 200,
+		];
+	}
+
 	return $settings;
 }
 
@@ -36,6 +54,5 @@ add_action( 'rest_api_init', function () {
 		'methods'  => 'GET',
 		'callback' => 'srizon_instagram_disconnect_user',
 	] );
-	
 } );
 

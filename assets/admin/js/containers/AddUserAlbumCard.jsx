@@ -21,7 +21,7 @@ class AddUserAlbumCard extends React.Component {
 }
 
 // map state
-function mapStateTopProps(state) {
+function mapStateToProps(state) {
     return {
         open_form: state.settings.open_user_album_form
     }
@@ -43,4 +43,4 @@ function mapDispatchToProps(dispatch) {
 }
 
 // connect and export
-export default connect(mapStateTopProps, mapDispatchToProps)(AddUserAlbumCard);
+export default connect(mapStateToProps, mapDispatchToProps)(AddUserAlbumCard);

@@ -1,4 +1,4 @@
-import {errorReceived,errorRequesting} from './messagesAction';
+import {errorReceived, errorRequesting} from './messagesAction';
 
 export function loadSettings() {
     return dispatch => {
@@ -53,3 +53,20 @@ export function disconnectUser() {
     }
 }
 
+export function toggleSettingsPanel() {
+    return {
+        type: 'SRIZON_INSTAGRAM_SETTINGS_TOGGLE_SETTINGS_PANEL'
+    }
+}
+
+export function saveGlobalSettings(settings) {
+    return dispatch => {
+        dispatch({type: 'SRIZON_INSTAGRAM_SETTINGS_SAVING_GLOBAL'});
+        // axios call
+        // then
+        dispatch({type: 'SRIZON_INSTAGRAM_SETTINGS_SAVED_GLOBAL'});
+        // catch
+        // dispatch (errorReceived(error);
+
+    }
+}
