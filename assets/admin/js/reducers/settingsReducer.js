@@ -7,7 +7,7 @@ const initial_state = {
     users_to_select: false,
     temp_album_title: '',
     saving_user_in_progress: false,
-    show_settings: false,
+    show_settings: true,
     saving_hashtag_in_progress: false
 };
 export default function settingsReducer(state = initial_state, action) {
