@@ -33,17 +33,27 @@ CREATE TABLE ' . $t_albums . ' (
 		$data['full_name']       = $payload['full_name'];
 		$data['profile_picture'] = $payload['profile_picture'];
 		$data['hashtag']         = $payload['hashtag'];
+		$data['options']         = $payload['options'];
 
 		$wpdb->insert( $table, $data );
 
 		return $wpdb->insert_id;
 	}
 
+	static function DeleteAlbum( $id ) {
+		global $wpdb;
+		$table = $wpdb->prefix . 'srzinst_albums';
+		$q     = $wpdb->prepare( "delete from $table where id = %d", $id );
+		$wpdb->query( $q );
+	}
+
 	static function GetAllAlbums() {
 		global $wpdb;
-		$table  = $wpdb->prefix . 'srzinst_albums';
-		$albums = $wpdb->get_results( "SELECT * FROM $table order by id desc" );
-
+		$table               = $wpdb->prefix . 'srzinst_albums';
+		$albums              = $wpdb->get_results( "SELECT * FROM $table order by id desc" );
+		foreach ( $albums as $album ) {
+			$album->options      = maybe_unserialize( $album->options );
+		}
 		return $albums;
 	}
 }

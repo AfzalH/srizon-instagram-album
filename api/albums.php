@@ -1,4 +1,6 @@
 <?php
+include_once 'defaults.php';
+include_once 'settings.php';
 /**
  * @param string $username
  * @param string $access_token
@@ -27,12 +29,11 @@ function srizon_instagram_username_to_id( $username, $access_token ) {
 }
 
 /**
- * @param \WP_REST_Request $data
+ * @param \WP_REST_Request $req
  */
-
-function srizon_instagram_save_user_album( $data ) {
+function srizon_instagram_save_user_album( $req ) {
 	$access_token = get_option( 'srizon_instagram_access_token', false );
-	$json_data    = json_decode( $data->get_body() );
+	$json_data    = json_decode( $req->get_body() );
 	$user         = srizon_instagram_username_to_id( $json_data->username, $access_token );
 
 	//return $user_id;
@@ -65,6 +66,7 @@ function srizon_instagram_save_user_album( $data ) {
 		$payload['full_name']       = $user->full_name;
 		$payload['profile_picture'] = $user->profile_pic_url;
 		$payload['hashtag']         = '';
+		$payload['options']         = serialize( srizon_instagram_get_global_settings() );
 
 		SrizonInstaDB::SaveAlbum( $payload );
 
@@ -81,12 +83,12 @@ function srizon_instagram_get_album_index() {
 }
 
 /**
- * @param \WP_REST_Request $data
+ * @param \WP_REST_Request $req
  *
  * @return mixed
  */
-function srizon_instagram_save_hashtag_album( $data ) {
-	$json_data = json_decode( $data->get_body() );
+function srizon_instagram_save_hashtag_album( $req ) {
+	$json_data = json_decode( $req->get_body() );
 	$hashtag   = trim( $json_data->hashtag, " \t\n\r\0\x0B" );
 
 	if ( strlen( $hashtag ) == 0 ) {
@@ -107,12 +109,24 @@ function srizon_instagram_save_hashtag_album( $data ) {
 	$payload['full_name']       = null;
 	$payload['profile_picture'] = null;
 	$payload['hashtag']         = $hashtag;
+	$payload['options']         = serialize( srizon_instagram_get_global_settings() );
 
 	SrizonInstaDB::SaveAlbum( $payload );
-
 	$ret['result'] = 'saved';
 	$ret['albums'] = srizon_instagram_get_album_index();
-	$ret['api']    = $payload;
+
+	return $ret;
+}
+
+/**
+ * @param \WP_REST_Request $req
+ *
+ * @return mixed
+ */
+function srizon_instagram_delete_album( $req ) {
+	SrizonInstaDB::DeleteAlbum( $req['id'] );
+	$ret['result'] = 'deleted';
+	$ret['albums'] = srizon_instagram_get_album_index();
 
 	return $ret;
 }
@@ -126,6 +140,11 @@ add_action( 'rest_api_init', function () {
 	register_rest_route( 'srizon-instagram/v1', '/album/', [
 		'methods'  => 'GET',
 		'callback' => 'srizon_instagram_get_album_index',
+	] );
+
+	register_rest_route( 'srizon-instagram/v1', '/album/(?P<id>[\d]+)', [
+		'methods'  => 'DELETE',
+		'callback' => 'srizon_instagram_delete_album',
 	] );
 
 	register_rest_route( 'srizon-instagram/v1', '/hashtagalbum/', [

@@ -1,4 +1,4 @@
-import {successAlbumSaved, errorReceived, errorRequesting} from './messagesAction';
+import {successAlbumSaved, errorReceived, errorRequesting, successAlbumDelete} from './messagesAction';
 
 export function newHashtagAlbum() {
     return {
@@ -51,6 +51,27 @@ export function newUserAlbum() {
 export function cancelUserAlbum() {
     return {
         type: 'SRIZON_INSTAGRAM_SETTINGS_CANCEL_USER_ALBUM'
+    }
+}
+export function deleteAlbum(id) {
+    if ((window.confirm('Are you sure?'))) {
+        return (dispatch) => {
+            dispatch({type: 'SRIZON_INSTAGRAM_ALBUM_DELETEING', payload: id});
+            axios.delete(wpApiSettings.root + 'srizon-instagram/v1/album/' + id)
+                .then((response)=> {
+                    if (response.data.result == 'deleted') {
+                        dispatch(successAlbumDelete());
+                        dispatch({type: 'SRIZON_INSTAGRAM_ALBUM_DELETED', payload: response.data.albums});
+                    }
+                })
+                .catch(()=> {
+                    dispatch(errorUnknown());
+                    dispatch({type: 'ACTION_CANCELLED'});
+                })
+        };
+
+    } else {
+        return {type: 'ACTION_CANCELLED'}
     }
 }
 

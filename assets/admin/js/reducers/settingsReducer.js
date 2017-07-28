@@ -7,8 +7,9 @@ const initial_state = {
     users_to_select: false,
     temp_album_title: '',
     saving_user_in_progress: false,
-    show_settings: true,
-    saving_hashtag_in_progress: false
+    show_settings: false,
+    saving_hashtag_in_progress: false,
+    saving_settings_in_progress: false
 };
 export default function settingsReducer(state = initial_state, action) {
     switch (action.type) {
@@ -44,9 +45,16 @@ export default function settingsReducer(state = initial_state, action) {
         case 'SRIZON_INSTAGRAM_SETTINGS_USER_SELECTION':
             return {...state, show_user_selection_prompt: true, users_to_select: action.payload};
         case 'SRIZON_INSTAGRAM_SETTINGS_SAVING_GLOBAL':
-            return {...state};
+            return {...state, saving_settings_in_progress: true};
+        case 'SRIZON_INSTAGRAM_SETTINGS_SAVING_ERROR_GLOBAL':
+            return {...state, saving_settings_in_progress: false};
         case 'SRIZON_INSTAGRAM_SETTINGS_SAVED_GLOBAL':
-            return {...state};
+            return {
+                ...state,
+                options: {...state.options, global: action.payload},
+                saving_settings_in_progress: false,
+                show_settings: false
+            };
         default:
             return state;
     }

@@ -10,6 +10,30 @@ export function successAlbumSaved() {
     }
 }
 
+export function successAlbumDelete(){
+    return {
+        type: 'SRIZON_INSTAGRAM_MESSAGE_RECEIVED',
+        payload: {
+            txt: 'Album Deleted!',
+            type: 'success',
+            expire_in: 3
+        }
+
+    }
+}
+
+export function successGlobalSettingsSaved() {
+    return {
+        type: 'SRIZON_INSTAGRAM_MESSAGE_RECEIVED',
+        payload: {
+            txt: 'Global Settings Saved! These will be used for new albums unless you override them',
+            type: 'success',
+            expire_in: 3
+        }
+
+    }
+}
+
 export function errorReceived(error) {
     return {
         type: 'SRIZON_INSTAGRAM_MESSAGE_RECEIVED',
@@ -49,6 +73,17 @@ export function errorCopy() {
         type: 'SRIZON_INSTAGRAM_MESSAGE_RECEIVED',
         payload: {
             txt: 'Couldn\'t Select and Copy. Try to Select and Copy manually!',
+            type: 'error',
+            expire_in: 5
+        }
+
+    }
+}
+export function errorUnknown() {
+    return {
+        type: 'SRIZON_INSTAGRAM_MESSAGE_RECEIVED',
+        payload: {
+            txt: 'Something went wrong. Please try again',
             type: 'error',
             expire_in: 5
         }

@@ -2591,8 +2591,8 @@ html .srizon {
 .srizon .card,
 .srizon .toast,
 .srizon .btn,
-.srizon .btn-large,
 .srizon .btn-floating,
+.srizon .btn-large,
 .srizon .dropdown-content,
 .srizon .collapsible,
 .srizon .side-nav {
@@ -2602,8 +2602,8 @@ html .srizon {
 
 .srizon .z-depth-1-half,
 .srizon .btn:hover,
-.srizon .btn-large:hover,
-.srizon .btn-floating:hover {
+.srizon .btn-floating:hover,
+.srizon .btn-large:hover {
   -webkit-box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.14), 0 1px 7px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -1px rgba(0, 0, 0, 0.2);
           box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.14), 0 1px 7px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -1px rgba(0, 0, 0, 0.2);
 }
@@ -4557,7 +4557,6 @@ html .srizon {
 
 .srizon nav ul a.btn,
 .srizon nav ul a.btn-large,
-.srizon nav ul a.btn-large,
 .srizon nav ul a.btn-flat,
 .srizon nav ul a.btn-floating {
   margin-top: -2px;
@@ -4566,7 +4565,6 @@ html .srizon {
 }
 
 .srizon nav ul a.btn > .material-icons,
-.srizon nav ul a.btn-large > .material-icons,
 .srizon nav ul a.btn-large > .material-icons,
 .srizon nav ul a.btn-flat > .material-icons,
 .srizon nav ul a.btn-floating > .material-icons {
@@ -5305,7 +5303,7 @@ html .srizon {
   border-radius: 0 0 2px 2px;
 }
 
-.srizon .card .card-action a:not(.btn):not(.srizon .btn-large):not(.btn-large):not(.btn-floating) {
+.srizon .card .card-action a:not(.btn):not(.btn-large):not(.btn-floating) {
   color: #ffab40;
   margin-right: 24px;
   -webkit-transition: color .3s ease;
@@ -5313,7 +5311,7 @@ html .srizon {
   text-transform: uppercase;
 }
 
-.srizon .card .card-action a:not(.btn):not(.srizon .btn-large):not(.btn-large):not(.btn-floating):hover {
+.srizon .card .card-action a:not(.btn):not(.btn-large):not(.btn-floating):hover {
   color: #ffd8a6;
 }
 
@@ -5393,7 +5391,6 @@ html .srizon {
 }
 
 .srizon .toast .btn,
-.srizon .toast .btn-large,
 .srizon .toast .btn-flat {
   margin: 0;
   margin-left: 3rem;
@@ -5559,7 +5556,6 @@ html .srizon {
 }
 
 .srizon .btn,
-.srizon .btn-large,
 .srizon .btn-flat {
   border: none;
   border-radius: 2px;
@@ -5573,17 +5569,14 @@ html .srizon {
 }
 
 .srizon .btn.disabled,
-.srizon .disabled.btn-large,
 .srizon .btn-floating.disabled,
 .srizon .btn-large.disabled,
 .srizon .btn-flat.disabled,
 .srizon .btn:disabled,
-.srizon .btn-large:disabled,
 .srizon .btn-floating:disabled,
 .srizon .btn-large:disabled,
 .srizon .btn-flat:disabled,
 .srizon .btn[disabled],
-.srizon [disabled].btn-large,
 .srizon .btn-floating[disabled],
 .srizon .btn-large[disabled],
 .srizon .btn-flat[disabled] {
@@ -5596,17 +5589,14 @@ html .srizon {
 }
 
 .srizon .btn.disabled:hover,
-.srizon .disabled.btn-large:hover,
 .srizon .btn-floating.disabled:hover,
 .srizon .btn-large.disabled:hover,
 .srizon .btn-flat.disabled:hover,
 .srizon .btn:disabled:hover,
-.srizon .btn-large:disabled:hover,
 .srizon .btn-floating:disabled:hover,
 .srizon .btn-large:disabled:hover,
 .srizon .btn-flat:disabled:hover,
 .srizon .btn[disabled]:hover,
-.srizon [disabled].btn-large:hover,
 .srizon .btn-floating[disabled]:hover,
 .srizon .btn-large[disabled]:hover,
 .srizon .btn-flat[disabled]:hover {
@@ -5615,7 +5605,6 @@ html .srizon {
 }
 
 .srizon .btn,
-.srizon .btn-large,
 .srizon .btn-floating,
 .srizon .btn-large,
 .srizon .btn-flat {
@@ -5624,7 +5613,6 @@ html .srizon {
 }
 
 .srizon .btn i,
-.srizon .btn-large i,
 .srizon .btn-floating i,
 .srizon .btn-large i,
 .srizon .btn-flat i {
@@ -5633,13 +5621,11 @@ html .srizon {
 }
 
 .srizon .btn:focus,
-.srizon .btn-large:focus,
 .srizon .btn-floating:focus {
   background-color: #1d7d74;
 }
 
-.srizon .btn,
-.srizon .btn-large {
+.srizon .btn {
   text-decoration: none;
   color: #fff;
   background-color: #26a69a;
@@ -5650,8 +5636,7 @@ html .srizon {
   cursor: pointer;
 }
 
-.srizon .btn:hover,
-.srizon .btn-large:hover {
+.srizon .btn:hover {
   background-color: #2bbbad;
 }
 
@@ -5857,8 +5842,20 @@ html .srizon {
 }
 
 .srizon .btn-large {
+  text-decoration: none;
+  color: #fff;
+  background-color: #26a69a;
+  text-align: center;
+  letter-spacing: .5px;
+  -webkit-transition: .2s ease-out;
+  transition: .2s ease-out;
+  cursor: pointer;
   height: 54px;
   line-height: 54px;
+}
+
+.srizon .btn-large:hover {
+  background-color: #2bbbad;
 }
 
 .srizon .btn-large i {
@@ -6102,7 +6099,6 @@ html .srizon {
 }
 
 .srizon .modal .modal-footer .btn,
-.srizon .modal .modal-footer .btn-large,
 .srizon .modal .modal-footer .btn-flat {
   margin: 6px 0;
 }
@@ -7428,8 +7424,7 @@ html .srizon {
   width: 100%;
 }
 
-.srizon .file-field .btn,
-.srizon .file-field .btn-large {
+.srizon .file-field .btn {
   float: left;
   height: 3rem;
   line-height: 3rem;
@@ -7696,14 +7691,12 @@ html .srizon {
 
 .srizon .side-nav li > a.btn,
 .srizon .side-nav li > a.btn-large,
-.srizon .side-nav li > a.btn-large,
 .srizon .side-nav li > a.btn-flat,
 .srizon .side-nav li > a.btn-floating {
   margin: 10px 15px;
 }
 
 .srizon .side-nav li > a.btn,
-.srizon .side-nav li > a.btn-large,
 .srizon .side-nav li > a.btn-large,
 .srizon .side-nav li > a.btn-floating {
   color: #fff;
@@ -7714,7 +7707,6 @@ html .srizon {
 }
 
 .srizon .side-nav li > a.btn:hover,
-.srizon .side-nav li > a.btn-large:hover,
 .srizon .side-nav li > a.btn-large:hover {
   background-color: #2bbbad;
 }
@@ -8706,8 +8698,8 @@ html .srizon {
   position: absolute !important;
 }
 
-.srizon .tap-target-origin:not(.btn):not(.srizon .btn-large),
-.srizon .tap-target-origin:not(.btn):not(.srizon .btn-large):hover {
+.srizon .tap-target-origin:not(.btn),
+.srizon .tap-target-origin:not(.btn):hover {
   background: none;
 }
 

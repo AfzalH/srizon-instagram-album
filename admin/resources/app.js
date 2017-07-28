@@ -1027,7 +1027,7 @@ module.exports = { debugTool: debugTool };
 
 
 var bind = __webpack_require__(107);
-var isBuffer = __webpack_require__(281);
+var isBuffer = __webpack_require__(282);
 
 /*global toString:true*/
 
@@ -5096,11 +5096,24 @@ function toggleSettingsPanel() {
 function saveGlobalSettings(settings) {
     return function (dispatch) {
         dispatch({ type: 'SRIZON_INSTAGRAM_SETTINGS_SAVING_GLOBAL' });
-        // axios call
-        // then
-        dispatch({ type: 'SRIZON_INSTAGRAM_SETTINGS_SAVED_GLOBAL' });
-        // catch
-        // dispatch (errorReceived(error);
+        axios.post(wpApiSettings.root + 'srizon-instagram/v1/save-global-settings', settings).then(function (response) {
+            console.log(response.data);
+            if (response.data.result == 'saved') {
+                dispatch(__WEBPACK_IMPORTED_MODULE_0__messagesAction__["h" /* successGlobalSettingsSaved */]());
+                dispatch({ type: 'SRIZON_INSTAGRAM_SETTINGS_SAVED_GLOBAL', payload: response.data.data });
+            } else {
+                dispatch(__WEBPACK_IMPORTED_MODULE_0__messagesAction__["d" /* errorUnknown */]());
+                dispatch({ type: 'SRIZON_INSTAGRAM_SETTINGS_SAVING_ERROR_GLOBAL' });
+            }
+        }).catch(function (error) {
+            if (error.response) {
+                dispatch(__WEBPACK_IMPORTED_MODULE_0__messagesAction__["b" /* errorReceived */](error));
+                dispatch({ type: 'SRIZON_INSTAGRAM_SETTINGS_SAVING_ERROR_GLOBAL' });
+            } else if (error.request) {
+                dispatch(__WEBPACK_IMPORTED_MODULE_0__messagesAction__["c" /* errorRequesting */](error));
+                dispatch({ type: 'SRIZON_INSTAGRAM_SETTINGS_SAVING_ERROR_GLOBAL' });
+            }
+        });
     };
 }
 
@@ -7110,16 +7123,43 @@ function warning(message) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (immutable) */ __webpack_exports__["d"] = successAlbumSaved;
+/* harmony export (immutable) */ __webpack_exports__["f"] = successAlbumSaved;
+/* harmony export (immutable) */ __webpack_exports__["e"] = successAlbumDelete;
+/* harmony export (immutable) */ __webpack_exports__["h"] = successGlobalSettingsSaved;
 /* harmony export (immutable) */ __webpack_exports__["b"] = errorReceived;
 /* harmony export (immutable) */ __webpack_exports__["c"] = errorRequesting;
-/* harmony export (immutable) */ __webpack_exports__["e"] = successCopy;
+/* harmony export (immutable) */ __webpack_exports__["g"] = successCopy;
 /* harmony export (immutable) */ __webpack_exports__["a"] = errorCopy;
+/* harmony export (immutable) */ __webpack_exports__["d"] = errorUnknown;
 function successAlbumSaved() {
     return {
         type: 'SRIZON_INSTAGRAM_MESSAGE_RECEIVED',
         payload: {
             txt: 'Album Saved!',
+            type: 'success',
+            expire_in: 3
+        }
+
+    };
+}
+
+function successAlbumDelete() {
+    return {
+        type: 'SRIZON_INSTAGRAM_MESSAGE_RECEIVED',
+        payload: {
+            txt: 'Album Deleted!',
+            type: 'success',
+            expire_in: 3
+        }
+
+    };
+}
+
+function successGlobalSettingsSaved() {
+    return {
+        type: 'SRIZON_INSTAGRAM_MESSAGE_RECEIVED',
+        payload: {
+            txt: 'Global Settings Saved! These will be used for new albums unless you override them',
             type: 'success',
             expire_in: 3
         }
@@ -7172,18 +7212,30 @@ function errorCopy() {
 
     };
 }
+function errorUnknown() {
+    return {
+        type: 'SRIZON_INSTAGRAM_MESSAGE_RECEIVED',
+        payload: {
+            txt: 'Something went wrong. Please try again',
+            type: 'error',
+            expire_in: 5
+        }
+
+    };
+}
 
 /***/ }),
 /* 58 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (immutable) */ __webpack_exports__["c"] = newHashtagAlbum;
+/* harmony export (immutable) */ __webpack_exports__["d"] = newHashtagAlbum;
 /* harmony export (immutable) */ __webpack_exports__["a"] = cancelHashtagAlbum;
-/* harmony export (immutable) */ __webpack_exports__["e"] = saveHashtagAlbum;
-/* harmony export (immutable) */ __webpack_exports__["d"] = newUserAlbum;
+/* harmony export (immutable) */ __webpack_exports__["f"] = saveHashtagAlbum;
+/* harmony export (immutable) */ __webpack_exports__["e"] = newUserAlbum;
 /* harmony export (immutable) */ __webpack_exports__["b"] = cancelUserAlbum;
-/* harmony export (immutable) */ __webpack_exports__["f"] = saveUserAlbum;
+/* harmony export (immutable) */ __webpack_exports__["c"] = deleteAlbum;
+/* harmony export (immutable) */ __webpack_exports__["g"] = saveUserAlbum;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__messagesAction__ = __webpack_require__(57);
 
 
@@ -7208,7 +7260,7 @@ function saveHashtagAlbum(album) {
             title: album.title
         }).then(function (response) {
             if (response.data.result == 'saved') {
-                dispatch(__WEBPACK_IMPORTED_MODULE_0__messagesAction__["d" /* successAlbumSaved */]());
+                dispatch(__WEBPACK_IMPORTED_MODULE_0__messagesAction__["f" /* successAlbumSaved */]());
                 dispatch({ type: 'SRIZON_INSTAGRAM_SETTINGS_SAVED_HASHTAG_ALBUM', payload: response.data.albums });
             } else {
                 dispatch({ type: 'SRIZON_INSTAGRAM_SETTINGS_CANCEL_HASHTAG_ALBUM' });
@@ -7236,13 +7288,31 @@ function cancelUserAlbum() {
         type: 'SRIZON_INSTAGRAM_SETTINGS_CANCEL_USER_ALBUM'
     };
 }
+function deleteAlbum(id) {
+    if (window.confirm('Are you sure?')) {
+        return function (dispatch) {
+            dispatch({ type: 'SRIZON_INSTAGRAM_ALBUM_DELETEING', payload: id });
+            axios.delete(wpApiSettings.root + 'srizon-instagram/v1/album/' + id).then(function (response) {
+                if (response.data.result == 'deleted') {
+                    dispatch(__WEBPACK_IMPORTED_MODULE_0__messagesAction__["e" /* successAlbumDelete */]());
+                    dispatch({ type: 'SRIZON_INSTAGRAM_ALBUM_DELETED', payload: response.data.albums });
+                }
+            }).catch(function () {
+                dispatch(errorUnknown());
+                dispatch({ type: 'ACTION_CANCELLED' });
+            });
+        };
+    } else {
+        return { type: 'ACTION_CANCELLED' };
+    }
+}
 
 function saveUserAlbum(album) {
     return function (dispatch) {
         dispatch({ type: 'SRIZON_INSTAGRAM_SETTINGS_SAVING_USER_ALBUM' });
         axios.post(wpApiSettings.root + 'srizon-instagram/v1/useralbum', { username: album.username, title: album.title }).then(function (response) {
             if (response.data.result == 'saved') {
-                dispatch(__WEBPACK_IMPORTED_MODULE_0__messagesAction__["d" /* successAlbumSaved */]());
+                dispatch(__WEBPACK_IMPORTED_MODULE_0__messagesAction__["f" /* successAlbumSaved */]());
                 dispatch({ type: 'SRIZON_INSTAGRAM_SETTINGS_SAVED_USER_ALBUM', payload: response.data.albums });
             } else if (response.data.result == 'selection') {
                 dispatch({ type: 'SRIZON_INSTAGRAM_SETTINGS_TEMP_ALBUM_TITLE', payload: album.title });
@@ -7270,7 +7340,7 @@ function saveUserAlbum(album) {
 /* WEBPACK VAR INJECTION */(function(process) {
 
 var utils = __webpack_require__(10);
-var normalizeHeaderName = __webpack_require__(283);
+var normalizeHeaderName = __webpack_require__(284);
 
 var DEFAULT_CONTENT_TYPE = {
   'Content-Type': 'application/x-www-form-urlencoded'
@@ -11913,7 +11983,7 @@ var AppTitle = function (_React$Component) {
                         connected_user ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             'a',
                             {
-                                className: "ml10 btn-floating btn-spin btn-small waves-effect waves-light " + settings_btn_bg + " darken-3",
+                                className: "ml10 btn-floating btn-spin btn-floating-small waves-effect waves-light " + settings_btn_bg + " darken-3",
                                 onClick: toggleSettingsPanel },
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                 'i',
@@ -12099,12 +12169,12 @@ module.exports = function bind(fn, thisArg) {
 
 
 var utils = __webpack_require__(10);
-var settle = __webpack_require__(284);
-var buildURL = __webpack_require__(286);
-var parseHeaders = __webpack_require__(287);
-var isURLSameOrigin = __webpack_require__(288);
+var settle = __webpack_require__(285);
+var buildURL = __webpack_require__(287);
+var parseHeaders = __webpack_require__(288);
+var isURLSameOrigin = __webpack_require__(289);
 var createError = __webpack_require__(109);
-var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(289);
+var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(290);
 
 module.exports = function xhrAdapter(config) {
   return new Promise(function dispatchXhrRequest(resolve, reject) {
@@ -12201,7 +12271,7 @@ module.exports = function xhrAdapter(config) {
     // This is only done if running in a standard browser environment.
     // Specifically not if we're in a web worker, or react-native.
     if (utils.isStandardBrowserEnv()) {
-      var cookies = __webpack_require__(290);
+      var cookies = __webpack_require__(291);
 
       // Add xsrf header
       var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ?
@@ -12285,7 +12355,7 @@ module.exports = function xhrAdapter(config) {
 "use strict";
 
 
-var enhanceError = __webpack_require__(285);
+var enhanceError = __webpack_require__(286);
 
 /**
  * Create an Error with the specified message, config, error code, request and response.
@@ -12346,8 +12416,8 @@ module.exports = Cancel;
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(113);
-__webpack_require__(298);
-module.exports = __webpack_require__(299);
+__webpack_require__(299);
+module.exports = __webpack_require__(300);
 
 
 /***/ }),
@@ -12379,7 +12449,7 @@ var render = function render() {
     ), document.getElementById('srizon-instagram-admin'));
 };
 
-window.axios = __webpack_require__(279);
+window.axios = __webpack_require__(280);
 
 if (wpApiSettings) {
     window.axios.defaults.headers.common['X-WP-Nonce'] = wpApiSettings.nonce;
@@ -25065,8 +25135,9 @@ var initial_state = {
     users_to_select: false,
     temp_album_title: '',
     saving_user_in_progress: false,
-    show_settings: true,
-    saving_hashtag_in_progress: false
+    show_settings: false,
+    saving_hashtag_in_progress: false,
+    saving_settings_in_progress: false
 };
 function settingsReducer() {
     var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initial_state;
@@ -25104,9 +25175,15 @@ function settingsReducer() {
         case 'SRIZON_INSTAGRAM_SETTINGS_USER_SELECTION':
             return _extends({}, state, { show_user_selection_prompt: true, users_to_select: action.payload });
         case 'SRIZON_INSTAGRAM_SETTINGS_SAVING_GLOBAL':
-            return _extends({}, state);
+            return _extends({}, state, { saving_settings_in_progress: true });
+        case 'SRIZON_INSTAGRAM_SETTINGS_SAVING_ERROR_GLOBAL':
+            return _extends({}, state, { saving_settings_in_progress: false });
         case 'SRIZON_INSTAGRAM_SETTINGS_SAVED_GLOBAL':
-            return _extends({}, state);
+            return _extends({}, state, {
+                options: _extends({}, state.options, { global: action.payload }),
+                saving_settings_in_progress: false,
+                show_settings: false
+            });
         default:
             return state;
     }
@@ -25133,10 +25210,12 @@ function albumsReducer() {
     switch (action.type) {
         case 'SRIZON_INSTAGRAM_ALBUMS_RECEIVED':
             return _extends({}, state, { initial_load: true, albums: action.payload });
-        case 'SRIZON_INSTAGRAM_ALBUM_DELETED':
-            return _extends({}, state, { albums: albums.filter(function (album) {
-                    return album.id != action.payload.id;
+        case 'SRIZON_INSTAGRAM_ALBUM_DELETEING':
+            return _extends({}, state, { albums: state.albums.filter(function (album) {
+                    return album.id != action.payload;
                 }) });
+        case 'SRIZON_INSTAGRAM_ALBUM_DELETED':
+            return _extends({}, state, { albums: action.payload });
         case 'SRIZON_INSTAGRAM_ALBUM_ADDED':
             return _extends({}, state, { albums: [].concat(_toConsumableArray(albums), [action.payload]) });
         case 'SRIZON_INSTAGRAM_SETTINGS_SAVED_USER_ALBUM':
@@ -26083,7 +26162,7 @@ var CircularLoaderFull = function CircularLoaderFull() {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_GetTokenButton__ = __webpack_require__(248);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__BodyPanel__ = __webpack_require__(249);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__actions_settingsAction__ = __webpack_require__(36);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__FlashMessages__ = __webpack_require__(277);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__FlashMessages__ = __webpack_require__(278);
 
 
 
@@ -26319,7 +26398,7 @@ function mapDispatchToProps(dispatch) {
             dispatch(__WEBPACK_IMPORTED_MODULE_8__actions_albumsAction__["b" /* cancelUserAlbum */]());
         },
         saveUserAlbum: function saveUserAlbum(album) {
-            dispatch(__WEBPACK_IMPORTED_MODULE_8__actions_albumsAction__["f" /* saveUserAlbum */](album));
+            dispatch(__WEBPACK_IMPORTED_MODULE_8__actions_albumsAction__["g" /* saveUserAlbum */](album));
         }
     };
 }
@@ -26338,6 +26417,8 @@ function mapDispatchToProps(dispatch) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_album_list_UserChip__ = __webpack_require__(252);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_album_list_HashtagChip__ = __webpack_require__(253);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__actions_messagesAction__ = __webpack_require__(57);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__actions_albumsAction__ = __webpack_require__(58);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__AlbumListItemSettings__ = __webpack_require__(306);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -26352,16 +26433,32 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
 
+
+
 var AlbumListItem = function (_React$Component) {
     _inherits(AlbumListItem, _React$Component);
 
     function AlbumListItem(props) {
         _classCallCheck(this, AlbumListItem);
 
-        return _possibleConstructorReturn(this, (AlbumListItem.__proto__ || Object.getPrototypeOf(AlbumListItem)).call(this, props));
+        var _this = _possibleConstructorReturn(this, (AlbumListItem.__proto__ || Object.getPrototypeOf(AlbumListItem)).call(this, props));
+
+        _this.state = {
+            settings_open: false
+        };
+        return _this;
     }
 
     _createClass(AlbumListItem, [{
+        key: 'toggleSettingsForm',
+        value: function toggleSettingsForm() {
+            this.setState(function (prevState) {
+                return {
+                    settings_open: !prevState.settings_open
+                };
+            });
+        }
+    }, {
         key: 'componentDidMount',
         value: function componentDidMount() {
             Materialize.updateTextFields();
@@ -26386,55 +26483,82 @@ var AlbumListItem = function (_React$Component) {
         value: function render() {
             var _this2 = this;
 
-            var album = this.props.album;
+            var _props2 = this.props,
+                album = _props2.album,
+                deleteAlbum = _props2.deleteAlbum;
 
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
                 { className: 'col s12 l4 m6' },
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'div',
-                    { className: 'card small' },
+                    { className: this.state.settings_open ? "card" : "card small" },
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'div',
                         { className: 'card-content' },
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'span',
-                            { className: 'card-title' },
-                            album.title
-                        ),
-                        album.albumtype == 'user' ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__components_album_list_UserChip__["a" /* default */], { album: album }) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_album_list_HashtagChip__["a" /* default */], { album: album }),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             'div',
-                            { className: 'col s3 pl0 label-text grey-text input-align' },
-                            'S.Code'
-                        ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'div',
-                            { className: 'col s7 pl0' },
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { className: 'grey-text', id: 'shortcode', type: 'text', name: 'shortcode',
-                                value: "[srzinst id=" + album.id + "]",
-                                onChange: function onChange() {},
-                                ref: function ref(input) {
-                                    _this2.shortcode = input;
-                                }
-                            })
+                            { className: 'row' },
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                'span',
+                                { className: 'card-title' },
+                                album.title
+                            ),
+                            album.albumtype == 'user' ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__components_album_list_UserChip__["a" /* default */], { album: album }) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_album_list_HashtagChip__["a" /* default */], { album: album })
                         ),
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             'div',
-                            { className: 'col s2 pl0 input-align' },
+                            { className: 'row plr0 top20' },
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                 'div',
-                                { className: 'copy-text blue-text text-darken-3', onClick: this.handleCopy.bind(this) },
-                                'Copy'
+                                { className: 'col s3 pl0 label-text grey-text input-align' },
+                                'S.Code'
+                            ),
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                'div',
+                                { className: 'col s7 pl0' },
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { className: 'grey-text', id: 'shortcode', type: 'text', name: 'shortcode',
+                                    value: "[srzinst id=" + album.id + "]",
+                                    onChange: function onChange() {},
+                                    ref: function ref(input) {
+                                        _this2.shortcode = input;
+                                    }
+                                })
+                            ),
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                'div',
+                                { className: 'col s2 pl0 input-align' },
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    'div',
+                                    { className: 'copy-text blue-text text-darken-3', onClick: this.handleCopy.bind(this) },
+                                    'Copy'
+                                )
                             )
                         ),
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             'div',
-                            { className: 'col s12 pl0 top10' },
+                            { className: 'row' },
+                            this.state.settings_open ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6__AlbumListItemSettings__["a" /* default */], null) : null
+                        )
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'card-action' },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'a',
+                            { className: 'no-transform blue-text', onClick: this.toggleSettingsForm.bind(this) },
+                            this.state.settings_open ? "Hide Settings" : "Show Settings"
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'a',
+                            { className: 'right mlr0', onClick: function onClick() {
+                                    deleteAlbum(album.id);
+                                } },
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                'p',
-                                null,
-                                'Test'
+                                'i',
+                                {
+                                    className: 'material-icons red-icon' },
+                                'delete'
                             )
                         )
                     )
@@ -26457,10 +26581,13 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         successCopy: function successCopy() {
-            dispatch(__WEBPACK_IMPORTED_MODULE_4__actions_messagesAction__["e" /* successCopy */]());
+            dispatch(__WEBPACK_IMPORTED_MODULE_4__actions_messagesAction__["g" /* successCopy */]());
         },
         errorCopy: function errorCopy() {
             dispatch(__WEBPACK_IMPORTED_MODULE_4__actions_messagesAction__["a" /* errorCopy */]());
+        },
+        deleteAlbum: function deleteAlbum(id) {
+            dispatch(__WEBPACK_IMPORTED_MODULE_5__actions_albumsAction__["c" /* deleteAlbum */](id));
         }
     };
 }
@@ -26784,13 +26911,13 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         newUserAlbum: function newUserAlbum() {
-            dispatch(__WEBPACK_IMPORTED_MODULE_2__actions_albumsAction__["d" /* newUserAlbum */]());
+            dispatch(__WEBPACK_IMPORTED_MODULE_2__actions_albumsAction__["e" /* newUserAlbum */]());
         },
         cancelUserAlbum: function cancelUserAlbum() {
             dispatch(__WEBPACK_IMPORTED_MODULE_2__actions_albumsAction__["b" /* cancelUserAlbum */]());
         },
         saveUserAlbum: function saveUserAlbum(album) {
-            dispatch(__WEBPACK_IMPORTED_MODULE_2__actions_albumsAction__["f" /* saveUserAlbum */](album));
+            dispatch(__WEBPACK_IMPORTED_MODULE_2__actions_albumsAction__["g" /* saveUserAlbum */](album));
         }
     };
 }
@@ -27052,13 +27179,13 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         newHashtagAlbum: function newHashtagAlbum() {
-            dispatch(__WEBPACK_IMPORTED_MODULE_2__actions_albumsAction__["c" /* newHashtagAlbum */]());
+            dispatch(__WEBPACK_IMPORTED_MODULE_2__actions_albumsAction__["d" /* newHashtagAlbum */]());
         },
         cancelHashtagAlbum: function cancelHashtagAlbum() {
             dispatch(__WEBPACK_IMPORTED_MODULE_2__actions_albumsAction__["a" /* cancelHashtagAlbum */]());
         },
         saveHashtagAlbum: function saveHashtagAlbum(album) {
-            dispatch(__WEBPACK_IMPORTED_MODULE_2__actions_albumsAction__["e" /* saveHashtagAlbum */](album));
+            dispatch(__WEBPACK_IMPORTED_MODULE_2__actions_albumsAction__["f" /* saveHashtagAlbum */](album));
         }
     };
 }
@@ -28381,6 +28508,7 @@ var SelectUser = function SelectUser(_ref) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__actions_settingsAction__ = __webpack_require__(36);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_form_TextField__ = __webpack_require__(275);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_form_RadioField__ = __webpack_require__(276);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_partials_CircularLoaderRow__ = __webpack_require__(277);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -28399,6 +28527,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
 
+
 var SettingsPanel = function (_React$Component) {
     _inherits(SettingsPanel, _React$Component);
 
@@ -28409,7 +28538,6 @@ var SettingsPanel = function (_React$Component) {
 
         _this.state = _extends({}, _this.props.globalSettings);
         _this.hich = _this.hich.bind(_this);
-        _this.save = _this.save.bind(_this);
         return _this;
     }
 
@@ -28435,24 +28563,52 @@ var SettingsPanel = function (_React$Component) {
             this.setState(_defineProperty({}, name, value));
         }
     }, {
-        key: 'save',
-        value: function save() {
-            this.props.saveSettings(this.state);
-        }
-    }, {
         key: 'render',
         value: function render() {
-            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            var _this2 = this;
+
+            var _props = this.props,
+                closeSettings = _props.closeSettings,
+                saveSettings = _props.saveSettings,
+                saving_in_progress = _props.saving_in_progress;
+
+            return saving_in_progress ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__components_partials_CircularLoaderRow__["a" /* default */], null) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
                 { className: 'row' },
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'div',
-                    { className: 'col s12' },
+                    { className: 'col s6' },
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'h6',
                         null,
                         'Global Settings'
-                    ),
+                    )
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { className: 'col s6' },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'right' },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'a',
+                            { className: 'btn wave green btn-small', onClick: function onClick() {
+                                    return saveSettings(_this2.state);
+                                } },
+                            'Save'
+                        ),
+                        ' ',
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'a',
+                            {
+                                className: 'btn wave grey btn-small', onClick: closeSettings },
+                            'Close'
+                        )
+                    )
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { className: 'col s12' },
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('hr', null)
                 ),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -28529,7 +28685,10 @@ var SettingsPanel = function (_React$Component) {
 
 
 function mapStateToProps(state) {
-    return { globalSettings: state.settings.options.global };
+    return {
+        globalSettings: state.settings.options.global,
+        saving_in_progress: state.settings.saving_settings_in_progress
+    };
 }
 
 // map dispatch
@@ -28537,6 +28696,9 @@ function mapDispatchToProps(dispatch) {
     return {
         saveSettings: function saveSettings(settings) {
             dispatch(__WEBPACK_IMPORTED_MODULE_2__actions_settingsAction__["c" /* saveGlobalSettings */](settings));
+        },
+        closeSettings: function closeSettings() {
+            dispatch(__WEBPACK_IMPORTED_MODULE_2__actions_settingsAction__["d" /* toggleSettingsPanel */]());
         }
     };
 }
@@ -28614,8 +28776,110 @@ var RadioField = function RadioField(_ref) {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+
+
+var CircularLoaderRow = function CircularLoaderRow() {
+    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        "div",
+        null,
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            "div",
+            { className: "center top50" },
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                "div",
+                { className: "preloader-wrapper big active" },
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    "div",
+                    { className: "spinner-layer spinner-blue" },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        "div",
+                        { className: "circle-clipper left" },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("div", { className: "circle" })
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        "div",
+                        { className: "gap-patch" },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("div", { className: "circle" })
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        "div",
+                        { className: "circle-clipper right" },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("div", { className: "circle" })
+                    )
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    "div",
+                    { className: "spinner-layer spinner-red" },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        "div",
+                        { className: "circle-clipper left" },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("div", { className: "circle" })
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        "div",
+                        { className: "gap-patch" },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("div", { className: "circle" })
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        "div",
+                        { className: "circle-clipper right" },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("div", { className: "circle" })
+                    )
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    "div",
+                    { className: "spinner-layer spinner-yellow" },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        "div",
+                        { className: "circle-clipper left" },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("div", { className: "circle" })
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        "div",
+                        { className: "gap-patch" },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("div", { className: "circle" })
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        "div",
+                        { className: "circle-clipper right" },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("div", { className: "circle" })
+                    )
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    "div",
+                    { className: "spinner-layer spinner-green" },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        "div",
+                        { className: "circle-clipper left" },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("div", { className: "circle" })
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        "div",
+                        { className: "gap-patch" },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("div", { className: "circle" })
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        "div",
+                        { className: "circle-clipper right" },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("div", { className: "circle" })
+                    )
+                )
+            )
+        )
+    );
+};
+
+/* harmony default export */ __webpack_exports__["a"] = (CircularLoaderRow);
+
+/***/ }),
+/* 278 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_redux__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_partials_TempMessage__ = __webpack_require__(278);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_partials_TempMessage__ = __webpack_require__(279);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react_addons_css_transition_group__ = __webpack_require__(104);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react_addons_css_transition_group___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_react_addons_css_transition_group__);
 
@@ -28666,7 +28930,7 @@ function mapDispatchToProps(dispatch) {
 /* harmony default export */ __webpack_exports__["a"] = (__WEBPACK_IMPORTED_MODULE_1_react_redux__["b" /* connect */](mapStateToProps, mapDispatchToProps)(FlashMessages));
 
 /***/ }),
-/* 278 */
+/* 279 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -28754,13 +29018,13 @@ var TempMessage = function (_React$Component) {
 /* harmony default export */ __webpack_exports__["a"] = (TempMessage);
 
 /***/ }),
-/* 279 */
+/* 280 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(280);
+module.exports = __webpack_require__(281);
 
 /***/ }),
-/* 280 */
+/* 281 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28768,7 +29032,7 @@ module.exports = __webpack_require__(280);
 
 var utils = __webpack_require__(10);
 var bind = __webpack_require__(107);
-var Axios = __webpack_require__(282);
+var Axios = __webpack_require__(283);
 var defaults = __webpack_require__(59);
 
 /**
@@ -28803,14 +29067,14 @@ axios.create = function create(instanceConfig) {
 
 // Expose Cancel & CancelToken
 axios.Cancel = __webpack_require__(111);
-axios.CancelToken = __webpack_require__(296);
+axios.CancelToken = __webpack_require__(297);
 axios.isCancel = __webpack_require__(110);
 
 // Expose all/spread
 axios.all = function all(promises) {
   return Promise.all(promises);
 };
-axios.spread = __webpack_require__(297);
+axios.spread = __webpack_require__(298);
 
 module.exports = axios;
 
@@ -28819,7 +29083,7 @@ module.exports.default = axios;
 
 
 /***/ }),
-/* 281 */
+/* 282 */
 /***/ (function(module, exports) {
 
 /*!
@@ -28846,7 +29110,7 @@ function isSlowBuffer (obj) {
 
 
 /***/ }),
-/* 282 */
+/* 283 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28854,10 +29118,10 @@ function isSlowBuffer (obj) {
 
 var defaults = __webpack_require__(59);
 var utils = __webpack_require__(10);
-var InterceptorManager = __webpack_require__(291);
-var dispatchRequest = __webpack_require__(292);
-var isAbsoluteURL = __webpack_require__(294);
-var combineURLs = __webpack_require__(295);
+var InterceptorManager = __webpack_require__(292);
+var dispatchRequest = __webpack_require__(293);
+var isAbsoluteURL = __webpack_require__(295);
+var combineURLs = __webpack_require__(296);
 
 /**
  * Create a new instance of Axios
@@ -28939,7 +29203,7 @@ module.exports = Axios;
 
 
 /***/ }),
-/* 283 */
+/* 284 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28958,7 +29222,7 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 
 
 /***/ }),
-/* 284 */
+/* 285 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28991,7 +29255,7 @@ module.exports = function settle(resolve, reject, response) {
 
 
 /***/ }),
-/* 285 */
+/* 286 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29019,7 +29283,7 @@ module.exports = function enhanceError(error, config, code, request, response) {
 
 
 /***/ }),
-/* 286 */
+/* 287 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29094,7 +29358,7 @@ module.exports = function buildURL(url, params, paramsSerializer) {
 
 
 /***/ }),
-/* 287 */
+/* 288 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29138,7 +29402,7 @@ module.exports = function parseHeaders(headers) {
 
 
 /***/ }),
-/* 288 */
+/* 289 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29213,7 +29477,7 @@ module.exports = (
 
 
 /***/ }),
-/* 289 */
+/* 290 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29256,7 +29520,7 @@ module.exports = btoa;
 
 
 /***/ }),
-/* 290 */
+/* 291 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29316,7 +29580,7 @@ module.exports = (
 
 
 /***/ }),
-/* 291 */
+/* 292 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29375,14 +29639,14 @@ module.exports = InterceptorManager;
 
 
 /***/ }),
-/* 292 */
+/* 293 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var utils = __webpack_require__(10);
-var transformData = __webpack_require__(293);
+var transformData = __webpack_require__(294);
 var isCancel = __webpack_require__(110);
 var defaults = __webpack_require__(59);
 
@@ -29461,7 +29725,7 @@ module.exports = function dispatchRequest(config) {
 
 
 /***/ }),
-/* 293 */
+/* 294 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29488,7 +29752,7 @@ module.exports = function transformData(data, headers, fns) {
 
 
 /***/ }),
-/* 294 */
+/* 295 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29509,7 +29773,7 @@ module.exports = function isAbsoluteURL(url) {
 
 
 /***/ }),
-/* 295 */
+/* 296 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29530,7 +29794,7 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 
 
 /***/ }),
-/* 296 */
+/* 297 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29594,7 +29858,7 @@ module.exports = CancelToken;
 
 
 /***/ }),
-/* 297 */
+/* 298 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29628,16 +29892,87 @@ module.exports = function spread(callback) {
 
 
 /***/ }),
-/* 298 */
+/* 299 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 299 */
+/* 300 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 301 */,
+/* 302 */,
+/* 303 */,
+/* 304 */,
+/* 305 */,
+/* 306 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_redux__ = __webpack_require__(9);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+
+var AlbumListItemSettings = function (_React$Component) {
+    _inherits(AlbumListItemSettings, _React$Component);
+
+    function AlbumListItemSettings() {
+        _classCallCheck(this, AlbumListItemSettings);
+
+        return _possibleConstructorReturn(this, (AlbumListItemSettings.__proto__ || Object.getPrototypeOf(AlbumListItemSettings)).apply(this, arguments));
+    }
+
+    _createClass(AlbumListItemSettings, [{
+        key: 'render',
+        value: function render() {
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'div',
+                null,
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'p',
+                    null,
+                    'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo, tenetur.'
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'p',
+                    null,
+                    'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam consequuntur dolorum eligendi enim error et impedit ipsum laborum libero maxime nam nemo odio pariatur provident quos tempore, voluptate! Aspernatur, cumque deleniti distinctio dolorem et mollitia nemo nostrum nulla, omnis quia, quisquam tenetur voluptatem voluptatibus. Cumque cupiditate dolores eos nobis quasi?'
+                )
+            );
+        }
+    }]);
+
+    return AlbumListItemSettings;
+}(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Component);
+
+// map state
+
+
+function mapStateToProps(state) {
+    return {};
+}
+
+// map dispatch
+function mapDispatchToProps(dispatch) {
+    return {};
+}
+
+// connect and export
+/* harmony default export */ __webpack_exports__["a"] = (__WEBPACK_IMPORTED_MODULE_1_react_redux__["b" /* connect */](mapStateToProps, mapDispatchToProps)(AlbumListItemSettings));
 
 /***/ })
 /******/ ]);

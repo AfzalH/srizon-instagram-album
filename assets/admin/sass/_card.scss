@@ -2,5 +2,17 @@
   .card {
     min-width: 50px;
     max-width: 100%;
+    .card-action {
+      background-color: white;
+      a {
+        line-height: 20px;
+        height: 20px;
+        vertical-align: middle;
+        display: inline-block;
+      }
+      a i.material-icons {
+        font-size: 20px;
+      }
+    }
   }
 }

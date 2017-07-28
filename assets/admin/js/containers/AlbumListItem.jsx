@@ -3,10 +3,21 @@ import {connect} from 'react-redux';
 import UserChip from '../components/album-list/UserChip';
 import HashtagChip from '../components/album-list/HashtagChip';
 import {successCopy, errorCopy} from '../actions/messagesAction'
+import {deleteAlbum} from '../actions/albumsAction';
+import AlbumListItemSettings from './AlbumListItemSettings';
 
 class AlbumListItem extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            settings_open: false
+        };
+    }
+
+    toggleSettingsForm() {
+        this.setState((prevState)=>({
+            settings_open: !prevState.settings_open
+        }));
     }
 
     componentDidMount() {
@@ -25,34 +36,45 @@ class AlbumListItem extends React.Component {
     }
 
     render() {
-        const {album} = this.props;
+        const {album, deleteAlbum} = this.props;
         return (
             <div className="col s12 l4 m6">
-                <div className="card small">
+                <div className={this.state.settings_open?"card":"card small"}>
                     <div className="card-content">
-                        <span className="card-title">{album.title}</span>
-                        {(album.albumtype == 'user') ?
-                            <UserChip album={album}/> : <HashtagChip album={album}/>
-                        }
-                        <div className="col s3 pl0 label-text grey-text input-align">
-                            S.Code
+                        <div className="row">
+                            <span className="card-title">{album.title}</span>
+                            {(album.albumtype == 'user') ?
+                                <UserChip album={album}/> : <HashtagChip album={album}/>
+                            }
                         </div>
-                        <div className="col s7 pl0">
-                            <input className="grey-text" id="shortcode" type="text" name="shortcode"
-                                   value={"[srzinst id="+album.id+"]"}
-                                   onChange={()=>{}}
-                                   ref={(input)=>{this.shortcode = input}}
-                            />
-                        </div>
-                        <div className="col s2 pl0 input-align">
-                            <div className="copy-text blue-text text-darken-3" onClick={this.handleCopy.bind(this)}>
-                                Copy
+                        <div className="row plr0 top20">
+                            <div className="col s3 pl0 label-text grey-text input-align">
+                                S.Code
+                            </div>
+                            <div className="col s7 pl0">
+                                <input className="grey-text" id="shortcode" type="text" name="shortcode"
+                                       value={"[srzinst id="+album.id+"]"}
+                                       onChange={()=>{}}
+                                       ref={(input)=>{this.shortcode = input}}
+                                />
+                            </div>
+                            <div className="col s2 pl0 input-align">
+                                <div className="copy-text blue-text text-darken-3" onClick={this.handleCopy.bind(this)}>
+                                    Copy
+                                </div>
                             </div>
                         </div>
-                        <div className="col s12 pl0 top10">
-
-                            <p>Test</p>
+                        <div className="row">
+                            {this.state.settings_open ? <AlbumListItemSettings /> : null}
                         </div>
+
+                    </div>
+                    <div className="card-action">
+                        <a className="no-transform blue-text" onClick={this.toggleSettingsForm.bind(this)}>
+                            {this.state.settings_open ? "Hide Settings" : "Show Settings"}
+                        </a>
+                        <a className="right mlr0" onClick={()=>{deleteAlbum(album.id)}}><i
+                            className="material-icons red-icon">delete</i></a>
                     </div>
                 </div>
             </div>
@@ -73,6 +95,9 @@ function mapDispatchToProps(dispatch) {
         },
         errorCopy: ()=> {
             dispatch(errorCopy())
+        },
+        deleteAlbum: (id)=> {
+            dispatch(deleteAlbum(id));
         }
     }
 }

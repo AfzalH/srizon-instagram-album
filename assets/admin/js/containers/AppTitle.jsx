@@ -25,7 +25,7 @@ class AppTitle extends React.Component {
                     <h5 className="thin main-title">Srizon Instagram Album
                         {connected_user ?
                             <a
-                                className={"ml10 btn-floating btn-spin btn-small waves-effect waves-light "+ settings_btn_bg + " darken-3"}
+                                className={"ml10 btn-floating btn-spin btn-floating-small waves-effect waves-light "+ settings_btn_bg + " darken-3"}
                                 onClick={toggleSettingsPanel}><i
                                 className="material-icons">settings</i></a> : null}
                     </h5>

@@ -1,4 +1,4 @@
-import {errorReceived, errorRequesting} from './messagesAction';
+import {errorReceived, errorRequesting, successGlobalSettingsSaved, errorUnknown} from './messagesAction';
 
 export function loadSettings() {
     return dispatch => {
@@ -62,11 +62,28 @@ export function toggleSettingsPanel() {
 export function saveGlobalSettings(settings) {
     return dispatch => {
         dispatch({type: 'SRIZON_INSTAGRAM_SETTINGS_SAVING_GLOBAL'});
-        // axios call
-        // then
-        dispatch({type: 'SRIZON_INSTAGRAM_SETTINGS_SAVED_GLOBAL'});
-        // catch
-        // dispatch (errorReceived(error);
+        axios.post(wpApiSettings.root + 'srizon-instagram/v1/save-global-settings', settings)
+            .then((response)=> {
+                console.log(response.data);
+                if (response.data.result == 'saved') {
+                    dispatch(successGlobalSettingsSaved());
+                    dispatch({type: 'SRIZON_INSTAGRAM_SETTINGS_SAVED_GLOBAL', payload: response.data.data});
+                }
+                else {
+                    dispatch(errorUnknown());
+                    dispatch({type: 'SRIZON_INSTAGRAM_SETTINGS_SAVING_ERROR_GLOBAL'});
+                }
+            })
+            .catch((error)=> {
+                if (error.response) {
+                    dispatch(errorReceived(error));
+                    dispatch({type: 'SRIZON_INSTAGRAM_SETTINGS_SAVING_ERROR_GLOBAL'});
+                }
+                else if (error.request) {
+                    dispatch(errorRequesting(error));
+                    dispatch({type: 'SRIZON_INSTAGRAM_SETTINGS_SAVING_ERROR_GLOBAL'});
+                }
+            });
 
     }
 }
