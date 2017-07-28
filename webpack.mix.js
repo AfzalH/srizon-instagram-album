@@ -11,6 +11,13 @@ let mix = require('laravel-mix');
  |
  */
 
+mix.webpackConfig({
+    externals: {
+        "react": "React",
+        "react-dom": "ReactDOM"
+    }
+});
+
 mix.react('assets/admin/js/app.jsx', 'admin/resources')
     .sass('assets/admin/sass/app.scss', 'admin/resources')
     .sass('assets/lib/srizon-materialize/sass/materialize.scss', 'admin/resources')
