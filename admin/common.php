@@ -20,14 +20,14 @@ function srizon_instagram_admin_menu() {
 function srizon_instagram_load_admin_resources() {
 
 	wp_enqueue_script( 'wp-api' );
-	// add app.css and app.js here
 	wp_enqueue_style( 'roboto', 'https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700', null, '1.0' );
 	wp_enqueue_style( 'material-icons', 'https://fonts.googleapis.com/icon?family=Material+Icons', null, '1.0' );
 	wp_enqueue_style( 'srizon-materialize', srizon_instagram_get_resource_url( 'admin/resources/materialize.css' ), null, '1.0' );
-	wp_enqueue_script( 'srizon-materialize', srizon_instagram_get_resource_url( 'admin/resources/materialize.js' ), [ 'jquery' ], '1.0', true );
 	wp_enqueue_style( 'srizon-instagram-admin', srizon_instagram_get_resource_url( 'admin/resources/app.css' ), null, '1.0' );
-	wp_enqueue_script( 'react', 'https://cdnjs.cloudflare.com/ajax/libs/react/0.14.1/react.min.js', null, '1.0' );
-	wp_enqueue_script( 'react-dom', 'https://cdnjs.cloudflare.com/ajax/libs/react/0.14.1/react-dom.min.js', null, '1.0' );
+
+	wp_enqueue_script( 'srizon-materialize', srizon_instagram_get_resource_url( 'admin/resources/materialize.js' ), [ 'jquery' ], '1.0', true );
+	wp_enqueue_script( 'react', 'https://unpkg.com/react@15/dist/react.min.js', null, '15' );
+	wp_enqueue_script( 'react-dom', 'https://unpkg.com/react-dom@15/dist/react-dom.min.js', null, '15' );
 	wp_enqueue_script( 'srizon-instagram-admin', srizon_instagram_get_resource_url( 'admin/resources/app.js' ), null, '1.0', true );
 }
 
@@ -40,3 +40,7 @@ function srizon_instagram_admin_page() {
 
 	<?php
 }
+
+
+//wp_enqueue_script( 'react', 'https://cdnjs.cloudflare.com/ajax/libs/react/0.14.1/react.min.js', null, '1.0' );
+//wp_enqueue_script( 'react-dom', 'https://cdnjs.cloudflare.com/ajax/libs/react/0.14.1/react-dom.min.js', null, '1.0' );
