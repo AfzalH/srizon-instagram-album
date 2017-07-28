@@ -1,5 +1,6 @@
 const initial_state = {
     albums: [],
+    albums_updating: [],
     initial_load: false
 };
 export default function albumsReducer(state = initial_state, action) {
@@ -11,11 +12,19 @@ export default function albumsReducer(state = initial_state, action) {
         case 'SRIZON_INSTAGRAM_ALBUM_DELETED':
             return {...state, albums: action.payload};
         case 'SRIZON_INSTAGRAM_ALBUM_ADDED':
-            return {...state, albums: [...albums, action.payload]};
+            return {...state, albums: [...state.albums, action.payload]};
         case 'SRIZON_INSTAGRAM_SETTINGS_SAVED_USER_ALBUM':
             return {...state, albums: action.payload};
         case 'SRIZON_INSTAGRAM_SETTINGS_SAVED_HASHTAG_ALBUM':
             return {...state, albums: action.payload};
+        case 'SRIZON_INSTAGRAM_ALBUM_UPDATING':
+            return {...state, albums_updating: [...state.albums_updating, action.payload]};
+        case 'SRIZON_INSTAGRAM_ALBUM_UPDATED':
+            return {
+                ...state,
+                albums_updating: state.albums_updating.filter(id=>(id != action.payload.id)),
+                albums: action.payload.albums
+            };
         default:
             return state;
     }

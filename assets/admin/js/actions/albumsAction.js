@@ -1,4 +1,11 @@
-import {successAlbumSaved, errorReceived, errorRequesting, successAlbumDelete} from './messagesAction';
+import {
+    successAlbumSaved,
+    errorReceived,
+    errorRequesting,
+    successAlbumDelete,
+    errorUnknown,
+    successAlbumUpdated
+} from './messagesAction';
 
 export function newHashtagAlbum() {
     return {
@@ -103,4 +110,21 @@ export function saveUserAlbum(album) {
                 }
             })
     };
+}
+
+export function updateAlbum(id, settings) {
+    return (dispatch)=> {
+        dispatch({type: 'SRIZON_INSTAGRAM_ALBUM_UPDATING', payload: id});
+        axios.post(wpApiSettings.root + 'srizon-instagram/v1/album-settings', {id: id, settings: settings})
+            .then((response)=> {
+                if (response.data.result == 'updated') {
+                    dispatch(successAlbumUpdated());
+                    dispatch({type: 'SRIZON_INSTAGRAM_ALBUM_UPDATED', payload: {id: id, albums: response.data.albums}});
+                }
+            })
+            .catch(()=> {
+                dispatch(errorUnknown());
+                dispatch({type: 'ACTION_CANCELLED'});
+            })
+    }
 }

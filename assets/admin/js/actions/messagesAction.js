@@ -10,7 +10,7 @@ export function successAlbumSaved() {
     }
 }
 
-export function successAlbumDelete(){
+export function successAlbumDelete() {
     return {
         type: 'SRIZON_INSTAGRAM_MESSAGE_RECEIVED',
         payload: {
@@ -88,5 +88,16 @@ export function errorUnknown() {
             expire_in: 5
         }
 
+    }
+}
+
+export function successAlbumUpdated() {
+    return {
+        type: 'SRIZON_INSTAGRAM_MESSAGE_RECEIVED',
+        payload: {
+            txt: 'Album updated successfully',
+            type: 'success',
+            expire_in: 5
+        }
     }
 }

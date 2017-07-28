@@ -40,6 +40,16 @@ CREATE TABLE ' . $t_albums . ' (
 		return $wpdb->insert_id;
 	}
 
+	static function UpdateAlbumSettings( $id, $payload ) {
+		global $wpdb;
+		$table = $wpdb->prefix . 'srzinst_albums';
+
+		$data['title']   = $payload->title;
+		$data['options'] = maybe_serialize( $payload );
+
+		$wpdb->update( $table, $data, [ 'id' => $id ] );
+	}
+
 	static function DeleteAlbum( $id ) {
 		global $wpdb;
 		$table = $wpdb->prefix . 'srzinst_albums';
@@ -49,11 +59,12 @@ CREATE TABLE ' . $t_albums . ' (
 
 	static function GetAllAlbums() {
 		global $wpdb;
-		$table               = $wpdb->prefix . 'srzinst_albums';
-		$albums              = $wpdb->get_results( "SELECT * FROM $table order by id desc" );
+		$table  = $wpdb->prefix . 'srzinst_albums';
+		$albums = $wpdb->get_results( "SELECT * FROM $table order by id desc" );
 		foreach ( $albums as $album ) {
-			$album->options      = maybe_unserialize( $album->options );
+			$album->options = maybe_unserialize( $album->options );
 		}
+
 		return $albums;
 	}
 }

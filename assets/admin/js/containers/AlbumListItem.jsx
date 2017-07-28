@@ -5,6 +5,8 @@ import HashtagChip from '../components/album-list/HashtagChip';
 import {successCopy, errorCopy} from '../actions/messagesAction'
 import {deleteAlbum} from '../actions/albumsAction';
 import AlbumListItemSettings from './AlbumListItemSettings';
+import CircularLoaderRow from '../components/partials/CircularLoaderRow';
+
 
 class AlbumListItem extends React.Component {
     constructor(props) {
@@ -36,27 +38,30 @@ class AlbumListItem extends React.Component {
     }
 
     render() {
-        const {album, deleteAlbum} = this.props;
+        const {albums_updating, album, deleteAlbum} = this.props;
+
+        let this_album_updating = false;
+        if (albums_updating.indexOf(album.id) != -1) this_album_updating = true;
         return (
             <div className="col s12 l4 m6">
-                <div className={this.state.settings_open?"card":"card small"}>
+                <div className={(this.state.settings_open || this_album_updating)?"card":"card small"}>
                     <div className="card-content">
-                        <div className="row">
+                        <div className="row center">
                             <span className="card-title">{album.title}</span>
                             {(album.albumtype == 'user') ?
                                 <UserChip album={album}/> : <HashtagChip album={album}/>
                             }
                         </div>
                         <div className="row plr0 top20">
-                            <div className="col s3 pl0 label-text grey-text input-align">
-                                S.Code
-                            </div>
-                            <div className="col s7 pl0">
-                                <input className="grey-text" id="shortcode" type="text" name="shortcode"
-                                       value={"[srzinst id="+album.id+"]"}
-                                       onChange={()=>{}}
-                                       ref={(input)=>{this.shortcode = input}}
-                                />
+                            <div className="col s10 pl0">
+                                <div className="input-field">
+                                    <input className="grey-text" id="shortcode" type="text" name="shortcode"
+                                           value={"[srzinst id="+album.id+"]"}
+                                           onChange={()=>{}}
+                                           ref={(input)=>{this.shortcode = input}}
+                                    />
+                                    <label htmlFor="shortcode">ShortCode</label>
+                                </div>
                             </div>
                             <div className="col s2 pl0 input-align">
                                 <div className="copy-text blue-text text-darken-3" onClick={this.handleCopy.bind(this)}>
@@ -65,7 +70,12 @@ class AlbumListItem extends React.Component {
                             </div>
                         </div>
                         <div className="row">
-                            {this.state.settings_open ? <AlbumListItemSettings /> : null}
+                            {this_album_updating ?
+                                <CircularLoaderRow /> :
+                                this.state.settings_open ?
+                                    <AlbumListItemSettings album={album}
+                                                           cancelForm={this.toggleSettingsForm.bind(this)}/>
+                                    : null}
                         </div>
 
                     </div>
@@ -84,7 +94,9 @@ class AlbumListItem extends React.Component {
 
 // map state
 function mapStateToProps(state) {
-    return {}
+    return {
+        albums_updating: state.albums.albums_updating
+    }
 }
 
 // map dispatch

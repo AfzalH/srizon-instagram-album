@@ -119,13 +119,28 @@ function srizon_instagram_save_hashtag_album( $req ) {
 }
 
 /**
- * @param \WP_REST_Request $req
+ * @param array $req
  *
  * @return mixed
  */
 function srizon_instagram_delete_album( $req ) {
 	SrizonInstaDB::DeleteAlbum( $req['id'] );
 	$ret['result'] = 'deleted';
+	$ret['albums'] = srizon_instagram_get_album_index();
+
+	return $ret;
+}
+
+/**
+ * @param \WP_REST_Request $req
+ *
+ * @return mixed
+ */
+function srizon_instagram_update_album_settings( $req ) {
+	$json_data = json_decode( $req->get_body() );
+
+	SrizonInstaDB::UpdateAlbumSettings( $json_data->id, $json_data->settings );
+	$ret['result'] = 'updated';
 	$ret['albums'] = srizon_instagram_get_album_index();
 
 	return $ret;
@@ -150,5 +165,9 @@ add_action( 'rest_api_init', function () {
 	register_rest_route( 'srizon-instagram/v1', '/hashtagalbum/', [
 		'methods'  => 'POST',
 		'callback' => 'srizon_instagram_save_hashtag_album',
+	] );
+	register_rest_route( 'srizon-instagram/v1', '/album-settings/', [
+		'methods'  => 'POST',
+		'callback' => 'srizon_instagram_update_album_settings',
 	] );
 } );
