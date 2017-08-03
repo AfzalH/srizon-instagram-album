@@ -17,19 +17,18 @@ function srizon_instagram_album_load_textdomain() {
 add_action( 'plugins_loaded', 'srizon_instagram_album_load_textdomain' );
 
 require_once 'lib/SrizonInstaDB.php';
+require_once 'lib/SrizonInstaAPI.php';
 require_once 'api/index.php';
 // backend files
 if ( is_admin() ) {
 	require_once 'admin/index.php';
-}
-else{
+} else {
 	require_once 'site/index.php';
 }
 
 register_activation_hook( __FILE__, 'srizon_instagram_activate' );
 
-
-function srizon_instagram_activate($network_wide) {
+function srizon_instagram_activate( $network_wide ) {
 	global $wpdb;
 	if ( is_multisite() && $network_wide ) {
 		$blog_ids = $wpdb->get_col( "SELECT blog_id FROM $wpdb->blogs" );

@@ -170,7 +170,7 @@ function srizon_instagram_get_album_data( $req ) {
 	$json_data = json_decode( $req->get_body() );
 
 	$ret['result'] = 'success';
-	$ret['data']   = $json_data;
+	$ret['data']   = SrizonInstaAPI::getAlbumData( $json_data->id );
 
 	return $ret;
 }

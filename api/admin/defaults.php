@@ -15,7 +15,7 @@ function srizon_instagram_album_global_defaults() {
 	];
 }
 
-function srizon_instagram_api_settings() {
+function srizon_instagram_api_settings_defaults() {
 	return [
 		'access_token'  => get_option( 'srizon_instagram_access_token', false ),
 		'oauth_url'     => 'https://api.instagram.com/oauth/authorize/',

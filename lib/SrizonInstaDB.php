@@ -4,20 +4,30 @@ class SrizonInstaDB{
 	static function CreateDBTables() {
 		global $wpdb;
 		$t_albums = $wpdb->prefix . 'srzinst_albums';
+		$t_cache  = $wpdb->prefix . 'srzinst_cache';
 		$sql      = '
 CREATE TABLE ' . $t_albums . ' (
   id int(11) NOT NULL AUTO_INCREMENT,
   title text,
-  albumtype text,
-  userid text,
-  username text,
-  full_name text,
+  albumtype varchar(255),
+  userid varchar(255),
+  username varchar(255),
+  full_name varchar(255),
   profile_picture text,
-  hashtag text,
+  hashtag varchar(255),
   options text,
   PRIMARY KEY (id)
 );
-	
+CREATE TABLE ' . $t_cache . ' (
+  id int(11) NOT NULL AUTO_INCREMENT,
+  url varchar(255),
+  data text,
+  storetime varchar(255),
+  album_id int(11),
+  options text,
+  unique index(url),
+  PRIMARY KEY (id)
+);	
 ';
 		require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
 		dbDelta( $sql );
@@ -76,5 +86,29 @@ CREATE TABLE ' . $t_albums . ' (
 		}
 
 		return $albums;
+	}
+
+	static function getAPICache( $url ) {
+		global $wpdb;
+		$table = $wpdb->prefix . 'srzinst_cache';
+		$q     = $wpdb->prepare( "SELECT * FROM $table WHERE url = '%s'", $url );
+		$data  = $wpdb->get_row( $q );
+
+		return $data;
+	}
+
+	static function updateAPICache( $url, $album_id, $data ) {
+		global $wpdb;
+		$table = $wpdb->prefix . 'srzinst_cache';
+
+		$tdata['url']       = $url;
+		$tdata['album_id']  = $album_id;
+		$tdata['data']      = maybe_serialize( $data );
+		$tdata['storetime'] = time();
+
+		$res = $wpdb->update( $table, $tdata, [ 'url' => $url ] );
+		if ( ! $res ) {
+			$wpdb->insert( $table, $tdata );
+		}
 	}
 }

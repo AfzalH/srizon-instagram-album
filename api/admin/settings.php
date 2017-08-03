@@ -6,7 +6,7 @@ function srizon_instagram_disconnect_user() {
 }
 
 function srizon_instagram_get_settings() {
-	$settings              = srizon_instagram_api_settings();
+	$settings              = srizon_instagram_api_settings_defaults();
 	$connected_user_object = json_decode( get_option( 'srizon_instagram_connected_user', false ) );
 	if ( $connected_user_object ) {
 		$settings['connected_user'] = isset( $connected_user_object->data ) ? $connected_user_object->data : false;
