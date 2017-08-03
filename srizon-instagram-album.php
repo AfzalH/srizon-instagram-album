@@ -22,6 +22,9 @@ require_once 'api/index.php';
 if ( is_admin() ) {
 	require_once 'admin/index.php';
 }
+else{
+	require_once 'site/index.php';
+}
 
 register_activation_hook( __FILE__, 'srizon_instagram_activate' );
 

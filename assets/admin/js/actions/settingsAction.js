@@ -2,7 +2,7 @@ import {errorReceived, errorRequesting, successGlobalSettingsSaved, errorUnknown
 
 export function loadSettings() {
     return dispatch => {
-        axios.get(wpApiSettings.root + 'srizon-instagram/v1/settings')
+        axios.get(srzinstbase + 'settings')
             .then((response)=> {
                 dispatch({
                     type: 'SRIZON_INSTAGRAM_SETTINGS_RECEIVED',
@@ -15,7 +15,7 @@ export function loadSettings() {
 
 export function loadAlbums() {
     return dispatch => {
-        axios.get(wpApiSettings.root + 'srizon-instagram/v1/album')
+        axios.get(srzinstbase + 'album')
             .then(response=> {
                 dispatch({
                     type: 'SRIZON_INSTAGRAM_ALBUMS_RECEIVED',
@@ -37,7 +37,7 @@ export function disconnectUser() {
     return dispatch => {
         if (window.confirm('Are you sure?')) {
             dispatch({type: 'SRIZON_INSTAGRAM_SETTINGS_USER_REMOVEING'});
-            axios.get(wpApiSettings.root + 'srizon-instagram/v1/disconnect-user')
+            axios.get(srzinstbase + 'disconnect-user')
                 .then(()=> {
                     dispatch(loadSettings())
                 })
@@ -62,7 +62,7 @@ export function toggleSettingsPanel() {
 export function saveGlobalSettings(settings) {
     return dispatch => {
         dispatch({type: 'SRIZON_INSTAGRAM_SETTINGS_SAVING_GLOBAL'});
-        axios.post(wpApiSettings.root + 'srizon-instagram/v1/save-global-settings', settings)
+        axios.post(srzinstbase + 'save-global-settings', settings)
             .then((response)=> {
                 console.log(response.data);
                 if (response.data.result == 'saved') {

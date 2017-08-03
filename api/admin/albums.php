@@ -132,6 +132,24 @@ function srizon_instagram_delete_album( $req ) {
 }
 
 /**
+ * @param array $req
+ *
+ * @return mixed
+ */
+function srizon_instagram_get_album( $req ) {
+	$album = SrizonInstaDB::getAlbum( (int) $req['id'] );
+	return $album;
+	if ( $album ) {
+		$ret['result'] = 'success';
+		$ret['albums'] = $album;
+
+		return $ret;
+	}
+
+	return new WP_Error( 'album_not_found', 'Album Not Found', [ 'status' => 404 ] );
+}
+
+/**
  * @param \WP_REST_Request $req
  *
  * @return mixed
@@ -160,6 +178,10 @@ add_action( 'rest_api_init', function () {
 	register_rest_route( 'srizon-instagram/v1', '/album/(?P<id>[\d]+)', [
 		'methods'  => 'DELETE',
 		'callback' => 'srizon_instagram_delete_album',
+	] );
+	register_rest_route( 'srizon-instagram/v1', '/album/(?P<id>[\d]+)', [
+		'methods'  => 'GET',
+		'callback' => 'srizon_instagram_get_album',
 	] );
 
 	register_rest_route( 'srizon-instagram/v1', '/hashtagalbum/', [

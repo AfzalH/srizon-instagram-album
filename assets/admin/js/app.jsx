@@ -17,8 +17,9 @@ const render = () => {
 
 window.axios = require('axios');
 
-if(wpApiSettings) {
+if (wpApiSettings) {
     window.axios.defaults.headers.common['X-WP-Nonce'] = wpApiSettings.nonce;
+    window.srzinstbase = wpApiSettings.root + 'srizon-instagram/v1/';
 }
 window.store = store;
 store.dispatch(loadSettings());

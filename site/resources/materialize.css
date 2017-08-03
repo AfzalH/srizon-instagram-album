@@ -2143,8 +2143,6 @@
  */
 
 html .srizon {
-  font-family: sans-serif;
-  /* 1 */
   -ms-text-size-adjust: 100%;
   /* 2 */
   -webkit-text-size-adjust: 100%;
@@ -4652,31 +4650,6 @@ html .srizon {
 
 .srizon a {
   text-decoration: none;
-}
-
-html .srizon {
-  line-height: 1.5;
-  font-family: "Roboto", sans-serif;
-  font-weight: normal;
-  color: rgba(0, 0, 0, 0.87);
-}
-
-@media only screen and (min-width: 0) {
-  html .srizon {
-    font-size: 14px;
-  }
-}
-
-@media only screen and (min-width: 992px) {
-  html .srizon {
-    font-size: 14.5px;
-  }
-}
-
-@media only screen and (min-width: 1200px) {
-  html .srizon {
-    font-size: 15px;
-  }
 }
 
 .srizon h1,

@@ -23,7 +23,7 @@ export function saveHashtagAlbum(album) {
     return (dispatch)=> {
         dispatch({type: 'SRIZON_INSTAGRAM_SETTINGS_SAVING_HASHTAG_ALBUM'});
         console.log(album);
-        axios.post(wpApiSettings.root + 'srizon-instagram/v1/hashtagalbum', {
+        axios.post(srzinstbase + 'hashtagalbum', {
             hashtag: album.hashtag,
             title: album.title
         })
@@ -60,32 +60,11 @@ export function cancelUserAlbum() {
         type: 'SRIZON_INSTAGRAM_SETTINGS_CANCEL_USER_ALBUM'
     }
 }
-export function deleteAlbum(id) {
-    if ((window.confirm('Are you sure?'))) {
-        return (dispatch) => {
-            dispatch({type: 'SRIZON_INSTAGRAM_ALBUM_DELETEING', payload: id});
-            axios.delete(wpApiSettings.root + 'srizon-instagram/v1/album/' + id)
-                .then((response)=> {
-                    if (response.data.result == 'deleted') {
-                        dispatch(successAlbumDelete());
-                        dispatch({type: 'SRIZON_INSTAGRAM_ALBUM_DELETED', payload: response.data.albums});
-                    }
-                })
-                .catch(()=> {
-                    dispatch(errorUnknown());
-                    dispatch({type: 'ACTION_CANCELLED'});
-                })
-        };
-
-    } else {
-        return {type: 'ACTION_CANCELLED'}
-    }
-}
 
 export function saveUserAlbum(album) {
     return (dispatch) => {
         dispatch({type: 'SRIZON_INSTAGRAM_SETTINGS_SAVING_USER_ALBUM'});
-        axios.post(wpApiSettings.root + 'srizon-instagram/v1/useralbum', {username: album.username, title: album.title})
+        axios.post(srzinstbase + 'useralbum', {username: album.username, title: album.title})
             .then((response)=> {
                 if (response.data.result == 'saved') {
                     dispatch(successAlbumSaved());
@@ -112,10 +91,33 @@ export function saveUserAlbum(album) {
     };
 }
 
+
+export function deleteAlbum(id) {
+    if ((window.confirm('Are you sure?'))) {
+        return (dispatch) => {
+            dispatch({type: 'SRIZON_INSTAGRAM_ALBUM_DELETEING', payload: id});
+            axios.delete(srzinstbase + 'album/' + id)
+                .then((response)=> {
+                    if (response.data.result == 'deleted') {
+                        dispatch(successAlbumDelete());
+                        dispatch({type: 'SRIZON_INSTAGRAM_ALBUM_DELETED', payload: response.data.albums});
+                    }
+                })
+                .catch(()=> {
+                    dispatch(errorUnknown());
+                    dispatch({type: 'ACTION_CANCELLED'});
+                })
+        };
+
+    } else {
+        return {type: 'ACTION_CANCELLED'}
+    }
+}
+
 export function updateAlbum(id, settings) {
     return (dispatch)=> {
         dispatch({type: 'SRIZON_INSTAGRAM_ALBUM_UPDATING', payload: id});
-        axios.post(wpApiSettings.root + 'srizon-instagram/v1/album-settings', {id: id, settings: settings})
+        axios.post(srzinstbase + 'album-settings', {id: id, settings: settings})
             .then((response)=> {
                 if (response.data.result == 'updated') {
                     dispatch(successAlbumUpdated());
