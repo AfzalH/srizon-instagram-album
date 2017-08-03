@@ -1,25 +1,42 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import {getAlbum, getAlbumData} from '../actions/albumAction';
 
 // smart component with redux connect
 
-const Base = ({id, incr, decr}) => (
-    <div>
-        <h1 className="entry-title">Testing {id}</h1>
-    </div>
-);
+class Base extends React.Component {
+    componentDidMount() {
+        const {id, getAlbum, getAlbumData} = this.props;
+        getAlbum(id);
+        getAlbumData(id);
+    }
+
+    render() {
+        const {id} = this.props;
+        return (
+            <div>
+                <h1 className="entry-title">Testing {id}</h1>
+            </div>
+        )
+    }
+}
 
 // map state
 function mapStateToProps(state) {
     return {
+        albums: state.albums
     }
 }
 
 // map dispatch
 function mapDispatchToProps(dispatch) {
     return {
-        incr: (id)=>dispatch({type: 'INC', payload: id}),
-        decr: (id)=>dispatch({type: 'DEC', payload: id})
+        getAlbum: (id)=> {
+            dispatch(getAlbum(id));
+        },
+        getAlbumData: (id)=> {
+            dispatch(getAlbumData(id));
+        }
     }
 }
 

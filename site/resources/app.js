@@ -26261,40 +26261,79 @@ render();
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_redux__ = __webpack_require__(17);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__actions_albumAction__ = __webpack_require__(317);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
 
 
 
 // smart component with redux connect
 
-var Base = function Base(_ref) {
-    var id = _ref.id,
-        incr = _ref.incr,
-        decr = _ref.decr;
-    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-        'div',
-        null,
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-            'h1',
-            { className: 'entry-title' },
-            'Testing ',
-            id
-        )
-    );
-};
+var Base = function (_React$Component) {
+    _inherits(Base, _React$Component);
+
+    function Base() {
+        _classCallCheck(this, Base);
+
+        return _possibleConstructorReturn(this, (Base.__proto__ || Object.getPrototypeOf(Base)).apply(this, arguments));
+    }
+
+    _createClass(Base, [{
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            var _props = this.props,
+                id = _props.id,
+                getAlbum = _props.getAlbum,
+                getAlbumData = _props.getAlbumData;
+
+            getAlbum(id);
+            getAlbumData(id);
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var id = this.props.id;
+
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'div',
+                null,
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'h1',
+                    { className: 'entry-title' },
+                    'Testing ',
+                    id
+                )
+            );
+        }
+    }]);
+
+    return Base;
+}(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Component);
 
 // map state
+
+
 function mapStateToProps(state) {
-    return {};
+    return {
+        albums: state.albums
+    };
 }
 
 // map dispatch
 function mapDispatchToProps(dispatch) {
     return {
-        incr: function incr(id) {
-            return dispatch({ type: 'INC', payload: id });
+        getAlbum: function getAlbum(id) {
+            dispatch(__WEBPACK_IMPORTED_MODULE_2__actions_albumAction__["a" /* getAlbum */](id));
         },
-        decr: function decr(id) {
-            return dispatch({ type: 'DEC', payload: id });
+        getAlbumData: function getAlbumData(id) {
+            dispatch(__WEBPACK_IMPORTED_MODULE_2__actions_albumAction__["b" /* getAlbumData */](id));
         }
     };
 }
@@ -26320,12 +26359,61 @@ function albumReducer() {
     switch (action.type) {
         case 'INIT_ALBUMS':
             return _extends({}, state, _defineProperty({}, action.id, {
-                settings_loaded: false, data_loaded: false
+                options_loaded: false,
+                data_loaded: false
             }));
+            break;
+        case 'ALBUM_OPTIONS_LOADED':
+            return _extends({}, state, _defineProperty({}, action.id, _extends({}, state[action.id], {
+                options_loaded: true,
+                options: action.payload
+            })));
+            break;
+        case 'ALBUM_DATA_LOADED':
+            return _extends({}, state, _defineProperty({}, action.id, _extends({}, state[action.id], {
+                data_loaded: true,
+                data: action.payload
+            })));
             break;
         default:
             return state;
     }
+}
+
+/***/ }),
+/* 317 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (immutable) */ __webpack_exports__["a"] = getAlbum;
+/* harmony export (immutable) */ __webpack_exports__["b"] = getAlbumData;
+function getAlbum(id) {
+    return function (dispatch) {
+        axios.get(srzinstbase + 'album/' + id).then(function (response) {
+            if (response.data.result == 'success') {
+                dispatch({
+                    type: 'ALBUM_OPTIONS_LOADED',
+                    id: id,
+                    payload: response.data.album
+                });
+            }
+        });
+        axios.post(srzinstbase + 'album-data', { id: id });
+    };
+}
+
+function getAlbumData(id) {
+    return function (dispatch) {
+        axios.post(srzinstbase + 'album-data', { id: id }).then(function (response) {
+            if (response.data.result == 'success') {
+                dispatch({
+                    type: 'ALBUM_DATA_LOADED',
+                    id: id,
+                    payload: response.data.data
+                });
+            }
+        });
+    };
 }
 
 /***/ })
