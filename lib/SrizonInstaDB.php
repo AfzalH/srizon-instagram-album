@@ -93,8 +93,13 @@ CREATE TABLE ' . $t_cache . ' (
 		$table = $wpdb->prefix . 'srzinst_cache';
 		$q     = $wpdb->prepare( "SELECT * FROM $table WHERE url = '%s'", $url );
 		$data  = $wpdb->get_row( $q );
+		if ( $data ) {
+			$data->data = unserialize( $data->data );
 
-		return $data;
+			return $data->data;
+		}
+
+		return false;
 	}
 
 	static function updateAPICache( $url, $album_id, $data ) {
