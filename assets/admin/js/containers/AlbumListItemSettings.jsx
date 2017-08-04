@@ -55,10 +55,12 @@ class AlbumListItemSettings extends React.Component {
                     </div>
 
                     <div className="top20">
-                        <p className="top0">Default Layout</p>
+                        <p className="top0">Layout</p>
                         <RadioField val="collage" label="Responsive Collage" name="layout"
                                     curval={this.state.layout} onch={this.hich}/>
                         <RadioField val="slider" label="Responsive Slider" name="layout"
+                                    curval={this.state.layout} onch={this.hich}/>
+                        <RadioField val="carousel" label="Carousel" name="layout"
                                     curval={this.state.layout} onch={this.hich}/>
                         {this.state.layout === "collage" ?
                             <TextField val={this.state.collage_row_height} onch={this.hich}

@@ -72,7 +72,9 @@ CREATE TABLE ' . $t_cache . ' (
 		$table          = $wpdb->prefix . 'srzinst_albums';
 		$q              = $wpdb->prepare( "SELECT * FROM $table WHERE id = %d", $id );
 		$album          = $wpdb->get_row( $q );
-		$album->options = maybe_unserialize( $album->options );
+		if($album) {
+			$album->options = maybe_unserialize( $album->options );
+		}
 
 		return $album;
 	}

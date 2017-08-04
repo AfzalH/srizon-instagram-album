@@ -1,6 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {getAlbum, getAlbumData} from '../actions/albumAction';
+import LayoutSelector from '../components/LayoutSelector';
 
 // smart component with redux connect
 
@@ -12,11 +13,13 @@ class Base extends React.Component {
     }
 
     render() {
-        const {id} = this.props;
+        const {id, albums} = this.props;
         return (
-            <div>
-                <h1 className="entry-title">Testing {id}</h1>
-            </div>
+            (albums[id].data_loaded && albums[id].options_loaded) ?
+
+                <LayoutSelector album={albums[id]}/>
+                :
+                <div>Loading...</div>
         )
     }
 }

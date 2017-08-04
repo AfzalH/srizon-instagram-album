@@ -79,6 +79,8 @@ class SettingsPanel extends React.Component {
                                         curval={this.state.layout} onch={this.hich}/>
                             <RadioField val="slider" label="Responsive Slider" name="layout"
                                         curval={this.state.layout} onch={this.hich}/>
+                            <RadioField val="carousel" label="Carousel" name="layout"
+                                        curval={this.state.layout} onch={this.hich}/>
                             {this.state.layout === "collage" ?
                                 <TextField val={this.state.collage_row_height} onch={this.hich}
                                            name="collage_row_height" aclass="top40"

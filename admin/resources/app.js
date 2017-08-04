@@ -27902,11 +27902,13 @@ var AlbumListItemSettings = function (_React$Component) {
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             'p',
                             { className: 'top0' },
-                            'Default Layout'
+                            'Layout'
                         ),
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_form_RadioField__["a" /* default */], { val: 'collage', label: 'Responsive Collage', name: 'layout',
                             curval: this.state.layout, onch: this.hich }),
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_form_RadioField__["a" /* default */], { val: 'slider', label: 'Responsive Slider', name: 'layout',
+                            curval: this.state.layout, onch: this.hich }),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_form_RadioField__["a" /* default */], { val: 'carousel', label: 'Carousel', name: 'layout',
                             curval: this.state.layout, onch: this.hich }),
                         this.state.layout === "collage" ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__components_form_TextField__["a" /* default */], { val: this.state.collage_row_height, onch: this.hich,
                             name: 'collage_row_height', aclass: 'top40',
@@ -29934,6 +29936,8 @@ var SettingsPanel = function (_React$Component) {
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__components_form_RadioField__["a" /* default */], { val: 'collage', label: 'Responsive Collage', name: 'layout',
                             curval: this.state.layout, onch: this.hich }),
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__components_form_RadioField__["a" /* default */], { val: 'slider', label: 'Responsive Slider', name: 'layout',
+                            curval: this.state.layout, onch: this.hich }),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__components_form_RadioField__["a" /* default */], { val: 'carousel', label: 'Carousel', name: 'layout',
                             curval: this.state.layout, onch: this.hich }),
                         this.state.layout === "collage" ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_form_TextField__["a" /* default */], { val: this.state.collage_row_height, onch: this.hich,
                             name: 'collage_row_height', aclass: 'top40',
