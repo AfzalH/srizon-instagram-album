@@ -153,45 +153,43 @@ var emptyFunction = __webpack_require__(11);
 var warning = emptyFunction;
 
 if (true) {
-  (function () {
-    var printWarning = function printWarning(format) {
-      for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-        args[_key - 1] = arguments[_key];
+  var printWarning = function printWarning(format) {
+    for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+      args[_key - 1] = arguments[_key];
+    }
+
+    var argIndex = 0;
+    var message = 'Warning: ' + format.replace(/%s/g, function () {
+      return args[argIndex++];
+    });
+    if (typeof console !== 'undefined') {
+      console.error(message);
+    }
+    try {
+      // --- Welcome to debugging React ---
+      // This error was thrown as a convenience so that you can use this stack
+      // to find the callsite that caused this warning to fire.
+      throw new Error(message);
+    } catch (x) {}
+  };
+
+  warning = function warning(condition, format) {
+    if (format === undefined) {
+      throw new Error('`warning(condition, format, ...args)` requires a warning ' + 'message argument');
+    }
+
+    if (format.indexOf('Failed Composite propType: ') === 0) {
+      return; // Ignore CompositeComponent proptype check.
+    }
+
+    if (!condition) {
+      for (var _len2 = arguments.length, args = Array(_len2 > 2 ? _len2 - 2 : 0), _key2 = 2; _key2 < _len2; _key2++) {
+        args[_key2 - 2] = arguments[_key2];
       }
 
-      var argIndex = 0;
-      var message = 'Warning: ' + format.replace(/%s/g, function () {
-        return args[argIndex++];
-      });
-      if (typeof console !== 'undefined') {
-        console.error(message);
-      }
-      try {
-        // --- Welcome to debugging React ---
-        // This error was thrown as a convenience so that you can use this stack
-        // to find the callsite that caused this warning to fire.
-        throw new Error(message);
-      } catch (x) {}
-    };
-
-    warning = function warning(condition, format) {
-      if (format === undefined) {
-        throw new Error('`warning(condition, format, ...args)` requires a warning ' + 'message argument');
-      }
-
-      if (format.indexOf('Failed Composite propType: ') === 0) {
-        return; // Ignore CompositeComponent proptype check.
-      }
-
-      if (!condition) {
-        for (var _len2 = arguments.length, args = Array(_len2 > 2 ? _len2 - 2 : 0), _key2 = 2; _key2 < _len2; _key2++) {
-          args[_key2 - 2] = arguments[_key2];
-        }
-
-        printWarning.apply(undefined, [format].concat(args));
-      }
-    };
-  })();
+      printWarning.apply(undefined, [format].concat(args));
+    }
+  };
 }
 
 module.exports = warning;
@@ -6986,10 +6984,10 @@ var objectCtorString = funcToString.call(Object);
  * // => true
  */
 function isPlainObject(value) {
-  if (!__WEBPACK_IMPORTED_MODULE_2__isObjectLike_js__["a" /* default */](value) || __WEBPACK_IMPORTED_MODULE_0__baseGetTag_js__["a" /* default */](value) != objectTag) {
+  if (!Object(__WEBPACK_IMPORTED_MODULE_2__isObjectLike_js__["a" /* default */])(value) || Object(__WEBPACK_IMPORTED_MODULE_0__baseGetTag_js__["a" /* default */])(value) != objectTag) {
     return false;
   }
-  var proto = __WEBPACK_IMPORTED_MODULE_1__getPrototype_js__["a" /* default */](value);
+  var proto = Object(__WEBPACK_IMPORTED_MODULE_1__getPrototype_js__["a" /* default */])(value);
   if (proto === null) {
     return true;
   }
@@ -10006,18 +10004,11 @@ module.exports = traverseAllChildren;
 
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
+ * All rights reserved.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
  *
  * @typechecks
  */
@@ -10866,7 +10857,7 @@ module.exports = getHostComponentFromComposite;
 function isCrushed() {}
 
 if ("development" !== 'production' && typeof isCrushed.name === 'string' && isCrushed.name !== 'isCrushed') {
-  __WEBPACK_IMPORTED_MODULE_5__utils_warning__["a" /* default */]('You are currently using minified code outside of NODE_ENV === \'production\'. ' + 'This means that you are running a slower development build of Redux. ' + 'You can use loose-envify (https://github.com/zertosh/loose-envify) for browserify ' + 'or DefinePlugin for webpack (http://stackoverflow.com/questions/30030031) ' + 'to ensure you have the correct code for your production build.');
+  Object(__WEBPACK_IMPORTED_MODULE_5__utils_warning__["a" /* default */])('You are currently using minified code outside of NODE_ENV === \'production\'. ' + 'This means that you are running a slower development build of Redux. ' + 'You can use loose-envify (https://github.com/zertosh/loose-envify) for browserify ' + 'or DefinePlugin for webpack (http://stackoverflow.com/questions/30030031) ' + 'to ensure you have the correct code for your production build.');
 }
 
 
@@ -11031,7 +11022,7 @@ var ActionTypes = {
    * return something else (for example, a Promise you can await).
    */
   function dispatch(action) {
-    if (!__WEBPACK_IMPORTED_MODULE_0_lodash_es_isPlainObject__["a" /* default */](action)) {
+    if (!Object(__WEBPACK_IMPORTED_MODULE_0_lodash_es_isPlainObject__["a" /* default */])(action)) {
       throw new Error('Actions must be plain objects. ' + 'Use custom middleware for async actions.');
     }
 
@@ -11332,7 +11323,7 @@ selectorFactory) {
   var childContextTypes = (_childContextTypes = {}, _childContextTypes[subscriptionKey] = __WEBPACK_IMPORTED_MODULE_4__utils_PropTypes__["b" /* subscriptionShape */], _childContextTypes);
 
   return function wrapWithConnect(WrappedComponent) {
-    __WEBPACK_IMPORTED_MODULE_1_invariant___default.a(typeof WrappedComponent == 'function', 'You must pass a component to the function returned by ' + ('connect. Instead received ' + JSON.stringify(WrappedComponent)));
+    __WEBPACK_IMPORTED_MODULE_1_invariant___default()(typeof WrappedComponent == 'function', 'You must pass a component to the function returned by ' + ('connect. Instead received ' + JSON.stringify(WrappedComponent)));
 
     var wrappedComponentName = WrappedComponent.displayName || WrappedComponent.name || 'Component';
 
@@ -11365,7 +11356,7 @@ selectorFactory) {
         _this.propsMode = Boolean(props[storeKey]);
         _this.setWrappedInstance = _this.setWrappedInstance.bind(_this);
 
-        __WEBPACK_IMPORTED_MODULE_1_invariant___default.a(_this.store, 'Could not find "' + storeKey + '" in either the context or props of ' + ('"' + displayName + '". Either wrap the root component in a <Provider>, ') + ('or explicitly pass "' + storeKey + '" as a prop to "' + displayName + '".'));
+        __WEBPACK_IMPORTED_MODULE_1_invariant___default()(_this.store, 'Could not find "' + storeKey + '" in either the context or props of ' + ('"' + displayName + '". Either wrap the root component in a <Provider>, ') + ('or explicitly pass "' + storeKey + '" as a prop to "' + displayName + '".'));
 
         _this.initSelector();
         _this.initSubscription();
@@ -11415,7 +11406,7 @@ selectorFactory) {
       };
 
       Connect.prototype.getWrappedInstance = function getWrappedInstance() {
-        __WEBPACK_IMPORTED_MODULE_1_invariant___default.a(withRef, 'To access the wrapped instance, you need to specify ' + ('{ withRef: true } in the options argument of the ' + methodName + '() call.'));
+        __WEBPACK_IMPORTED_MODULE_1_invariant___default()(withRef, 'To access the wrapped instance, you need to specify ' + ('{ withRef: true } in the options argument of the ' + methodName + '() call.'));
         return this.wrappedInstance;
       };
 
@@ -11491,7 +11482,7 @@ selectorFactory) {
         if (selector.error) {
           throw selector.error;
         } else {
-          return __WEBPACK_IMPORTED_MODULE_2_react__["createElement"](WrappedComponent, this.addExtraProps(selector.props));
+          return Object(__WEBPACK_IMPORTED_MODULE_2_react__["createElement"])(WrappedComponent, this.addExtraProps(selector.props));
         }
       };
 
@@ -11518,7 +11509,7 @@ selectorFactory) {
       };
     }
 
-    return __WEBPACK_IMPORTED_MODULE_0_hoist_non_react_statics___default.a(Connect, WrappedComponent);
+    return __WEBPACK_IMPORTED_MODULE_0_hoist_non_react_statics___default()(Connect, WrappedComponent);
   };
 }
 
@@ -11590,7 +11581,7 @@ function wrapMapToPropsFunc(mapToProps, methodName) {
         props = proxy(stateOrDispatch, ownProps);
       }
 
-      if (true) __WEBPACK_IMPORTED_MODULE_0__utils_verifyPlainObject__["a" /* default */](props, displayName, methodName);
+      if (true) Object(__WEBPACK_IMPORTED_MODULE_0__utils_verifyPlainObject__["a" /* default */])(props, displayName, methodName);
 
       return props;
     };
@@ -11611,8 +11602,8 @@ function wrapMapToPropsFunc(mapToProps, methodName) {
 
 
 function verifyPlainObject(value, displayName, methodName) {
-  if (!__WEBPACK_IMPORTED_MODULE_0_lodash_es_isPlainObject__["a" /* default */](value)) {
-    __WEBPACK_IMPORTED_MODULE_1__warning__["a" /* default */](methodName + '() in ' + displayName + ' must return a plain object. Instead received ' + value + '.');
+  if (!Object(__WEBPACK_IMPORTED_MODULE_0_lodash_es_isPlainObject__["a" /* default */])(value)) {
+    Object(__WEBPACK_IMPORTED_MODULE_1__warning__["a" /* default */])(methodName + '() in ' + displayName + ' must return a plain object. Instead received ' + value + '.');
   }
 }
 
@@ -11653,17 +11644,17 @@ function saveHashtagAlbum(album) {
             title: album.title
         }).then(function (response) {
             if (response.data.result == 'saved') {
-                dispatch(__WEBPACK_IMPORTED_MODULE_0__messagesAction__["f" /* successAlbumSaved */]());
+                dispatch(Object(__WEBPACK_IMPORTED_MODULE_0__messagesAction__["f" /* successAlbumSaved */])());
                 dispatch({ type: 'SRIZON_INSTAGRAM_SETTINGS_SAVED_HASHTAG_ALBUM', payload: response.data.albums });
             } else {
                 dispatch({ type: 'SRIZON_INSTAGRAM_SETTINGS_CANCEL_HASHTAG_ALBUM' });
             }
         }).catch(function (error) {
             if (error.response) {
-                dispatch(__WEBPACK_IMPORTED_MODULE_0__messagesAction__["b" /* errorReceived */](error));
+                dispatch(Object(__WEBPACK_IMPORTED_MODULE_0__messagesAction__["b" /* errorReceived */])(error));
                 dispatch({ type: 'SRIZON_INSTAGRAM_SETTINGS_NEW_HASHTAG_ALBUM' });
             } else if (error.request) {
-                dispatch(__WEBPACK_IMPORTED_MODULE_0__messagesAction__["c" /* errorRequesting */](error));
+                dispatch(Object(__WEBPACK_IMPORTED_MODULE_0__messagesAction__["c" /* errorRequesting */])(error));
                 dispatch({ type: 'SRIZON_INSTAGRAM_SETTINGS_NEW_HASHTAG_ALBUM' });
             }
         });
@@ -11687,7 +11678,7 @@ function saveUserAlbum(album) {
         dispatch({ type: 'SRIZON_INSTAGRAM_SETTINGS_SAVING_USER_ALBUM' });
         axios.post(srzinstbase + 'useralbum', { username: album.username, title: album.title }).then(function (response) {
             if (response.data.result == 'saved') {
-                dispatch(__WEBPACK_IMPORTED_MODULE_0__messagesAction__["f" /* successAlbumSaved */]());
+                dispatch(Object(__WEBPACK_IMPORTED_MODULE_0__messagesAction__["f" /* successAlbumSaved */])());
                 dispatch({ type: 'SRIZON_INSTAGRAM_SETTINGS_SAVED_USER_ALBUM', payload: response.data.albums });
             } else if (response.data.result == 'selection') {
                 dispatch({ type: 'SRIZON_INSTAGRAM_SETTINGS_TEMP_ALBUM_TITLE', payload: album.title });
@@ -11697,10 +11688,10 @@ function saveUserAlbum(album) {
             }
         }).catch(function (error) {
             if (error.response) {
-                dispatch(__WEBPACK_IMPORTED_MODULE_0__messagesAction__["b" /* errorReceived */](error));
+                dispatch(Object(__WEBPACK_IMPORTED_MODULE_0__messagesAction__["b" /* errorReceived */])(error));
                 dispatch({ type: 'SRIZON_INSTAGRAM_SETTINGS_NEW_USER_ALBUM' });
             } else if (error.request) {
-                dispatch(__WEBPACK_IMPORTED_MODULE_0__messagesAction__["c" /* errorRequesting */](error));
+                dispatch(Object(__WEBPACK_IMPORTED_MODULE_0__messagesAction__["c" /* errorRequesting */])(error));
                 dispatch({ type: 'SRIZON_INSTAGRAM_SETTINGS_NEW_USER_ALBUM' });
             }
         });
@@ -11713,11 +11704,11 @@ function deleteAlbum(id) {
             dispatch({ type: 'SRIZON_INSTAGRAM_ALBUM_DELETEING', payload: id });
             axios.delete(srzinstbase + 'album/' + id).then(function (response) {
                 if (response.data.result == 'deleted') {
-                    dispatch(__WEBPACK_IMPORTED_MODULE_0__messagesAction__["e" /* successAlbumDelete */]());
+                    dispatch(Object(__WEBPACK_IMPORTED_MODULE_0__messagesAction__["e" /* successAlbumDelete */])());
                     dispatch({ type: 'SRIZON_INSTAGRAM_ALBUM_DELETED', payload: response.data.albums });
                 }
             }).catch(function () {
-                dispatch(__WEBPACK_IMPORTED_MODULE_0__messagesAction__["d" /* errorUnknown */]());
+                dispatch(Object(__WEBPACK_IMPORTED_MODULE_0__messagesAction__["d" /* errorUnknown */])());
                 dispatch({ type: 'ACTION_CANCELLED' });
             });
         };
@@ -11731,11 +11722,11 @@ function updateAlbum(id, settings) {
         dispatch({ type: 'SRIZON_INSTAGRAM_ALBUM_UPDATING', payload: id });
         axios.post(srzinstbase + 'album-settings', { id: id, settings: settings }).then(function (response) {
             if (response.data.result == 'updated') {
-                dispatch(__WEBPACK_IMPORTED_MODULE_0__messagesAction__["g" /* successAlbumUpdated */]());
+                dispatch(Object(__WEBPACK_IMPORTED_MODULE_0__messagesAction__["g" /* successAlbumUpdated */])());
                 dispatch({ type: 'SRIZON_INSTAGRAM_ALBUM_UPDATED', payload: { id: id, albums: response.data.albums } });
             }
         }).catch(function () {
-            dispatch(__WEBPACK_IMPORTED_MODULE_0__messagesAction__["d" /* errorUnknown */]());
+            dispatch(Object(__WEBPACK_IMPORTED_MODULE_0__messagesAction__["d" /* errorUnknown */])());
             dispatch({ type: 'ACTION_CANCELLED' });
         });
     };
@@ -12990,9 +12981,9 @@ function loadAlbums() {
             });
         }).catch(function (error) {
             if (error.response) {
-                dispatch(__WEBPACK_IMPORTED_MODULE_0__messagesAction__["b" /* errorReceived */](error));
+                dispatch(Object(__WEBPACK_IMPORTED_MODULE_0__messagesAction__["b" /* errorReceived */])(error));
             } else if (error.request) {
-                dispatch(__WEBPACK_IMPORTED_MODULE_0__messagesAction__["c" /* errorRequesting */](error));
+                dispatch(Object(__WEBPACK_IMPORTED_MODULE_0__messagesAction__["c" /* errorRequesting */])(error));
             }
         });
     };
@@ -13006,9 +12997,9 @@ function disconnectUser() {
                 dispatch(loadSettings());
             }).catch(function (error) {
                 if (error.response) {
-                    dispatch(__WEBPACK_IMPORTED_MODULE_0__messagesAction__["b" /* errorReceived */](error));
+                    dispatch(Object(__WEBPACK_IMPORTED_MODULE_0__messagesAction__["b" /* errorReceived */])(error));
                 } else if (error.request) {
-                    dispatch(__WEBPACK_IMPORTED_MODULE_0__messagesAction__["c" /* errorRequesting */](error));
+                    dispatch(Object(__WEBPACK_IMPORTED_MODULE_0__messagesAction__["c" /* errorRequesting */])(error));
                 }
             });
         }
@@ -13027,18 +13018,18 @@ function saveGlobalSettings(settings) {
         axios.post(srzinstbase + 'save-global-settings', settings).then(function (response) {
             console.log(response.data);
             if (response.data.result == 'saved') {
-                dispatch(__WEBPACK_IMPORTED_MODULE_0__messagesAction__["i" /* successGlobalSettingsSaved */]());
+                dispatch(Object(__WEBPACK_IMPORTED_MODULE_0__messagesAction__["i" /* successGlobalSettingsSaved */])());
                 dispatch({ type: 'SRIZON_INSTAGRAM_SETTINGS_SAVED_GLOBAL', payload: response.data.data });
             } else {
-                dispatch(__WEBPACK_IMPORTED_MODULE_0__messagesAction__["d" /* errorUnknown */]());
+                dispatch(Object(__WEBPACK_IMPORTED_MODULE_0__messagesAction__["d" /* errorUnknown */])());
                 dispatch({ type: 'SRIZON_INSTAGRAM_SETTINGS_SAVING_ERROR_GLOBAL' });
             }
         }).catch(function (error) {
             if (error.response) {
-                dispatch(__WEBPACK_IMPORTED_MODULE_0__messagesAction__["b" /* errorReceived */](error));
+                dispatch(Object(__WEBPACK_IMPORTED_MODULE_0__messagesAction__["b" /* errorReceived */])(error));
                 dispatch({ type: 'SRIZON_INSTAGRAM_SETTINGS_SAVING_ERROR_GLOBAL' });
             } else if (error.request) {
-                dispatch(__WEBPACK_IMPORTED_MODULE_0__messagesAction__["c" /* errorRequesting */](error));
+                dispatch(Object(__WEBPACK_IMPORTED_MODULE_0__messagesAction__["c" /* errorRequesting */])(error));
                 dispatch({ type: 'SRIZON_INSTAGRAM_SETTINGS_SAVING_ERROR_GLOBAL' });
             }
         });
@@ -24259,8 +24250,8 @@ function baseGetTag(value) {
     return value === undefined ? undefinedTag : nullTag;
   }
   return (symToStringTag && symToStringTag in Object(value))
-    ? __WEBPACK_IMPORTED_MODULE_1__getRawTag_js__["a" /* default */](value)
-    : __WEBPACK_IMPORTED_MODULE_2__objectToString_js__["a" /* default */](value);
+    ? Object(__WEBPACK_IMPORTED_MODULE_1__getRawTag_js__["a" /* default */])(value)
+    : Object(__WEBPACK_IMPORTED_MODULE_2__objectToString_js__["a" /* default */])(value);
 }
 
 /* harmony default export */ __webpack_exports__["a"] = (baseGetTag);
@@ -24387,7 +24378,7 @@ function objectToString(value) {
 
 
 /** Built-in value references. */
-var getPrototype = __WEBPACK_IMPORTED_MODULE_0__overArg_js__["a" /* default */](Object.getPrototypeOf, Object);
+var getPrototype = Object(__WEBPACK_IMPORTED_MODULE_0__overArg_js__["a" /* default */])(Object.getPrototypeOf, Object);
 
 /* harmony default export */ __webpack_exports__["a"] = (getPrototype);
 
@@ -24578,7 +24569,7 @@ function getUnexpectedStateShapeWarningMessage(inputState, reducers, action, une
     return 'Store does not have a valid reducer. Make sure the argument passed ' + 'to combineReducers is an object whose values are reducers.';
   }
 
-  if (!__WEBPACK_IMPORTED_MODULE_1_lodash_es_isPlainObject__["a" /* default */](inputState)) {
+  if (!Object(__WEBPACK_IMPORTED_MODULE_1_lodash_es_isPlainObject__["a" /* default */])(inputState)) {
     return 'The ' + argumentName + ' has unexpected type of "' + {}.toString.call(inputState).match(/\s([a-z|A-Z]+)/)[1] + '". Expected argument to be an object with the following ' + ('keys: "' + reducerKeys.join('", "') + '"');
   }
 
@@ -24635,7 +24626,7 @@ function combineReducers(reducers) {
 
     if (true) {
       if (typeof reducers[key] === 'undefined') {
-        __WEBPACK_IMPORTED_MODULE_2__utils_warning__["a" /* default */]('No reducer provided for key "' + key + '"');
+        Object(__WEBPACK_IMPORTED_MODULE_2__utils_warning__["a" /* default */])('No reducer provided for key "' + key + '"');
       }
     }
 
@@ -24668,7 +24659,7 @@ function combineReducers(reducers) {
     if (true) {
       var warningMessage = getUnexpectedStateShapeWarningMessage(state, finalReducers, action, unexpectedKeyCache);
       if (warningMessage) {
-        __WEBPACK_IMPORTED_MODULE_2__utils_warning__["a" /* default */](warningMessage);
+        Object(__WEBPACK_IMPORTED_MODULE_2__utils_warning__["a" /* default */])(warningMessage);
       }
     }
 
@@ -24867,7 +24858,7 @@ function warnAboutReceivingStore() {
   }
   didWarnAboutReceivingStore = true;
 
-  __WEBPACK_IMPORTED_MODULE_3__utils_warning__["a" /* default */]('<Provider> does not support changing `store` on the fly. ' + 'It is most likely that you see this error because you updated to ' + 'Redux 2.x and React Redux 2.x which no longer hot reload reducers ' + 'automatically. See https://github.com/reactjs/react-redux/releases/' + 'tag/v2.0.0 for the migration instructions.');
+  Object(__WEBPACK_IMPORTED_MODULE_3__utils_warning__["a" /* default */])('<Provider> does not support changing `store` on the fly. ' + 'It is most likely that you see this error because you updated to ' + 'Redux 2.x and React Redux 2.x which no longer hot reload reducers ' + 'automatically. See https://github.com/reactjs/react-redux/releases/' + 'tag/v2.0.0 for the migration instructions.');
 }
 
 function createProvider() {
@@ -25301,18 +25292,18 @@ function shallowEqual(objA, objB) {
 
 
 function whenMapDispatchToPropsIsFunction(mapDispatchToProps) {
-  return typeof mapDispatchToProps === 'function' ? __WEBPACK_IMPORTED_MODULE_1__wrapMapToProps__["b" /* wrapMapToPropsFunc */](mapDispatchToProps, 'mapDispatchToProps') : undefined;
+  return typeof mapDispatchToProps === 'function' ? Object(__WEBPACK_IMPORTED_MODULE_1__wrapMapToProps__["b" /* wrapMapToPropsFunc */])(mapDispatchToProps, 'mapDispatchToProps') : undefined;
 }
 
 function whenMapDispatchToPropsIsMissing(mapDispatchToProps) {
-  return !mapDispatchToProps ? __WEBPACK_IMPORTED_MODULE_1__wrapMapToProps__["a" /* wrapMapToPropsConstant */](function (dispatch) {
+  return !mapDispatchToProps ? Object(__WEBPACK_IMPORTED_MODULE_1__wrapMapToProps__["a" /* wrapMapToPropsConstant */])(function (dispatch) {
     return { dispatch: dispatch };
   }) : undefined;
 }
 
 function whenMapDispatchToPropsIsObject(mapDispatchToProps) {
-  return mapDispatchToProps && typeof mapDispatchToProps === 'object' ? __WEBPACK_IMPORTED_MODULE_1__wrapMapToProps__["a" /* wrapMapToPropsConstant */](function (dispatch) {
-    return __WEBPACK_IMPORTED_MODULE_0_redux__["b" /* bindActionCreators */](mapDispatchToProps, dispatch);
+  return mapDispatchToProps && typeof mapDispatchToProps === 'object' ? Object(__WEBPACK_IMPORTED_MODULE_1__wrapMapToProps__["a" /* wrapMapToPropsConstant */])(function (dispatch) {
+    return Object(__WEBPACK_IMPORTED_MODULE_0_redux__["b" /* bindActionCreators */])(mapDispatchToProps, dispatch);
   }) : undefined;
 }
 
@@ -25329,11 +25320,11 @@ function whenMapDispatchToPropsIsObject(mapDispatchToProps) {
 
 
 function whenMapStateToPropsIsFunction(mapStateToProps) {
-  return typeof mapStateToProps === 'function' ? __WEBPACK_IMPORTED_MODULE_0__wrapMapToProps__["b" /* wrapMapToPropsFunc */](mapStateToProps, 'mapStateToProps') : undefined;
+  return typeof mapStateToProps === 'function' ? Object(__WEBPACK_IMPORTED_MODULE_0__wrapMapToProps__["b" /* wrapMapToPropsFunc */])(mapStateToProps, 'mapStateToProps') : undefined;
 }
 
 function whenMapStateToPropsIsMissing(mapStateToProps) {
-  return !mapStateToProps ? __WEBPACK_IMPORTED_MODULE_0__wrapMapToProps__["a" /* wrapMapToPropsConstant */](function () {
+  return !mapStateToProps ? Object(__WEBPACK_IMPORTED_MODULE_0__wrapMapToProps__["a" /* wrapMapToPropsConstant */])(function () {
     return {};
   }) : undefined;
 }
@@ -25376,7 +25367,7 @@ function wrapMergePropsFunc(mergeProps) {
         hasRunOnce = true;
         mergedProps = nextMergedProps;
 
-        if (true) __WEBPACK_IMPORTED_MODULE_0__utils_verifyPlainObject__["a" /* default */](mergedProps, displayName, 'mergeProps');
+        if (true) Object(__WEBPACK_IMPORTED_MODULE_0__utils_verifyPlainObject__["a" /* default */])(mergedProps, displayName, 'mergeProps');
       }
 
       return mergedProps;
@@ -25500,7 +25491,7 @@ function finalPropsSelectorFactory(dispatch, _ref2) {
   var mergeProps = initMergeProps(dispatch, options);
 
   if (true) {
-    __WEBPACK_IMPORTED_MODULE_0__verifySubselectors__["a" /* default */](mapStateToProps, mapDispatchToProps, mergeProps, options.displayName);
+    Object(__WEBPACK_IMPORTED_MODULE_0__verifySubselectors__["a" /* default */])(mapStateToProps, mapDispatchToProps, mergeProps, options.displayName);
   }
 
   var selectorFactory = options.pure ? pureFinalPropsSelectorFactory : impureFinalPropsSelectorFactory;
@@ -25522,7 +25513,7 @@ function verify(selector, methodName, displayName) {
     throw new Error('Unexpected value for ' + methodName + ' in ' + displayName + '.');
   } else if (methodName === 'mapStateToProps' || methodName === 'mapDispatchToProps') {
     if (!selector.hasOwnProperty('dependsOnOwnProps')) {
-      __WEBPACK_IMPORTED_MODULE_0__utils_warning__["a" /* default */]('The selector for ' + methodName + ' of ' + displayName + ' did not specify a value for dependsOnOwnProps.');
+      Object(__WEBPACK_IMPORTED_MODULE_0__utils_warning__["a" /* default */])('The selector for ' + methodName + ' of ' + displayName + ' did not specify a value for dependsOnOwnProps.');
     }
   }
 }
@@ -27684,13 +27675,13 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         toggleSettingsPanel: function toggleSettingsPanel() {
-            dispatch(__WEBPACK_IMPORTED_MODULE_2__actions_settingsAction__["d" /* toggleSettingsPanel */]());
+            dispatch(Object(__WEBPACK_IMPORTED_MODULE_2__actions_settingsAction__["d" /* toggleSettingsPanel */])());
         }
     };
 }
 
 // connect and export
-/* harmony default export */ __webpack_exports__["a"] = (__WEBPACK_IMPORTED_MODULE_1_react_redux__["b" /* connect */](mapStateToProps, mapDispatchToProps)(AppTitle));
+/* harmony default export */ __webpack_exports__["a"] = (Object(__WEBPACK_IMPORTED_MODULE_1_react_redux__["b" /* connect */])(mapStateToProps, mapDispatchToProps)(AppTitle));
 
 /***/ }),
 /* 274 */
@@ -27928,7 +27919,7 @@ if (wpApiSettings) {
     window.srzinstbase = wpApiSettings.root + 'srizon-instagram/v1/';
 }
 window.store = __WEBPACK_IMPORTED_MODULE_2__store__["a" /* default */];
-__WEBPACK_IMPORTED_MODULE_2__store__["a" /* default */].dispatch(__WEBPACK_IMPORTED_MODULE_5__actions_settingsAction__["b" /* loadSettings */]());
+__WEBPACK_IMPORTED_MODULE_2__store__["a" /* default */].dispatch(Object(__WEBPACK_IMPORTED_MODULE_5__actions_settingsAction__["b" /* loadSettings */])());
 __WEBPACK_IMPORTED_MODULE_2__store__["a" /* default */].subscribe(render);
 render();
 
@@ -27952,11 +27943,11 @@ render();
 
 
 
-/* harmony default export */ __webpack_exports__["a"] = (__WEBPACK_IMPORTED_MODULE_0_redux__["d" /* createStore */](__WEBPACK_IMPORTED_MODULE_0_redux__["c" /* combineReducers */]({
+/* harmony default export */ __webpack_exports__["a"] = (Object(__WEBPACK_IMPORTED_MODULE_0_redux__["d" /* createStore */])(Object(__WEBPACK_IMPORTED_MODULE_0_redux__["c" /* combineReducers */])({
     settings: __WEBPACK_IMPORTED_MODULE_1__reducers_settingsReducer__["a" /* default */],
     messages: __WEBPACK_IMPORTED_MODULE_3__reducers_messagesReducer__["a" /* default */],
     albums: __WEBPACK_IMPORTED_MODULE_2__reducers_albumsReducer__["a" /* default */]
-}), __WEBPACK_IMPORTED_MODULE_0_redux__["a" /* applyMiddleware */](__WEBPACK_IMPORTED_MODULE_4_redux_logger___default.a, __WEBPACK_IMPORTED_MODULE_5_redux_thunk___default.a)));
+}), Object(__WEBPACK_IMPORTED_MODULE_0_redux__["a" /* applyMiddleware */])(__WEBPACK_IMPORTED_MODULE_4_redux_logger___default.a, __WEBPACK_IMPORTED_MODULE_5_redux_thunk___default.a)));
 
 /***/ }),
 /* 286 */
@@ -28160,7 +28151,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 // connect and export
-/* harmony default export */ __webpack_exports__["a"] = (__WEBPACK_IMPORTED_MODULE_1_react_redux__["b" /* connect */](mapStateToProps, mapDispatchToProps)(Base));
+/* harmony default export */ __webpack_exports__["a"] = (Object(__WEBPACK_IMPORTED_MODULE_1_react_redux__["b" /* connect */])(mapStateToProps, mapDispatchToProps)(Base));
 
 /***/ }),
 /* 290 */
@@ -28316,13 +28307,13 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         disconnectUser: function disconnectUser() {
-            return dispatch(__WEBPACK_IMPORTED_MODULE_5__actions_settingsAction__["a" /* disconnectUser */]());
+            return dispatch(Object(__WEBPACK_IMPORTED_MODULE_5__actions_settingsAction__["a" /* disconnectUser */])());
         }
     };
 }
 
 // connect and export
-/* harmony default export */ __webpack_exports__["a"] = (__WEBPACK_IMPORTED_MODULE_1_react_redux__["b" /* connect */](mapStateToProps, mapDispatchToProps)(MainPannel));
+/* harmony default export */ __webpack_exports__["a"] = (Object(__WEBPACK_IMPORTED_MODULE_1_react_redux__["b" /* connect */])(mapStateToProps, mapDispatchToProps)(MainPannel));
 
 /***/ }),
 /* 292 */
@@ -28439,7 +28430,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 // connect and export
-/* harmony default export */ __webpack_exports__["a"] = (__WEBPACK_IMPORTED_MODULE_1_react_redux__["b" /* connect */](mapStateToProps, mapDispatchToProps)(BodyPanel));
+/* harmony default export */ __webpack_exports__["a"] = (Object(__WEBPACK_IMPORTED_MODULE_1_react_redux__["b" /* connect */])(mapStateToProps, mapDispatchToProps)(BodyPanel));
 
 /***/ }),
 /* 294 */
@@ -28512,16 +28503,16 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         cancelUserAlbum: function cancelUserAlbum() {
-            dispatch(__WEBPACK_IMPORTED_MODULE_8__actions_albumsAction__["b" /* cancelUserAlbum */]());
+            dispatch(Object(__WEBPACK_IMPORTED_MODULE_8__actions_albumsAction__["b" /* cancelUserAlbum */])());
         },
         saveUserAlbum: function saveUserAlbum(album) {
-            dispatch(__WEBPACK_IMPORTED_MODULE_8__actions_albumsAction__["g" /* saveUserAlbum */](album));
+            dispatch(Object(__WEBPACK_IMPORTED_MODULE_8__actions_albumsAction__["g" /* saveUserAlbum */])(album));
         }
     };
 }
 
 // connect and export
-/* harmony default export */ __webpack_exports__["a"] = (__WEBPACK_IMPORTED_MODULE_1_react_redux__["b" /* connect */](mapStateToProps, mapDispatchToProps)(AlbumList));
+/* harmony default export */ __webpack_exports__["a"] = (Object(__WEBPACK_IMPORTED_MODULE_1_react_redux__["b" /* connect */])(mapStateToProps, mapDispatchToProps)(AlbumList));
 
 /***/ }),
 /* 295 */
@@ -28711,18 +28702,18 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         successCopy: function successCopy() {
-            dispatch(__WEBPACK_IMPORTED_MODULE_4__actions_messagesAction__["h" /* successCopy */]());
+            dispatch(Object(__WEBPACK_IMPORTED_MODULE_4__actions_messagesAction__["h" /* successCopy */])());
         },
         errorCopy: function errorCopy() {
-            dispatch(__WEBPACK_IMPORTED_MODULE_4__actions_messagesAction__["a" /* errorCopy */]());
+            dispatch(Object(__WEBPACK_IMPORTED_MODULE_4__actions_messagesAction__["a" /* errorCopy */])());
         },
         deleteAlbum: function deleteAlbum(id) {
-            dispatch(__WEBPACK_IMPORTED_MODULE_5__actions_albumsAction__["c" /* deleteAlbum */](id));
+            dispatch(Object(__WEBPACK_IMPORTED_MODULE_5__actions_albumsAction__["c" /* deleteAlbum */])(id));
         }
     };
 }
 // connect and export
-/* harmony default export */ __webpack_exports__["a"] = (__WEBPACK_IMPORTED_MODULE_1_react_redux__["b" /* connect */](mapStateToProps, mapDispatchToProps)(AlbumListItem));
+/* harmony default export */ __webpack_exports__["a"] = (Object(__WEBPACK_IMPORTED_MODULE_1_react_redux__["b" /* connect */])(mapStateToProps, mapDispatchToProps)(AlbumListItem));
 
 /***/ }),
 /* 296 */
@@ -29012,13 +29003,13 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         updateAlbum: function updateAlbum(id, settings) {
-            dispatch(__WEBPACK_IMPORTED_MODULE_4__actions_albumsAction__["h" /* updateAlbum */](id, settings));
+            dispatch(Object(__WEBPACK_IMPORTED_MODULE_4__actions_albumsAction__["h" /* updateAlbum */])(id, settings));
         }
     };
 }
 
 // connect and export
-/* harmony default export */ __webpack_exports__["a"] = (__WEBPACK_IMPORTED_MODULE_1_react_redux__["b" /* connect */](mapStateToProps, mapDispatchToProps)(AlbumListItemSettings));
+/* harmony default export */ __webpack_exports__["a"] = (Object(__WEBPACK_IMPORTED_MODULE_1_react_redux__["b" /* connect */])(mapStateToProps, mapDispatchToProps)(AlbumListItemSettings));
 
 /***/ }),
 /* 299 */
@@ -29231,19 +29222,19 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         newUserAlbum: function newUserAlbum() {
-            dispatch(__WEBPACK_IMPORTED_MODULE_2__actions_albumsAction__["e" /* newUserAlbum */]());
+            dispatch(Object(__WEBPACK_IMPORTED_MODULE_2__actions_albumsAction__["e" /* newUserAlbum */])());
         },
         cancelUserAlbum: function cancelUserAlbum() {
-            dispatch(__WEBPACK_IMPORTED_MODULE_2__actions_albumsAction__["b" /* cancelUserAlbum */]());
+            dispatch(Object(__WEBPACK_IMPORTED_MODULE_2__actions_albumsAction__["b" /* cancelUserAlbum */])());
         },
         saveUserAlbum: function saveUserAlbum(album) {
-            dispatch(__WEBPACK_IMPORTED_MODULE_2__actions_albumsAction__["g" /* saveUserAlbum */](album));
+            dispatch(Object(__WEBPACK_IMPORTED_MODULE_2__actions_albumsAction__["g" /* saveUserAlbum */])(album));
         }
     };
 }
 
 // connect and export
-/* harmony default export */ __webpack_exports__["a"] = (__WEBPACK_IMPORTED_MODULE_1_react_redux__["b" /* connect */](mapStateToProps, mapDispatchToProps)(AddUserAlbumCard));
+/* harmony default export */ __webpack_exports__["a"] = (Object(__WEBPACK_IMPORTED_MODULE_1_react_redux__["b" /* connect */])(mapStateToProps, mapDispatchToProps)(AddUserAlbumCard));
 
 /***/ }),
 /* 302 */
@@ -29499,19 +29490,19 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         newHashtagAlbum: function newHashtagAlbum() {
-            dispatch(__WEBPACK_IMPORTED_MODULE_2__actions_albumsAction__["d" /* newHashtagAlbum */]());
+            dispatch(Object(__WEBPACK_IMPORTED_MODULE_2__actions_albumsAction__["d" /* newHashtagAlbum */])());
         },
         cancelHashtagAlbum: function cancelHashtagAlbum() {
-            dispatch(__WEBPACK_IMPORTED_MODULE_2__actions_albumsAction__["a" /* cancelHashtagAlbum */]());
+            dispatch(Object(__WEBPACK_IMPORTED_MODULE_2__actions_albumsAction__["a" /* cancelHashtagAlbum */])());
         },
         saveHashtagAlbum: function saveHashtagAlbum(album) {
-            dispatch(__WEBPACK_IMPORTED_MODULE_2__actions_albumsAction__["f" /* saveHashtagAlbum */](album));
+            dispatch(Object(__WEBPACK_IMPORTED_MODULE_2__actions_albumsAction__["f" /* saveHashtagAlbum */])(album));
         }
     };
 }
 
 // connect and export
-/* harmony default export */ __webpack_exports__["a"] = (__WEBPACK_IMPORTED_MODULE_1_react_redux__["b" /* connect */](mapStateToProps, mapDispatchToProps)(AddHashTagAlbumCard));
+/* harmony default export */ __webpack_exports__["a"] = (Object(__WEBPACK_IMPORTED_MODULE_1_react_redux__["b" /* connect */])(mapStateToProps, mapDispatchToProps)(AddHashTagAlbumCard));
 
 /***/ }),
 /* 305 */
@@ -29992,16 +29983,16 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         saveSettings: function saveSettings(settings) {
-            dispatch(__WEBPACK_IMPORTED_MODULE_2__actions_settingsAction__["c" /* saveGlobalSettings */](settings));
+            dispatch(Object(__WEBPACK_IMPORTED_MODULE_2__actions_settingsAction__["c" /* saveGlobalSettings */])(settings));
         },
         closeSettings: function closeSettings() {
-            dispatch(__WEBPACK_IMPORTED_MODULE_2__actions_settingsAction__["d" /* toggleSettingsPanel */]());
+            dispatch(Object(__WEBPACK_IMPORTED_MODULE_2__actions_settingsAction__["d" /* toggleSettingsPanel */])());
         }
     };
 }
 
 // connect and export
-/* harmony default export */ __webpack_exports__["a"] = (__WEBPACK_IMPORTED_MODULE_1_react_redux__["b" /* connect */](mapStateToProps, mapDispatchToProps)(SettingsPanel));
+/* harmony default export */ __webpack_exports__["a"] = (Object(__WEBPACK_IMPORTED_MODULE_1_react_redux__["b" /* connect */])(mapStateToProps, mapDispatchToProps)(SettingsPanel));
 
 /***/ }),
 /* 309 */
@@ -30059,7 +30050,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 // connect and export
-/* harmony default export */ __webpack_exports__["a"] = (__WEBPACK_IMPORTED_MODULE_1_react_redux__["b" /* connect */](mapStateToProps, mapDispatchToProps)(FlashMessages));
+/* harmony default export */ __webpack_exports__["a"] = (Object(__WEBPACK_IMPORTED_MODULE_1_react_redux__["b" /* connect */])(mapStateToProps, mapDispatchToProps)(FlashMessages));
 
 /***/ }),
 /* 310 */

@@ -21,6 +21,7 @@
     "react": "^15.6.1",
     "react-addons-css-transition-group": "^15.6.0",
     "react-dom": "^15.6.1",
+    "react-grid-gallery": "^0.4.2",
     "react-image-gallery": "^0.8.3",
     "react-images": "^0.5.5",
     "react-measure": "^2.0.2",

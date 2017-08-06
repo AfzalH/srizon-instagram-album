@@ -1,15 +1,16 @@
 import React from 'react';
-import Collage from 'react-photo-gallery';
+import Collage from '../lib/Gallery';
 import Lightbox from 'react-images';
 
 class AlbumCollage extends React.Component {
     constructor() {
         super();
-        this.state = {currentImage: 0, lightboxIsOpen: false};
+        this.state = {currentImage: 0, lightboxIsOpen: false, cols: 2};
         this.closeLightbox = this.closeLightbox.bind(this);
         this.openLightbox = this.openLightbox.bind(this);
         this.gotoNext = this.gotoNext.bind(this);
         this.gotoPrevious = this.gotoPrevious.bind(this);
+        this.updateCol = this.updateCol.bind(this);
     }
 
     openLightbox(index, event) {
@@ -42,6 +43,32 @@ class AlbumCollage extends React.Component {
         });
     }
 
+    componentDidMount() {
+        this.updateCol();
+    }
+
+    componentDidUpdate() {
+        this.updateCol();
+    }
+
+    updateCol() {
+        setTimeout(()=> {
+            const width = this.refs["collage" + this.props.album.options.id].state.containerWidth;
+            if (width < 250) {
+                this.setState({cols: 1});
+            }
+            else if (width < 600) {
+                this.setState({cols: 2});
+            }
+            else if (width < 900) {
+                this.setState({cols: 3});
+            }
+            else {
+                this.setState({cols: 4});
+            }
+        }, 1000);
+    }
+
     render() {
         const {album} = this.props;
         const images = album.data.data.map((img)=>({
@@ -63,7 +90,8 @@ class AlbumCollage extends React.Component {
         }));
         return (
             <div>
-                <Collage photos={images} cols={2} onClickPhoto={this.openLightbox}/>
+                <Collage ref={"collage"+album.options.id} photos={images} cols={this.state.cols}
+                         onClickPhoto={this.openLightbox}/>
                 <Lightbox
                     theme={{container: { background: 'rgba(0, 0, 0, 0.85)' }}}
                     images={images}

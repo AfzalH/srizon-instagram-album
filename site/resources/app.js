@@ -153,45 +153,43 @@ var emptyFunction = __webpack_require__(11);
 var warning = emptyFunction;
 
 if (true) {
-  (function () {
-    var printWarning = function printWarning(format) {
-      for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-        args[_key - 1] = arguments[_key];
+  var printWarning = function printWarning(format) {
+    for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+      args[_key - 1] = arguments[_key];
+    }
+
+    var argIndex = 0;
+    var message = 'Warning: ' + format.replace(/%s/g, function () {
+      return args[argIndex++];
+    });
+    if (typeof console !== 'undefined') {
+      console.error(message);
+    }
+    try {
+      // --- Welcome to debugging React ---
+      // This error was thrown as a convenience so that you can use this stack
+      // to find the callsite that caused this warning to fire.
+      throw new Error(message);
+    } catch (x) {}
+  };
+
+  warning = function warning(condition, format) {
+    if (format === undefined) {
+      throw new Error('`warning(condition, format, ...args)` requires a warning ' + 'message argument');
+    }
+
+    if (format.indexOf('Failed Composite propType: ') === 0) {
+      return; // Ignore CompositeComponent proptype check.
+    }
+
+    if (!condition) {
+      for (var _len2 = arguments.length, args = Array(_len2 > 2 ? _len2 - 2 : 0), _key2 = 2; _key2 < _len2; _key2++) {
+        args[_key2 - 2] = arguments[_key2];
       }
 
-      var argIndex = 0;
-      var message = 'Warning: ' + format.replace(/%s/g, function () {
-        return args[argIndex++];
-      });
-      if (typeof console !== 'undefined') {
-        console.error(message);
-      }
-      try {
-        // --- Welcome to debugging React ---
-        // This error was thrown as a convenience so that you can use this stack
-        // to find the callsite that caused this warning to fire.
-        throw new Error(message);
-      } catch (x) {}
-    };
-
-    warning = function warning(condition, format) {
-      if (format === undefined) {
-        throw new Error('`warning(condition, format, ...args)` requires a warning ' + 'message argument');
-      }
-
-      if (format.indexOf('Failed Composite propType: ') === 0) {
-        return; // Ignore CompositeComponent proptype check.
-      }
-
-      if (!condition) {
-        for (var _len2 = arguments.length, args = Array(_len2 > 2 ? _len2 - 2 : 0), _key2 = 2; _key2 < _len2; _key2++) {
-          args[_key2 - 2] = arguments[_key2];
-        }
-
-        printWarning.apply(undefined, [format].concat(args));
-      }
-    };
-  })();
+      printWarning.apply(undefined, [format].concat(args));
+    }
+  };
 }
 
 module.exports = warning;
@@ -6986,10 +6984,10 @@ var objectCtorString = funcToString.call(Object);
  * // => true
  */
 function isPlainObject(value) {
-  if (!__WEBPACK_IMPORTED_MODULE_2__isObjectLike_js__["a" /* default */](value) || __WEBPACK_IMPORTED_MODULE_0__baseGetTag_js__["a" /* default */](value) != objectTag) {
+  if (!Object(__WEBPACK_IMPORTED_MODULE_2__isObjectLike_js__["a" /* default */])(value) || Object(__WEBPACK_IMPORTED_MODULE_0__baseGetTag_js__["a" /* default */])(value) != objectTag) {
     return false;
   }
-  var proto = __WEBPACK_IMPORTED_MODULE_1__getPrototype_js__["a" /* default */](value);
+  var proto = Object(__WEBPACK_IMPORTED_MODULE_1__getPrototype_js__["a" /* default */])(value);
   if (proto === null) {
     return true;
   }
@@ -10098,18 +10096,11 @@ module.exports = traverseAllChildren;
 
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
+ * All rights reserved.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
  *
  * @typechecks
  */
@@ -10958,7 +10949,7 @@ module.exports = getHostComponentFromComposite;
 function isCrushed() {}
 
 if ("development" !== 'production' && typeof isCrushed.name === 'string' && isCrushed.name !== 'isCrushed') {
-  __WEBPACK_IMPORTED_MODULE_5__utils_warning__["a" /* default */]('You are currently using minified code outside of NODE_ENV === \'production\'. ' + 'This means that you are running a slower development build of Redux. ' + 'You can use loose-envify (https://github.com/zertosh/loose-envify) for browserify ' + 'or DefinePlugin for webpack (http://stackoverflow.com/questions/30030031) ' + 'to ensure you have the correct code for your production build.');
+  Object(__WEBPACK_IMPORTED_MODULE_5__utils_warning__["a" /* default */])('You are currently using minified code outside of NODE_ENV === \'production\'. ' + 'This means that you are running a slower development build of Redux. ' + 'You can use loose-envify (https://github.com/zertosh/loose-envify) for browserify ' + 'or DefinePlugin for webpack (http://stackoverflow.com/questions/30030031) ' + 'to ensure you have the correct code for your production build.');
 }
 
 
@@ -11123,7 +11114,7 @@ var ActionTypes = {
    * return something else (for example, a Promise you can await).
    */
   function dispatch(action) {
-    if (!__WEBPACK_IMPORTED_MODULE_0_lodash_es_isPlainObject__["a" /* default */](action)) {
+    if (!Object(__WEBPACK_IMPORTED_MODULE_0_lodash_es_isPlainObject__["a" /* default */])(action)) {
       throw new Error('Actions must be plain objects. ' + 'Use custom middleware for async actions.');
     }
 
@@ -11424,7 +11415,7 @@ selectorFactory) {
   var childContextTypes = (_childContextTypes = {}, _childContextTypes[subscriptionKey] = __WEBPACK_IMPORTED_MODULE_4__utils_PropTypes__["b" /* subscriptionShape */], _childContextTypes);
 
   return function wrapWithConnect(WrappedComponent) {
-    __WEBPACK_IMPORTED_MODULE_1_invariant___default.a(typeof WrappedComponent == 'function', 'You must pass a component to the function returned by ' + ('connect. Instead received ' + JSON.stringify(WrappedComponent)));
+    __WEBPACK_IMPORTED_MODULE_1_invariant___default()(typeof WrappedComponent == 'function', 'You must pass a component to the function returned by ' + ('connect. Instead received ' + JSON.stringify(WrappedComponent)));
 
     var wrappedComponentName = WrappedComponent.displayName || WrappedComponent.name || 'Component';
 
@@ -11457,7 +11448,7 @@ selectorFactory) {
         _this.propsMode = Boolean(props[storeKey]);
         _this.setWrappedInstance = _this.setWrappedInstance.bind(_this);
 
-        __WEBPACK_IMPORTED_MODULE_1_invariant___default.a(_this.store, 'Could not find "' + storeKey + '" in either the context or props of ' + ('"' + displayName + '". Either wrap the root component in a <Provider>, ') + ('or explicitly pass "' + storeKey + '" as a prop to "' + displayName + '".'));
+        __WEBPACK_IMPORTED_MODULE_1_invariant___default()(_this.store, 'Could not find "' + storeKey + '" in either the context or props of ' + ('"' + displayName + '". Either wrap the root component in a <Provider>, ') + ('or explicitly pass "' + storeKey + '" as a prop to "' + displayName + '".'));
 
         _this.initSelector();
         _this.initSubscription();
@@ -11507,7 +11498,7 @@ selectorFactory) {
       };
 
       Connect.prototype.getWrappedInstance = function getWrappedInstance() {
-        __WEBPACK_IMPORTED_MODULE_1_invariant___default.a(withRef, 'To access the wrapped instance, you need to specify ' + ('{ withRef: true } in the options argument of the ' + methodName + '() call.'));
+        __WEBPACK_IMPORTED_MODULE_1_invariant___default()(withRef, 'To access the wrapped instance, you need to specify ' + ('{ withRef: true } in the options argument of the ' + methodName + '() call.'));
         return this.wrappedInstance;
       };
 
@@ -11583,7 +11574,7 @@ selectorFactory) {
         if (selector.error) {
           throw selector.error;
         } else {
-          return __WEBPACK_IMPORTED_MODULE_2_react__["createElement"](WrappedComponent, this.addExtraProps(selector.props));
+          return Object(__WEBPACK_IMPORTED_MODULE_2_react__["createElement"])(WrappedComponent, this.addExtraProps(selector.props));
         }
       };
 
@@ -11610,7 +11601,7 @@ selectorFactory) {
       };
     }
 
-    return __WEBPACK_IMPORTED_MODULE_0_hoist_non_react_statics___default.a(Connect, WrappedComponent);
+    return __WEBPACK_IMPORTED_MODULE_0_hoist_non_react_statics___default()(Connect, WrappedComponent);
   };
 }
 
@@ -11682,7 +11673,7 @@ function wrapMapToPropsFunc(mapToProps, methodName) {
         props = proxy(stateOrDispatch, ownProps);
       }
 
-      if (true) __WEBPACK_IMPORTED_MODULE_0__utils_verifyPlainObject__["a" /* default */](props, displayName, methodName);
+      if (true) Object(__WEBPACK_IMPORTED_MODULE_0__utils_verifyPlainObject__["a" /* default */])(props, displayName, methodName);
 
       return props;
     };
@@ -11703,8 +11694,8 @@ function wrapMapToPropsFunc(mapToProps, methodName) {
 
 
 function verifyPlainObject(value, displayName, methodName) {
-  if (!__WEBPACK_IMPORTED_MODULE_0_lodash_es_isPlainObject__["a" /* default */](value)) {
-    __WEBPACK_IMPORTED_MODULE_1__warning__["a" /* default */](methodName + '() in ' + displayName + ' must return a plain object. Instead received ' + value + '.');
+  if (!Object(__WEBPACK_IMPORTED_MODULE_0_lodash_es_isPlainObject__["a" /* default */])(value)) {
+    Object(__WEBPACK_IMPORTED_MODULE_1__warning__["a" /* default */])(methodName + '() in ' + displayName + ' must return a plain object. Instead received ' + value + '.');
   }
 }
 
@@ -24164,8 +24155,8 @@ function baseGetTag(value) {
     return value === undefined ? undefinedTag : nullTag;
   }
   return (symToStringTag && symToStringTag in Object(value))
-    ? __WEBPACK_IMPORTED_MODULE_1__getRawTag_js__["a" /* default */](value)
-    : __WEBPACK_IMPORTED_MODULE_2__objectToString_js__["a" /* default */](value);
+    ? Object(__WEBPACK_IMPORTED_MODULE_1__getRawTag_js__["a" /* default */])(value)
+    : Object(__WEBPACK_IMPORTED_MODULE_2__objectToString_js__["a" /* default */])(value);
 }
 
 /* harmony default export */ __webpack_exports__["a"] = (baseGetTag);
@@ -24292,7 +24283,7 @@ function objectToString(value) {
 
 
 /** Built-in value references. */
-var getPrototype = __WEBPACK_IMPORTED_MODULE_0__overArg_js__["a" /* default */](Object.getPrototypeOf, Object);
+var getPrototype = Object(__WEBPACK_IMPORTED_MODULE_0__overArg_js__["a" /* default */])(Object.getPrototypeOf, Object);
 
 /* harmony default export */ __webpack_exports__["a"] = (getPrototype);
 
@@ -24483,7 +24474,7 @@ function getUnexpectedStateShapeWarningMessage(inputState, reducers, action, une
     return 'Store does not have a valid reducer. Make sure the argument passed ' + 'to combineReducers is an object whose values are reducers.';
   }
 
-  if (!__WEBPACK_IMPORTED_MODULE_1_lodash_es_isPlainObject__["a" /* default */](inputState)) {
+  if (!Object(__WEBPACK_IMPORTED_MODULE_1_lodash_es_isPlainObject__["a" /* default */])(inputState)) {
     return 'The ' + argumentName + ' has unexpected type of "' + {}.toString.call(inputState).match(/\s([a-z|A-Z]+)/)[1] + '". Expected argument to be an object with the following ' + ('keys: "' + reducerKeys.join('", "') + '"');
   }
 
@@ -24540,7 +24531,7 @@ function combineReducers(reducers) {
 
     if (true) {
       if (typeof reducers[key] === 'undefined') {
-        __WEBPACK_IMPORTED_MODULE_2__utils_warning__["a" /* default */]('No reducer provided for key "' + key + '"');
+        Object(__WEBPACK_IMPORTED_MODULE_2__utils_warning__["a" /* default */])('No reducer provided for key "' + key + '"');
       }
     }
 
@@ -24573,7 +24564,7 @@ function combineReducers(reducers) {
     if (true) {
       var warningMessage = getUnexpectedStateShapeWarningMessage(state, finalReducers, action, unexpectedKeyCache);
       if (warningMessage) {
-        __WEBPACK_IMPORTED_MODULE_2__utils_warning__["a" /* default */](warningMessage);
+        Object(__WEBPACK_IMPORTED_MODULE_2__utils_warning__["a" /* default */])(warningMessage);
       }
     }
 
@@ -24772,7 +24763,7 @@ function warnAboutReceivingStore() {
   }
   didWarnAboutReceivingStore = true;
 
-  __WEBPACK_IMPORTED_MODULE_3__utils_warning__["a" /* default */]('<Provider> does not support changing `store` on the fly. ' + 'It is most likely that you see this error because you updated to ' + 'Redux 2.x and React Redux 2.x which no longer hot reload reducers ' + 'automatically. See https://github.com/reactjs/react-redux/releases/' + 'tag/v2.0.0 for the migration instructions.');
+  Object(__WEBPACK_IMPORTED_MODULE_3__utils_warning__["a" /* default */])('<Provider> does not support changing `store` on the fly. ' + 'It is most likely that you see this error because you updated to ' + 'Redux 2.x and React Redux 2.x which no longer hot reload reducers ' + 'automatically. See https://github.com/reactjs/react-redux/releases/' + 'tag/v2.0.0 for the migration instructions.');
 }
 
 function createProvider() {
@@ -25206,18 +25197,18 @@ function shallowEqual(objA, objB) {
 
 
 function whenMapDispatchToPropsIsFunction(mapDispatchToProps) {
-  return typeof mapDispatchToProps === 'function' ? __WEBPACK_IMPORTED_MODULE_1__wrapMapToProps__["b" /* wrapMapToPropsFunc */](mapDispatchToProps, 'mapDispatchToProps') : undefined;
+  return typeof mapDispatchToProps === 'function' ? Object(__WEBPACK_IMPORTED_MODULE_1__wrapMapToProps__["b" /* wrapMapToPropsFunc */])(mapDispatchToProps, 'mapDispatchToProps') : undefined;
 }
 
 function whenMapDispatchToPropsIsMissing(mapDispatchToProps) {
-  return !mapDispatchToProps ? __WEBPACK_IMPORTED_MODULE_1__wrapMapToProps__["a" /* wrapMapToPropsConstant */](function (dispatch) {
+  return !mapDispatchToProps ? Object(__WEBPACK_IMPORTED_MODULE_1__wrapMapToProps__["a" /* wrapMapToPropsConstant */])(function (dispatch) {
     return { dispatch: dispatch };
   }) : undefined;
 }
 
 function whenMapDispatchToPropsIsObject(mapDispatchToProps) {
-  return mapDispatchToProps && typeof mapDispatchToProps === 'object' ? __WEBPACK_IMPORTED_MODULE_1__wrapMapToProps__["a" /* wrapMapToPropsConstant */](function (dispatch) {
-    return __WEBPACK_IMPORTED_MODULE_0_redux__["b" /* bindActionCreators */](mapDispatchToProps, dispatch);
+  return mapDispatchToProps && typeof mapDispatchToProps === 'object' ? Object(__WEBPACK_IMPORTED_MODULE_1__wrapMapToProps__["a" /* wrapMapToPropsConstant */])(function (dispatch) {
+    return Object(__WEBPACK_IMPORTED_MODULE_0_redux__["b" /* bindActionCreators */])(mapDispatchToProps, dispatch);
   }) : undefined;
 }
 
@@ -25234,11 +25225,11 @@ function whenMapDispatchToPropsIsObject(mapDispatchToProps) {
 
 
 function whenMapStateToPropsIsFunction(mapStateToProps) {
-  return typeof mapStateToProps === 'function' ? __WEBPACK_IMPORTED_MODULE_0__wrapMapToProps__["b" /* wrapMapToPropsFunc */](mapStateToProps, 'mapStateToProps') : undefined;
+  return typeof mapStateToProps === 'function' ? Object(__WEBPACK_IMPORTED_MODULE_0__wrapMapToProps__["b" /* wrapMapToPropsFunc */])(mapStateToProps, 'mapStateToProps') : undefined;
 }
 
 function whenMapStateToPropsIsMissing(mapStateToProps) {
-  return !mapStateToProps ? __WEBPACK_IMPORTED_MODULE_0__wrapMapToProps__["a" /* wrapMapToPropsConstant */](function () {
+  return !mapStateToProps ? Object(__WEBPACK_IMPORTED_MODULE_0__wrapMapToProps__["a" /* wrapMapToPropsConstant */])(function () {
     return {};
   }) : undefined;
 }
@@ -25281,7 +25272,7 @@ function wrapMergePropsFunc(mergeProps) {
         hasRunOnce = true;
         mergedProps = nextMergedProps;
 
-        if (true) __WEBPACK_IMPORTED_MODULE_0__utils_verifyPlainObject__["a" /* default */](mergedProps, displayName, 'mergeProps');
+        if (true) Object(__WEBPACK_IMPORTED_MODULE_0__utils_verifyPlainObject__["a" /* default */])(mergedProps, displayName, 'mergeProps');
       }
 
       return mergedProps;
@@ -25405,7 +25396,7 @@ function finalPropsSelectorFactory(dispatch, _ref2) {
   var mergeProps = initMergeProps(dispatch, options);
 
   if (true) {
-    __WEBPACK_IMPORTED_MODULE_0__verifySubselectors__["a" /* default */](mapStateToProps, mapDispatchToProps, mergeProps, options.displayName);
+    Object(__WEBPACK_IMPORTED_MODULE_0__verifySubselectors__["a" /* default */])(mapStateToProps, mapDispatchToProps, mergeProps, options.displayName);
   }
 
   var selectorFactory = options.pure ? pureFinalPropsSelectorFactory : impureFinalPropsSelectorFactory;
@@ -25427,7 +25418,7 @@ function verify(selector, methodName, displayName) {
     throw new Error('Unexpected value for ' + methodName + ' in ' + displayName + '.');
   } else if (methodName === 'mapStateToProps' || methodName === 'mapDispatchToProps') {
     if (!selector.hasOwnProperty('dependsOnOwnProps')) {
-      __WEBPACK_IMPORTED_MODULE_0__utils_warning__["a" /* default */]('The selector for ' + methodName + ' of ' + displayName + ' did not specify a value for dependsOnOwnProps.');
+      Object(__WEBPACK_IMPORTED_MODULE_0__utils_warning__["a" /* default */])('The selector for ' + methodName + ' of ' + displayName + ' did not specify a value for dependsOnOwnProps.');
     }
   }
 }
@@ -28138,9 +28129,9 @@ render();
 
 
 
-/* harmony default export */ __webpack_exports__["a"] = (__WEBPACK_IMPORTED_MODULE_0_redux__["d" /* createStore */](__WEBPACK_IMPORTED_MODULE_0_redux__["c" /* combineReducers */]({
+/* harmony default export */ __webpack_exports__["a"] = (Object(__WEBPACK_IMPORTED_MODULE_0_redux__["d" /* createStore */])(Object(__WEBPACK_IMPORTED_MODULE_0_redux__["c" /* combineReducers */])({
     albums: __WEBPACK_IMPORTED_MODULE_1__reducers_albumReducer__["a" /* default */]
-}), __WEBPACK_IMPORTED_MODULE_0_redux__["a" /* applyMiddleware */](__WEBPACK_IMPORTED_MODULE_2_redux_logger___default.a, __WEBPACK_IMPORTED_MODULE_3_redux_thunk___default.a)));
+}), Object(__WEBPACK_IMPORTED_MODULE_0_redux__["a" /* applyMiddleware */])(__WEBPACK_IMPORTED_MODULE_2_redux_logger___default.a, __WEBPACK_IMPORTED_MODULE_3_redux_thunk___default.a)));
 
 /***/ }),
 /* 318 */
@@ -28257,16 +28248,16 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         getAlbum: function getAlbum(id) {
-            dispatch(__WEBPACK_IMPORTED_MODULE_2__actions_albumAction__["a" /* getAlbum */](id));
+            dispatch(Object(__WEBPACK_IMPORTED_MODULE_2__actions_albumAction__["a" /* getAlbum */])(id));
         },
         getAlbumData: function getAlbumData(id) {
-            dispatch(__WEBPACK_IMPORTED_MODULE_2__actions_albumAction__["b" /* getAlbumData */](id));
+            dispatch(Object(__WEBPACK_IMPORTED_MODULE_2__actions_albumAction__["b" /* getAlbumData */])(id));
         }
     };
 }
 
 // connect and export
-/* harmony default export */ __webpack_exports__["a"] = (__WEBPACK_IMPORTED_MODULE_1_react_redux__["b" /* connect */](mapStateToProps, mapDispatchToProps)(Base));
+/* harmony default export */ __webpack_exports__["a"] = (Object(__WEBPACK_IMPORTED_MODULE_1_react_redux__["b" /* connect */])(mapStateToProps, mapDispatchToProps)(Base));
 
 /***/ }),
 /* 320 */
@@ -30733,8 +30724,8 @@ module.exports = debounce;
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_photo_gallery__ = __webpack_require__(328);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_photo_gallery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react_photo_gallery__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__lib_Gallery__ = __webpack_require__(373);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__lib_Gallery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__lib_Gallery__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_images__ = __webpack_require__(329);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_images___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_react_images__);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -30757,11 +30748,12 @@ var AlbumCollage = function (_React$Component) {
 
         var _this = _possibleConstructorReturn(this, (AlbumCollage.__proto__ || Object.getPrototypeOf(AlbumCollage)).call(this));
 
-        _this.state = { currentImage: 0, lightboxIsOpen: false };
+        _this.state = { currentImage: 0, lightboxIsOpen: false, cols: 2 };
         _this.closeLightbox = _this.closeLightbox.bind(_this);
         _this.openLightbox = _this.openLightbox.bind(_this);
         _this.gotoNext = _this.gotoNext.bind(_this);
         _this.gotoPrevious = _this.gotoPrevious.bind(_this);
+        _this.updateCol = _this.updateCol.bind(_this);
         return _this;
     }
 
@@ -30800,6 +30792,34 @@ var AlbumCollage = function (_React$Component) {
             });
         }
     }, {
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            this.updateCol();
+        }
+    }, {
+        key: 'componentDidUpdate',
+        value: function componentDidUpdate() {
+            this.updateCol();
+        }
+    }, {
+        key: 'updateCol',
+        value: function updateCol() {
+            var _this2 = this;
+
+            setTimeout(function () {
+                var width = _this2.refs["collage" + _this2.props.album.options.id].state.containerWidth;
+                if (width < 250) {
+                    _this2.setState({ cols: 1 });
+                } else if (width < 600) {
+                    _this2.setState({ cols: 2 });
+                } else if (width < 900) {
+                    _this2.setState({ cols: 3 });
+                } else {
+                    _this2.setState({ cols: 4 });
+                }
+            }, 1000);
+        }
+    }, {
         key: 'render',
         value: function render() {
             var album = this.props.album;
@@ -30818,7 +30838,8 @@ var AlbumCollage = function (_React$Component) {
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
                 null,
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_photo_gallery___default.a, { photos: images, cols: 2, onClickPhoto: this.openLightbox }),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__lib_Gallery___default.a, { ref: "collage" + album.options.id, photos: images, cols: this.state.cols,
+                    onClickPhoto: this.openLightbox }),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_images___default.a, {
                     theme: { container: { background: 'rgba(0, 0, 0, 0.85)' } },
                     images: images,
@@ -30840,197 +30861,7 @@ var AlbumCollage = function (_React$Component) {
 /* harmony default export */ __webpack_exports__["a"] = (AlbumCollage);
 
 /***/ }),
-/* 328 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, '__esModule', {
-    value: true
-});
-
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
-var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var _react = __webpack_require__(2);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _propTypes = __webpack_require__(8);
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
-var Gallery = (function (_React$Component) {
-    _inherits(Gallery, _React$Component);
-
-    function Gallery() {
-        _classCallCheck(this, Gallery);
-
-        _get(Object.getPrototypeOf(Gallery.prototype), 'constructor', this).call(this);
-        this.state = {
-            containerWidth: 0
-        };
-        this.handleResize = this.handleResize.bind(this);
-    }
-
-    _createClass(Gallery, [{
-        key: 'componentDidMount',
-        value: function componentDidMount() {
-            this.setState({ containerWidth: Math.floor(this._gallery.clientWidth) });
-            window.addEventListener('resize', this.handleResize);
-        }
-    }, {
-        key: 'componentDidUpdate',
-        value: function componentDidUpdate() {
-            if (this._gallery.clientWidth !== this.state.containerWidth) {
-                this.setState({ containerWidth: Math.floor(this._gallery.clientWidth) });
-            }
-        }
-    }, {
-        key: 'componentWillUnmount',
-        value: function componentWillUnmount() {
-            window.removeEventListener('resize', this.handleResize, false);
-        }
-    }, {
-        key: 'handleResize',
-        value: function handleResize(e) {
-            this.setState({ containerWidth: Math.floor(this._gallery.clientWidth) });
-        }
-    }, {
-        key: 'render',
-        value: function render() {
-            var _this = this;
-
-            var cols = this.props.cols,
-                photoPreviewNodes = [],
-                contWidth = this.state.containerWidth - cols * (this.props.margin * 2);
-
-            contWidth = Math.floor(contWidth); // add some padding to prevent layout prob
-            var remainder = this.props.photos.length % cols;
-            if (remainder) {
-                // there are fewer photos than cols num in last row
-                var lastRowWidth = Math.floor(this.state.containerWidth / cols * remainder - remainder * (this.props.margin * 2));
-                var lastRowIndex = this.props.photos.length - remainder;
-            }
-            // loop thru each set of  cols num
-            // eg. if cols is 3 it will  loop thru 0,1,2, then 3,4,5 to perform calculations for the particular set
-            for (var i = 0; i < this.props.photos.length; i += cols) {
-                var totalAr = 0,
-                    commonHeight = 0;
-
-                // get the total aspect ratio of the row
-                for (var j = i; j < i + cols; j++) {
-                    if (j == this.props.photos.length) {
-                        break;
-                    }
-                    this.props.photos[j].aspectRatio = this.props.photos[j].width / this.props.photos[j].height;
-                    totalAr += this.props.photos[j].aspectRatio;
-                }
-                if (i === lastRowIndex) {
-                    commonHeight = lastRowWidth / totalAr;
-                } else {
-                    commonHeight = contWidth / totalAr;
-                }
-                // run thru the same set of items again to give the width and common height
-
-                var _loop = function (k) {
-                    if (k == _this.props.photos.length) {
-                        return 'break';
-                    }
-
-                    var src = _this.props.photos[k].src,
-                        srcset = undefined,
-                        sizes = undefined;
-                    if (_this.props.photos[k].srcset) {
-                        srcset = _this.props.photos[k].srcset.join();
-                    }
-                    if (_this.props.photos[k].sizes) {
-                        sizes = _this.props.photos[k].sizes.join();
-                    }
-
-                    style.margin = _this.props.margin;
-                    photoPreviewNodes.push(_react2['default'].createElement(
-                        'div',
-                        { key: k, style: style },
-                        _react2['default'].createElement(
-                            'a',
-                            { href: '#', className: k, onClick: function (e) {
-                                    return _this.props.onClickPhoto(k, e);
-                                } },
-                            _react2['default'].createElement('img', { src: src, srcSet: srcset, sizes: sizes, style: { display: 'block', border: 0 }, height: commonHeight, width: commonHeight * _this.props.photos[k].aspectRatio, alt: _this.props.photos[k].alt })
-                        )
-                    ));
-                };
-
-                for (var k = i; k < i + cols; k++) {
-                    var _ret = _loop(k);
-
-                    if (_ret === 'break') break;
-                }
-            }
-            return this.renderGallery(photoPreviewNodes);
-        }
-    }, {
-        key: 'renderGallery',
-        value: function renderGallery(photoPreviewNodes) {
-            var _this2 = this;
-
-            return _react2['default'].createElement(
-                'div',
-                { id: 'Gallery', className: 'clearfix', ref: function (c) {
-                        return _this2._gallery = c;
-                    } },
-                photoPreviewNodes
-            );
-        }
-    }]);
-
-    return Gallery;
-})(_react2['default'].Component);
-
-;
-Gallery.displayName = 'Gallery';
-Gallery.propTypes = {
-    photos: function photos(props, propName, componentName) {
-        return _propTypes2['default'].arrayOf(_propTypes2['default'].shape({
-            src: _propTypes2['default'].string.isRequired,
-            width: _propTypes2['default'].number.isRequired,
-            height: _propTypes2['default'].number.isRequired,
-            alt: _propTypes2['default'].string,
-            srcset: _propTypes2['default'].array,
-            sizes: _propTypes2['default'].array
-        })).isRequired.apply(this, arguments);
-    },
-    onClickPhoto: _propTypes2['default'].func,
-    cols: _propTypes2['default'].number,
-    margin: _propTypes2['default'].number
-};
-Gallery.defaultProps = {
-    cols: 3,
-    onClickPhoto: function onClickPhoto(k, e) {
-        e.preventDefault();
-    },
-    margin: 2
-};
-// Gallery image style
-var style = {
-    display: 'block',
-    backgroundColor: '#e3e3e3',
-    float: 'left'
-};
-
-exports['default'] = Gallery;
-module.exports = exports['default'];
-
-/***/ }),
+/* 328 */,
 /* 329 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -33685,6 +33516,272 @@ PassContext.childContextTypes = {
 };
 
 exports['default'] = PassContext;
+module.exports = exports['default'];
+
+/***/ }),
+/* 366 */,
+/* 367 */,
+/* 368 */,
+/* 369 */,
+/* 370 */,
+/* 371 */,
+/* 372 */,
+/* 373 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+Object.defineProperty(exports, '__esModule', {
+    value: true
+});
+
+var _createClass = function () {
+    function defineProperties(target, props) {
+        for (var i = 0; i < props.length; i++) {
+            var descriptor = props[i];
+            descriptor.enumerable = descriptor.enumerable || false;
+            descriptor.configurable = true;
+            if ('value' in descriptor) descriptor.writable = true;
+            Object.defineProperty(target, descriptor.key, descriptor);
+        }
+    }
+
+    return function (Constructor, protoProps, staticProps) {
+        if (protoProps) defineProperties(Constructor.prototype, protoProps);
+        if (staticProps) defineProperties(Constructor, staticProps);
+        return Constructor;
+    };
+}();
+
+var _get = function get(_x, _x2, _x3) {
+    var _again = true;
+    _function: while (_again) {
+        var object = _x,
+            property = _x2,
+            receiver = _x3;
+        _again = false;
+        if (object === null) object = Function.prototype;
+        var desc = Object.getOwnPropertyDescriptor(object, property);
+        if (desc === undefined) {
+            var parent = Object.getPrototypeOf(object);
+            if (parent === null) {
+                return undefined;
+            } else {
+                _x = parent;
+                _x2 = property;
+                _x3 = receiver;
+                _again = true;
+                desc = parent = undefined;
+                continue _function;
+            }
+        } else if ('value' in desc) {
+            return desc.value;
+        } else {
+            var getter = desc.get;
+            if (getter === undefined) {
+                return undefined;
+            }
+            return getter.call(receiver);
+        }
+    }
+};
+
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : { 'default': obj };
+}
+
+function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+        throw new TypeError('Cannot call a class as a function');
+    }
+}
+
+function _inherits(subClass, superClass) {
+    if (typeof superClass !== 'function' && superClass !== null) {
+        throw new TypeError('Super expression must either be null or a function, not ' + (typeof superClass === 'undefined' ? 'undefined' : _typeof(superClass)));
+    }
+    subClass.prototype = Object.create(superClass && superClass.prototype, {
+        constructor: {
+            value: subClass,
+            enumerable: false,
+            writable: true,
+            configurable: true
+        }
+    });
+    if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+}
+
+var _react = __webpack_require__(2);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = __webpack_require__(8);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var Gallery = function (_React$Component) {
+    _inherits(Gallery, _React$Component);
+
+    function Gallery() {
+        _classCallCheck(this, Gallery);
+
+        _get(Object.getPrototypeOf(Gallery.prototype), 'constructor', this).call(this);
+        this.state = {
+            containerWidth: 0
+        };
+        this.handleResize = this.handleResize.bind(this);
+    }
+
+    _createClass(Gallery, [{
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            this.setState({ containerWidth: Math.floor(this._gallery.clientWidth - 1) });
+            window.addEventListener('resize', this.handleResize);
+        }
+    }, {
+        key: 'componentDidUpdate',
+        value: function componentDidUpdate() {
+            if (this._gallery.clientWidth - 1 !== this.state.containerWidth) {
+                this.setState({ containerWidth: Math.floor(this._gallery.clientWidth - 1) });
+            }
+        }
+    }, {
+        key: 'componentWillUnmount',
+        value: function componentWillUnmount() {
+            window.removeEventListener('resize', this.handleResize, false);
+        }
+    }, {
+        key: 'handleResize',
+        value: function handleResize(e) {
+            this.setState({ containerWidth: Math.floor(this._gallery.clientWidth - 1) });
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var _this = this;
+
+            var cols = this.props.cols,
+                photoPreviewNodes = [],
+                contWidth = this.state.containerWidth - cols * (this.props.margin * 2);
+
+            contWidth = Math.floor(contWidth); // add some padding to prevent layout prob
+            var remainder = this.props.photos.length % cols;
+            if (remainder) {
+                // there are fewer photos than cols num in last row
+                var lastRowWidth = Math.floor(this.state.containerWidth / cols * remainder - remainder * (this.props.margin * 2));
+                var lastRowIndex = this.props.photos.length - remainder;
+            }
+            // loop thru each set of  cols num
+            // eg. if cols is 3 it will  loop thru 0,1,2, then 3,4,5 to perform calculations for the particular set
+            for (var i = 0; i < this.props.photos.length; i += cols) {
+                var totalAr = 0,
+                    commonHeight = 0;
+
+                // get the total aspect ratio of the row
+                for (var j = i; j < i + cols; j++) {
+                    if (j == this.props.photos.length) {
+                        break;
+                    }
+                    this.props.photos[j].aspectRatio = this.props.photos[j].width / this.props.photos[j].height;
+                    totalAr += this.props.photos[j].aspectRatio;
+                }
+                if (i === lastRowIndex) {
+                    commonHeight = lastRowWidth / totalAr;
+                } else {
+                    commonHeight = contWidth / totalAr;
+                }
+                // run thru the same set of items again to give the width and common height
+
+                var _loop = function _loop(k) {
+                    if (k == _this.props.photos.length) {
+                        return 'break';
+                    }
+
+                    var src = _this.props.photos[k].src,
+                        srcset = undefined,
+                        sizes = undefined;
+                    if (_this.props.photos[k].srcset) {
+                        srcset = _this.props.photos[k].srcset.join();
+                    }
+                    if (_this.props.photos[k].sizes) {
+                        sizes = _this.props.photos[k].sizes.join();
+                    }
+
+                    style.margin = _this.props.margin;
+                    photoPreviewNodes.push(_react2['default'].createElement('div', { key: k, style: style }, _react2['default'].createElement('a', {
+                        href: '#', className: k, onClick: function onClick(e) {
+                            return _this.props.onClickPhoto(k, e);
+                        }
+                    }, _react2['default'].createElement('img', {
+                        src: src,
+                        srcSet: srcset,
+                        sizes: sizes,
+                        style: { display: 'block', border: 0 },
+                        height: commonHeight,
+                        width: commonHeight * _this.props.photos[k].aspectRatio,
+                        alt: _this.props.photos[k].alt
+                    }))));
+                };
+
+                for (var k = i; k < i + cols; k++) {
+                    var _ret = _loop(k);
+
+                    if (_ret === 'break') break;
+                }
+            }
+            return this.renderGallery(photoPreviewNodes);
+        }
+    }, {
+        key: 'renderGallery',
+        value: function renderGallery(photoPreviewNodes) {
+            var _this2 = this;
+
+            return _react2['default'].createElement('div', {
+                id: 'Gallery', className: 'clearfix', ref: function ref(c) {
+                    return _this2._gallery = c;
+                }
+            }, photoPreviewNodes);
+        }
+    }]);
+
+    return Gallery;
+}(_react2['default'].Component);
+
+;
+Gallery.displayName = 'Gallery';
+Gallery.propTypes = {
+    photos: function photos(props, propName, componentName) {
+        return _propTypes2['default'].arrayOf(_propTypes2['default'].shape({
+            src: _propTypes2['default'].string.isRequired,
+            width: _propTypes2['default'].number.isRequired,
+            height: _propTypes2['default'].number.isRequired,
+            alt: _propTypes2['default'].string,
+            srcset: _propTypes2['default'].array,
+            sizes: _propTypes2['default'].array
+        })).isRequired.apply(this, arguments);
+    },
+    onClickPhoto: _propTypes2['default'].func,
+    cols: _propTypes2['default'].number,
+    margin: _propTypes2['default'].number
+};
+Gallery.defaultProps = {
+    cols: 3,
+    onClickPhoto: function onClickPhoto(k, e) {
+        e.preventDefault();
+    },
+    margin: 2
+};
+// Gallery image style
+var style = {
+    display: 'block',
+    backgroundColor: '#e3e3e3',
+    float: 'left'
+};
+
+exports['default'] = Gallery;
 module.exports = exports['default'];
 
 /***/ })
