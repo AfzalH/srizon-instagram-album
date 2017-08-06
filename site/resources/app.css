@@ -597,3 +597,7 @@
   margin-top: 10px !important;
 }
 
+#lightboxBackdrop button {
+  background: none !important;
+}
+
