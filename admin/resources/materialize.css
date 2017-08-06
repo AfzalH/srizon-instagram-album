@@ -2576,7 +2576,15 @@ html .srizon {
           align-items: center;
 }
 
-.srizon .clearfix {
+.srizon .clearfix:before,
+.srizon .clearfix:after {
+  content: " ";
+  /* 1 */
+  display: table;
+  /* 2 */
+}
+
+.srizon .clearfix:after {
   clear: both;
 }
 

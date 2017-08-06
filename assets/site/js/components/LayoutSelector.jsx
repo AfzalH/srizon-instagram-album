@@ -11,7 +11,11 @@ class LayoutSelector extends React.Component {
                     <AlbumCarousel album={album}/>
                     :
                     album.options.options.layout == 'collage' ?
-                        <AlbumCollage album={album}/>
+                        <div className="row">
+                            <div className="col s12 plr0">
+                                <AlbumCollage album={album}/>
+                            </div>
+                        </div>
                         :
                         <div>Layout <em>{album.options.options.layout}</em> not found</div>
                 : <p>Couldn't get the images for <em>{album.options.title}</em>. Probably private album</p>

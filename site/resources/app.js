@@ -27530,7 +27530,15 @@ var LayoutSelector = function (_React$Component) {
         value: function render() {
             var album = this.props.album;
 
-            return album.data.meta.code == 200 ? album.options.options.layout == 'carousel' ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__AlbumCarousel__["a" /* default */], { album: album }) : album.options.options.layout == 'collage' ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__AlbumCollage__["a" /* default */], { album: album }) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            return album.data.meta.code == 200 ? album.options.options.layout == 'carousel' ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__AlbumCarousel__["a" /* default */], { album: album }) : album.options.options.layout == 'collage' ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'div',
+                { className: 'row' },
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { className: 'col s12 plr0' },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__AlbumCollage__["a" /* default */], { album: album })
+                )
+            ) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
                 null,
                 'Layout ',
