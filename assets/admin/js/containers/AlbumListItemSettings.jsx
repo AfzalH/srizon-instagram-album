@@ -36,6 +36,17 @@ class AlbumListItemSettings extends React.Component {
         return (
             <div className="row bottom0">
                 <div className="col s12 plr0">
+                    <div className="row bottom40">
+                        <div className="col s6 plr0">
+                            <button className="btn btn-small green left"
+                                    onClick={()=>{cancelForm();updateAlbum(album.id,this.state)}}>Save
+                            </button>
+                        </div>
+                        <div className="col s6 plr0">
+                            <button className="btn btn-small right grey" onClick={cancelForm}>Cancel</button>
+                        </div>
+                    </div>
+
                     <TextField val={this.state.title} onch={this.hich} name="title"
                                label="Title"/>
 

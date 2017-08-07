@@ -189,7 +189,12 @@ var Gallery = (function (_React$Component) {
                                 src: src,
                                 srcSet: srcset,
                                 sizes: sizes,
-                                style: {display: 'block', border: 0},
+                                style: {
+                                    display: 'block',
+                                    border: 0,
+                                    height: commonHeight,
+                                    width: commonHeight * _this.props.photos[k].aspectRatio
+                                },
                                 height: commonHeight,
                                 width: commonHeight * _this.props.photos[k].aspectRatio,
                                 alt: _this.props.photos[k].alt

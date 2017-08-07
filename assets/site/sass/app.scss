@@ -1,15 +1,36 @@
 @import "../../admin/sass/color";
 @import "../../admin/sass/common";
 @import "../../../node_modules/react-image-gallery/styles/scss/image-gallery.scss";
+
 .srizon {
   margin-top: 10px !important;
-  .image-gallery-content{
-    button{
+  .image-gallery-content {
+    button {
       background: none;
       font-size: 48px;
     }
   }
 }
-#lightboxBackdrop button{
-  background: none !important;
+
+#lightboxBackdrop{
+  button {
+    background: none !important;
+  }
+  figure{
+    text-align: center;
+    div{
+      max-width: 800px;
+    }
+  }
+}
+
+.srizon-tooltip {
+  display: none;
+  position: absolute;
+  border: 1px solid #333;
+  background-color: #161616;
+  border-radius: 5px;
+  padding: 10px;
+  color: #fff;
+  font-size: 12px;
 }

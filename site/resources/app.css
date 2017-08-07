@@ -52,6 +52,26 @@
   margin-bottom: 0 !important;
 }
 
+.srizon .bottom50 {
+  margin-bottom: 50px !important;
+}
+
+.srizon .bottom40 {
+  margin-bottom: 40px !important;
+}
+
+.srizon .bottom30 {
+  margin-bottom: 30px !important;
+}
+
+.srizon .bottom20 {
+  margin-bottom: 20px !important;
+}
+
+.srizon .bottom10 {
+  margin-bottom: 10px !important;
+}
+
 .srizon .pl0 {
   padding-left: 0 !important;
 }
@@ -604,5 +624,24 @@
 
 #lightboxBackdrop button {
   background: none !important;
+}
+
+#lightboxBackdrop figure {
+  text-align: center;
+}
+
+#lightboxBackdrop figure div {
+  max-width: 800px;
+}
+
+.srizon-tooltip {
+  display: none;
+  position: absolute;
+  border: 1px solid #333;
+  background-color: #161616;
+  border-radius: 5px;
+  padding: 10px;
+  color: #fff;
+  font-size: 12px;
 }
 

@@ -28901,6 +28901,31 @@ var AlbumListItemSettings = function (_React$Component) {
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'div',
                     { className: 'col s12 plr0' },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'row bottom40' },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'div',
+                            { className: 'col s6 plr0' },
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                'button',
+                                { className: 'btn btn-small green left',
+                                    onClick: function onClick() {
+                                        cancelForm();updateAlbum(album.id, _this2.state);
+                                    } },
+                                'Save'
+                            )
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'div',
+                            { className: 'col s6 plr0' },
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                'button',
+                                { className: 'btn btn-small right grey', onClick: cancelForm },
+                                'Cancel'
+                            )
+                        )
+                    ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__components_form_TextField__["a" /* default */], { val: this.state.title, onch: this.hich, name: 'title',
                         label: 'Title' }),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_SettingsForm__["a" /* default */], { hich: this.hich, pstate: this.state }),
@@ -30110,7 +30135,8 @@ var TempMessage = function (_React$Component) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_form_TextField__ = __webpack_require__(274);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_form_RadioField__ = __webpack_require__(275);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_form_RangeField__ = __webpack_require__(374);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_form_RadioField__ = __webpack_require__(275);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -30118,6 +30144,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
 
 
 
@@ -30161,16 +30188,16 @@ var SettingsForm = function (_React$Component) {
                             { className: 'top0' },
                             'Layout'
                         ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__components_form_RadioField__["a" /* default */], { val: 'collage', label: 'Responsive Collage', name: 'layout',
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_form_RadioField__["a" /* default */], { val: 'collage', label: 'Responsive Collage', name: 'layout',
                             curval: pstate.layout, onch: hich }),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__components_form_RadioField__["a" /* default */], { val: 'carousel', label: 'Carousel', name: 'layout',
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_form_RadioField__["a" /* default */], { val: 'carousel', label: 'Carousel', name: 'layout',
                             curval: pstate.layout, onch: hich }),
-                        pstate.layout === "collage" || pstate.layout === "carousel" ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__components_form_TextField__["a" /* default */], { val: pstate.max_image, onch: hich, name: 'max_image',
-                            aclass: 'top40', label: 'Maximum/Total image to load' }) : null,
-                        pstate.layout === "collage" ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__components_form_TextField__["a" /* default */], { val: pstate.initial_load, onch: hich, name: 'initial_load',
-                            label: 'Image to load initially' }) : null,
-                        pstate.layout === "collage" ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__components_form_TextField__["a" /* default */], { val: pstate.load_more_load, onch: hich, name: 'load_more_load',
-                            label: 'Image to add on Load More click' }) : null,
+                        pstate.layout === "collage" || pstate.layout === "carousel" ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__components_form_RangeField__["a" /* default */], { val: pstate.max_image, onch: hich, name: 'max_image',
+                            aclass: '', label: 'Maximum/Total image to load', min: 1, max: 1000 }) : null,
+                        pstate.layout === "collage" ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__components_form_RangeField__["a" /* default */], { val: pstate.initial_load, onch: hich, name: 'initial_load',
+                            label: 'Image to load initially', min: 1, max: 33 }) : null,
+                        pstate.layout === "collage" ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__components_form_RangeField__["a" /* default */], { val: pstate.load_more_load, onch: hich, name: 'load_more_load',
+                            label: 'Image to add on Load More click', min: 1, max: 33 }) : null,
                         pstate.layout === "collage" ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__components_form_TextField__["a" /* default */], { val: pstate.load_more_text, onch: hich, name: 'load_more_text',
                             label: 'Load More Text' }) : null
                     )
@@ -30183,6 +30210,49 @@ var SettingsForm = function (_React$Component) {
 }(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Component);
 
 /* harmony default export */ __webpack_exports__["a"] = (SettingsForm);
+
+/***/ }),
+/* 374 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+
+
+// dumb component ... only props and presentation
+var RangeField = function RangeField(_ref) {
+    var val = _ref.val,
+        onch = _ref.onch,
+        name = _ref.name,
+        label = _ref.label,
+        aclass = _ref.aclass,
+        min = _ref.min,
+        max = _ref.max;
+    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        "div",
+        { className: "input-field " + aclass },
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            "p",
+            { className: "grey-text bottom0" },
+            label,
+            " : ",
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                "span",
+                { className: "green-text text-darken-1" },
+                val
+            )
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            "p",
+            { className: "range-field top0" },
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", { type: "range", name: name, value: val,
+                onChange: onch, id: name, min: min, max: max })
+        )
+    );
+};
+
+/* harmony default export */ __webpack_exports__["a"] = (RangeField);
 
 /***/ })
 /******/ ]);

@@ -30756,7 +30756,7 @@ var AlbumCollage = function (_React$Component) {
         _this.openLightbox = _this.openLightbox.bind(_this);
         _this.gotoNext = _this.gotoNext.bind(_this);
         _this.gotoPrevious = _this.gotoPrevious.bind(_this);
-        _this.updateColDebounced = __WEBPACK_IMPORTED_MODULE_3_lodash_debounce___default()(_this.updateCol.bind(_this), 500);
+        _this.updateColDebounced = __WEBPACK_IMPORTED_MODULE_3_lodash_debounce___default()(_this.updateCol.bind(_this), 200);
         return _this;
     }
 
@@ -30798,6 +30798,21 @@ var AlbumCollage = function (_React$Component) {
         key: 'componentDidMount',
         value: function componentDidMount() {
             this.updateColDebounced();
+            window.addEventListener("resize", this.updateColDebounced);
+
+            jQuery('.srizon img').hover(function () {
+                var title = jQuery(this).attr('alt');
+                jQuery('<p class="srizon-tooltip"></p>').text(title).appendTo('body').fadeIn('slow');
+            }, function () {
+                jQuery('.srizon-tooltip').remove();
+            }).mousemove(function (e) {
+                jQuery('.srizon-tooltip').css({ top: e.pageY + 10, left: e.pageX + 20 });
+            });
+        }
+    }, {
+        key: 'componentWillUnmount',
+        value: function componentWillUnmount() {
+            window.removeEventListener("resize", this.updateColDebounced);
         }
     }, {
         key: 'componentDidUpdate',
@@ -30807,7 +30822,6 @@ var AlbumCollage = function (_React$Component) {
     }, {
         key: 'updateCol',
         value: function updateCol() {
-            console.log('updating cols');
             var newCol = 2;
             var width = this.refs["collage" + this.props.album.options.id].state.containerWidth;
             if (width < 250) newCol = 1;else if (width < 600) newCol = 2;else if (width < 900) newCol = 3;else newCol = 4;
@@ -31051,7 +31065,12 @@ var Gallery = function (_React$Component) {
                         src: src,
                         srcSet: srcset,
                         sizes: sizes,
-                        style: { display: 'block', border: 0 },
+                        style: {
+                            display: 'block',
+                            border: 0,
+                            height: commonHeight,
+                            width: commonHeight * _this.props.photos[k].aspectRatio
+                        },
                         height: commonHeight,
                         width: commonHeight * _this.props.photos[k].aspectRatio,
                         alt: _this.props.photos[k].alt

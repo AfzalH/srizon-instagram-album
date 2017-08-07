@@ -50,6 +50,26 @@
   margin-bottom: 0 !important;
 }
 
+.srizon .bottom50 {
+  margin-bottom: 50px !important;
+}
+
+.srizon .bottom40 {
+  margin-bottom: 40px !important;
+}
+
+.srizon .bottom30 {
+  margin-bottom: 30px !important;
+}
+
+.srizon .bottom20 {
+  margin-bottom: 20px !important;
+}
+
+.srizon .bottom10 {
+  margin-bottom: 10px !important;
+}
+
 .srizon .pl0 {
   padding-left: 0 !important;
 }

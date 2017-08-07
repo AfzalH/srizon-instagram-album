@@ -1,5 +1,6 @@
 import React from 'react';
 import TextField from '../components/form/TextField';
+import RangeField from '../components/form/RangeField';
 import RadioField from '../components/form/RadioField';
 
 class SettingsForm extends React.Component {
@@ -20,14 +21,14 @@ class SettingsForm extends React.Component {
                         <RadioField val="carousel" label="Carousel" name="layout"
                                     curval={pstate.layout} onch={hich}/>
                         {pstate.layout === "collage" || pstate.layout === "carousel" ?
-                            <TextField val={pstate.max_image} onch={hich} name="max_image"
-                                       aclass="top40" label="Maximum/Total image to load"/> : null}
+                            <RangeField val={pstate.max_image} onch={hich} name="max_image"
+                                       aclass="" label="Maximum/Total image to load" min={1} max={1000}/> : null}
                         {pstate.layout === "collage" ?
-                            <TextField val={pstate.initial_load} onch={hich} name="initial_load"
-                                       label="Image to load initially"/> : null}
+                            <RangeField val={pstate.initial_load} onch={hich} name="initial_load"
+                                       label="Image to load initially" min={1} max={33}/> : null}
                         {pstate.layout === "collage" ?
-                            <TextField val={pstate.load_more_load} onch={hich} name="load_more_load"
-                                       label="Image to add on Load More click"/> : null}
+                            <RangeField val={pstate.load_more_load} onch={hich} name="load_more_load"
+                                       label="Image to add on Load More click" min={1} max={33}/> : null}
                         {pstate.layout === "collage" ?
                             <TextField val={pstate.load_more_text} onch={hich} name="load_more_text"
                                        label="Load More Text"/> : null}

@@ -11,7 +11,7 @@ class AlbumCollage extends React.Component {
         this.openLightbox = this.openLightbox.bind(this);
         this.gotoNext = this.gotoNext.bind(this);
         this.gotoPrevious = this.gotoPrevious.bind(this);
-        this.updateColDebounced = debounce(this.updateCol.bind(this), 500);
+        this.updateColDebounced = debounce(this.updateCol.bind(this), 200);
     }
 
     openLightbox(index, event) {
@@ -46,6 +46,20 @@ class AlbumCollage extends React.Component {
 
     componentDidMount() {
         this.updateColDebounced();
+        window.addEventListener("resize", this.updateColDebounced);
+
+        jQuery('.srizon img').hover(function () {
+            var title = jQuery(this).attr('alt');
+            jQuery('<p class="srizon-tooltip"></p>').text(title).appendTo('body').fadeIn('slow');
+        }, function () {
+            jQuery('.srizon-tooltip').remove();
+        }).mousemove(function (e) {
+            jQuery('.srizon-tooltip').css({top: e.pageY + 10, left: e.pageX + 20})
+        });
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener("resize", this.updateColDebounced);
     }
 
     componentDidUpdate() {
@@ -53,7 +67,6 @@ class AlbumCollage extends React.Component {
     }
 
     updateCol() {
-        console.log('updating cols');
         let newCol = 2;
         const width = this.refs["collage" + this.props.album.options.id].state.containerWidth;
         if (width < 250) newCol = 1;
