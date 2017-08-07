@@ -6,7 +6,9 @@ class AlbumCarousel extends React.Component {
     componentDidMount() {
         jQuery('.image-gallery-thumbnails-container img').hover(function () {
             var title = jQuery(this).attr('alt');
-            jQuery('<p class="srizon-tooltip"></p>').text(title).appendTo('body').fadeIn('slow');
+            if(title) {
+                jQuery('<p class="srizon-tooltip"></p>').text(title).appendTo('body').fadeIn('slow');
+            }
         }, function () {
             jQuery('.srizon-tooltip').remove();
         }).mousemove(function (e) {

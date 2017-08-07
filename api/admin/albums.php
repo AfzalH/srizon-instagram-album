@@ -175,6 +175,20 @@ function srizon_instagram_get_album_data( $req ) {
 	return $ret;
 }
 
+/**
+ * @param \WP_REST_Request $req
+ *
+ * @return mixed
+ */
+function srizon_instagram_get_album_load_more($req){
+	$json_data = json_decode( $req->get_body() );
+	
+	$ret['result'] = 'success';
+	$ret['data']   = SrizonInstaAPI::getAlbumLoadMore( $json_data->id,  $json_data->url);
+
+	return $ret;
+}
+
 add_action( 'rest_api_init', function () {
 	register_rest_route( 'srizon-instagram/v1', '/useralbum/', [
 		'methods'  => 'POST',
@@ -189,6 +203,10 @@ add_action( 'rest_api_init', function () {
 	register_rest_route( 'srizon-instagram/v1', '/album-data/', [
 		'methods'  => 'POST',
 		'callback' => 'srizon_instagram_get_album_data',
+	] );
+	register_rest_route( 'srizon-instagram/v1', '/album-load-more/', [
+		'methods'  => 'POST',
+		'callback' => 'srizon_instagram_get_album_load_more',
 	] );
 
 	register_rest_route( 'srizon-instagram/v1', '/album/(?P<id>[\d]+)', [

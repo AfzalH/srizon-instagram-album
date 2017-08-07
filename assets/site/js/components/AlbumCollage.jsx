@@ -2,6 +2,7 @@ import React from 'react';
 import Collage from '../lib/Gallery';
 import Lightbox from 'react-images';
 import debounce from 'lodash.debounce';
+import throttle from 'lodash.throttle';
 
 class AlbumCollage extends React.Component {
     constructor() {
@@ -50,7 +51,9 @@ class AlbumCollage extends React.Component {
 
         jQuery('.srizon img').hover(function () {
             var title = jQuery(this).attr('alt');
-            jQuery('<p class="srizon-tooltip"></p>').text(title).appendTo('body').fadeIn('slow');
+            if(title) {
+                jQuery('<p class="srizon-tooltip"></p>').text(title).appendTo('body').fadeIn('slow');
+            }
         }, function () {
             jQuery('.srizon-tooltip').remove();
         }).mousemove(function (e) {
@@ -80,7 +83,7 @@ class AlbumCollage extends React.Component {
     }
 
     render() {
-        const {album} = this.props;
+        const {album, loadMoreData} = this.props;
         const images = album.data.data.map((img)=>({
             src: img.images.standard_resolution.url,
             srcset: [
@@ -113,6 +116,14 @@ class AlbumCollage extends React.Component {
                     isOpen={this.state.lightboxIsOpen}
                     width={1600}
                 />
+                {album.data.pagination.next_url ?
+                    <div className="row top20">
+                        <div className="col s12 center">
+                            <button className="btn no-transform"
+                                    onClick={throttle(()=>loadMoreData(album.options.id,album.data.pagination.next_url),2000)}>
+                                {album.options.options.load_more_text}</button>
+                        </div>
+                    </div> : null}
             </div>
 
         )

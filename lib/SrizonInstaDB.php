@@ -21,7 +21,7 @@ CREATE TABLE ' . $t_albums . ' (
 CREATE TABLE ' . $t_cache . ' (
   id int(11) NOT NULL AUTO_INCREMENT,
   url varchar(255),
-  data text,
+  data mediumtext,
   storetime varchar(255),
   album_id int(11),
   options text,
@@ -106,6 +106,7 @@ CREATE TABLE ' . $t_cache . ' (
 
 	static function updateAPICache( $url, $album_id, $data ) {
 		global $wpdb;
+		$wpdb->show_errors();
 		$table = $wpdb->prefix . 'srzinst_cache';
 
 		$tdata['url']       = $url;

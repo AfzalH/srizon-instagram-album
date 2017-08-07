@@ -28,3 +28,18 @@ export function getAlbumData(id) {
             });
     }
 }
+
+export function loadMoreData(id,url){
+    return (dispatch)=>{
+        axios.post(srzinstbase + 'album-load-more', {id:id,url:url})
+            .then((response)=>{
+                if (response.data.result == 'success') {
+                    dispatch({
+                        type: 'ALBUM_DATA_LOADED_MORE',
+                        id: id,
+                        payload: response.data.data
+                    });
+                }
+            });
+    }
+}

@@ -30192,12 +30192,12 @@ var SettingsForm = function (_React$Component) {
                             curval: pstate.layout, onch: hich }),
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_form_RadioField__["a" /* default */], { val: 'carousel', label: 'Carousel', name: 'layout',
                             curval: pstate.layout, onch: hich }),
-                        pstate.layout === "collage" || pstate.layout === "carousel" ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__components_form_RangeField__["a" /* default */], { val: pstate.max_image, onch: hich, name: 'max_image',
-                            aclass: '', label: 'Maximum/Total image to load', min: 1, max: 1000 }) : null,
+                        pstate.layout === "collage" ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__components_form_RangeField__["a" /* default */], { val: pstate.max_image, onch: hich, name: 'max_image',
+                            aclass: '', label: 'Maximum image to load', min: 1, max: 1000 }) : null,
+                        pstate.layout === "carousel" ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__components_form_RangeField__["a" /* default */], { val: pstate.total_image_carousel, onch: hich, name: 'total_image_carousel',
+                            aclass: '', label: 'Total image to load', min: 1, max: 33 }) : null,
                         pstate.layout === "collage" ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__components_form_RangeField__["a" /* default */], { val: pstate.initial_load, onch: hich, name: 'initial_load',
-                            label: 'Image to load initially', min: 1, max: 33 }) : null,
-                        pstate.layout === "collage" ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__components_form_RangeField__["a" /* default */], { val: pstate.load_more_load, onch: hich, name: 'load_more_load',
-                            label: 'Image to add on Load More click', min: 1, max: 33 }) : null,
+                            label: 'Image to load initially and on `Load More`', min: 1, max: 33 }) : null,
                         pstate.layout === "collage" ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__components_form_TextField__["a" /* default */], { val: pstate.load_more_text, onch: hich, name: 'load_more_text',
                             label: 'Load More Text' }) : null
                     )

@@ -28525,6 +28525,8 @@ render();
 /* harmony export (immutable) */ __webpack_exports__["a"] = albumReducer;
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 var initialState = {};
@@ -28549,6 +28551,16 @@ function albumReducer() {
             return _extends({}, state, _defineProperty({}, action.id, _extends({}, state[action.id], {
                 data_loaded: true,
                 data: action.payload
+            })));
+            break;
+        case 'ALBUM_DATA_LOADED_MORE':
+            return _extends({}, state, _defineProperty({}, action.id, _extends({}, state[action.id], {
+                data_loaded: true,
+                data: {
+                    data: [].concat(_toConsumableArray(state[action.id].data.data), _toConsumableArray(action.payload.data)),
+                    meta: action.payload.meta,
+                    pagination: action.payload.pagination
+                }
             })));
             break;
         default:
@@ -28606,9 +28618,10 @@ var Base = function (_React$Component) {
         value: function render() {
             var _props2 = this.props,
                 id = _props2.id,
-                albums = _props2.albums;
+                albums = _props2.albums,
+                loadMoreData = _props2.loadMoreData;
 
-            return albums[id].data_loaded && albums[id].options_loaded ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_LayoutSelector__["a" /* default */], { album: albums[id] }) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            return albums[id].data_loaded && albums[id].options_loaded ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_LayoutSelector__["a" /* default */], { album: albums[id], loadMoreData: loadMoreData }) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
                 null,
                 'Loading...'
@@ -28636,6 +28649,9 @@ function mapDispatchToProps(dispatch) {
         },
         getAlbumData: function getAlbumData(id) {
             dispatch(Object(__WEBPACK_IMPORTED_MODULE_2__actions_albumAction__["b" /* getAlbumData */])(id));
+        },
+        loadMoreData: function loadMoreData(id, url) {
+            dispatch(Object(__WEBPACK_IMPORTED_MODULE_2__actions_albumAction__["c" /* loadMoreData */])(id, url));
         }
     };
 }
@@ -28650,6 +28666,7 @@ function mapDispatchToProps(dispatch) {
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = getAlbum;
 /* harmony export (immutable) */ __webpack_exports__["b"] = getAlbumData;
+/* harmony export (immutable) */ __webpack_exports__["c"] = loadMoreData;
 function getAlbum(id) {
     return function (dispatch) {
         axios.get(srzinstbase + 'album/' + id).then(function (response) {
@@ -28671,6 +28688,20 @@ function getAlbumData(id) {
             if (response.data.result == 'success') {
                 dispatch({
                     type: 'ALBUM_DATA_LOADED',
+                    id: id,
+                    payload: response.data.data
+                });
+            }
+        });
+    };
+}
+
+function loadMoreData(id, url) {
+    return function (dispatch) {
+        axios.post(srzinstbase + 'album-load-more', { id: id, url: url }).then(function (response) {
+            if (response.data.result == 'success') {
+                dispatch({
+                    type: 'ALBUM_DATA_LOADED_MORE',
                     id: id,
                     payload: response.data.data
                 });
@@ -28712,7 +28743,9 @@ var LayoutSelector = function (_React$Component) {
     _createClass(LayoutSelector, [{
         key: 'render',
         value: function render() {
-            var album = this.props.album;
+            var _props = this.props,
+                album = _props.album,
+                loadMoreData = _props.loadMoreData;
 
             return album.data.meta.code == 200 ? album.options.options.layout == 'carousel' ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__AlbumCarousel__["a" /* default */], { album: album }) : album.options.options.layout == 'collage' ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
@@ -28720,7 +28753,7 @@ var LayoutSelector = function (_React$Component) {
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'div',
                     { className: 'col s12 plr0' },
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__AlbumCollage__["a" /* default */], { album: album })
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__AlbumCollage__["a" /* default */], { album: album, loadMoreData: loadMoreData })
                 )
             ) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
@@ -28785,7 +28818,9 @@ var AlbumCarousel = function (_React$Component) {
         value: function componentDidMount() {
             jQuery('.image-gallery-thumbnails-container img').hover(function () {
                 var title = jQuery(this).attr('alt');
-                jQuery('<p class="srizon-tooltip"></p>').text(title).appendTo('body').fadeIn('slow');
+                if (title) {
+                    jQuery('<p class="srizon-tooltip"></p>').text(title).appendTo('body').fadeIn('slow');
+                }
             }, function () {
                 jQuery('.srizon-tooltip').remove();
             }).mousemove(function (e) {
@@ -30744,6 +30779,8 @@ module.exports = throttle;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_images___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_react_images__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_lodash_debounce__ = __webpack_require__(278);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_lodash_debounce___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_lodash_debounce__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_lodash_throttle__ = __webpack_require__(326);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_lodash_throttle___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_lodash_throttle__);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -30751,6 +30788,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
 
 
 
@@ -30816,7 +30854,9 @@ var AlbumCollage = function (_React$Component) {
 
             jQuery('.srizon img').hover(function () {
                 var title = jQuery(this).attr('alt');
-                jQuery('<p class="srizon-tooltip"></p>').text(title).appendTo('body').fadeIn('slow');
+                if (title) {
+                    jQuery('<p class="srizon-tooltip"></p>').text(title).appendTo('body').fadeIn('slow');
+                }
             }, function () {
                 jQuery('.srizon-tooltip').remove();
             }).mousemove(function (e) {
@@ -30847,7 +30887,9 @@ var AlbumCollage = function (_React$Component) {
     }, {
         key: 'render',
         value: function render() {
-            var album = this.props.album;
+            var _props = this.props,
+                album = _props.album,
+                loadMoreData = _props.loadMoreData;
 
             var images = album.data.data.map(function (img) {
                 return {
@@ -30875,7 +30917,23 @@ var AlbumCollage = function (_React$Component) {
                     currentImage: this.state.currentImage,
                     isOpen: this.state.lightboxIsOpen,
                     width: 1600
-                })
+                }),
+                album.data.pagination.next_url ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { className: 'row top20' },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'col s12 center' },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'button',
+                            { className: 'btn no-transform',
+                                onClick: __WEBPACK_IMPORTED_MODULE_4_lodash_throttle___default()(function () {
+                                    return loadMoreData(album.options.id, album.data.pagination.next_url);
+                                }, 2000) },
+                            album.options.options.load_more_text
+                        )
+                    )
+                ) : null
             );
         }
     }]);

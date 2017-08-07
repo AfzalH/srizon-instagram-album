@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {getAlbum, getAlbumData} from '../actions/albumAction';
+import {getAlbum, getAlbumData, loadMoreData} from '../actions/albumAction';
 import LayoutSelector from '../components/LayoutSelector';
 
 // smart component with redux connect
@@ -13,11 +13,11 @@ class Base extends React.Component {
     }
 
     render() {
-        const {id, albums} = this.props;
+        const {id, albums, loadMoreData} = this.props;
         return (
             (albums[id].data_loaded && albums[id].options_loaded) ?
 
-                <LayoutSelector album={albums[id]}/>
+                <LayoutSelector album={albums[id]} loadMoreData={loadMoreData}/>
                 :
                 <div>Loading...</div>
         )
@@ -39,6 +39,9 @@ function mapDispatchToProps(dispatch) {
         },
         getAlbumData: (id)=> {
             dispatch(getAlbumData(id));
+        },
+        loadMoreData: (id, url)=> {
+            dispatch(loadMoreData(id, url));
         }
     }
 }

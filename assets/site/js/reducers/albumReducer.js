@@ -30,6 +30,20 @@ export default function albumReducer(state = initialState, action) {
                 }
             };
             break;
+        case 'ALBUM_DATA_LOADED_MORE':
+            return {
+                ...state,
+                [action.id]: {
+                    ...state[action.id],
+                    data_loaded: true,
+                    data: {
+                        data: [...state[action.id].data.data, ...action.payload.data],
+                        meta: action.payload.meta,
+                        pagination: action.payload.pagination
+                    }
+                }
+            };
+            break;
         default:
             return state;
     }
