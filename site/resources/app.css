@@ -597,6 +597,11 @@
   margin-top: 10px !important;
 }
 
+.srizon .image-gallery-content button {
+  background: none;
+  font-size: 48px;
+}
+
 #lightboxBackdrop button {
   background: none !important;
 }

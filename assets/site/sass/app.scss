@@ -3,6 +3,12 @@
 @import "../../../node_modules/react-image-gallery/styles/scss/image-gallery.scss";
 .srizon {
   margin-top: 10px !important;
+  .image-gallery-content{
+    button{
+      background: none;
+      font-size: 48px;
+    }
+  }
 }
 #lightboxBackdrop button{
   background: none !important;

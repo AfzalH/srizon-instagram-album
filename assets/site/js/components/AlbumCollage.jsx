@@ -1,6 +1,7 @@
 import React from 'react';
 import Collage from '../lib/Gallery';
 import Lightbox from 'react-images';
+import debounce from 'lodash.debounce';
 
 class AlbumCollage extends React.Component {
     constructor() {
@@ -10,7 +11,7 @@ class AlbumCollage extends React.Component {
         this.openLightbox = this.openLightbox.bind(this);
         this.gotoNext = this.gotoNext.bind(this);
         this.gotoPrevious = this.gotoPrevious.bind(this);
-        this.updateCol = this.updateCol.bind(this);
+        this.updateColDebounced = debounce(this.updateCol.bind(this), 500);
     }
 
     openLightbox(index, event) {
@@ -44,29 +45,25 @@ class AlbumCollage extends React.Component {
     }
 
     componentDidMount() {
-        this.updateCol();
+        this.updateColDebounced();
     }
 
     componentDidUpdate() {
-        this.updateCol();
+        this.updateColDebounced();
     }
 
     updateCol() {
-        setTimeout(()=> {
-            const width = this.refs["collage" + this.props.album.options.id].state.containerWidth;
-            if (width < 250) {
-                this.setState({cols: 1});
-            }
-            else if (width < 600) {
-                this.setState({cols: 2});
-            }
-            else if (width < 900) {
-                this.setState({cols: 3});
-            }
-            else {
-                this.setState({cols: 4});
-            }
-        }, 1000);
+        console.log('updating cols');
+        let newCol = 2;
+        const width = this.refs["collage" + this.props.album.options.id].state.containerWidth;
+        if (width < 250) newCol = 1;
+        else if (width < 600) newCol = 2;
+        else if (width < 900) newCol = 3;
+        else newCol = 4;
+
+        if (this.state.cols != newCol) {
+            this.setState({cols: newCol});
+        }
     }
 
     render() {
