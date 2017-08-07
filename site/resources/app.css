@@ -634,6 +634,10 @@
   max-width: 800px;
 }
 
+#lightboxBackdrop figure div figcaption {
+  text-align: left;
+}
+
 .srizon-tooltip {
   display: none;
   position: absolute;

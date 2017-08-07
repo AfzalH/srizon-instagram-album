@@ -28781,6 +28781,18 @@ var AlbumCarousel = function (_React$Component) {
     }
 
     _createClass(AlbumCarousel, [{
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            jQuery('.image-gallery-thumbnails-container img').hover(function () {
+                var title = jQuery(this).attr('alt');
+                jQuery('<p class="srizon-tooltip"></p>').text(title).appendTo('body').fadeIn('slow');
+            }, function () {
+                jQuery('.srizon-tooltip').remove();
+            }).mousemove(function (e) {
+                jQuery('.srizon-tooltip').css({ top: e.pageY + 10, left: e.pageX + 20 });
+            });
+        }
+    }, {
         key: 'render',
         value: function render() {
             var album = this.props.album;
@@ -28789,7 +28801,9 @@ var AlbumCarousel = function (_React$Component) {
                 return {
                     original: img.images.standard_resolution.url,
                     thumbnail: img.images.low_resolution.url,
-                    description: img.caption ? img.caption.text : null
+                    description: img.caption ? img.caption.text : null,
+                    thumbnailAlt: img.caption ? img.caption.text : null,
+                    originalAlt: img.caption ? img.caption.text : null
                 };
             });
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_image_gallery___default.a, {
