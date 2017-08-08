@@ -30174,8 +30174,8 @@ var SettingsForm = function (_React$Component) {
                 global ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'div',
                     { className: 'col s12 m6 top20 pr50' },
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__components_form_TextField__["a" /* default */], { val: pstate.cache_time, onch: hich, name: 'cache_time',
-                        label: 'Global Caching Time (For API)' })
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__components_form_RangeField__["a" /* default */], { val: pstate.cache_time, onch: hich, name: 'cache_time',
+                        label: 'Global Caching Time For API data - In Minutes', min: 10, max: 10080 })
                 ) : null,
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'div',
@@ -30192,8 +30192,6 @@ var SettingsForm = function (_React$Component) {
                             curval: pstate.layout, onch: hich }),
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_form_RadioField__["a" /* default */], { val: 'carousel', label: 'Carousel', name: 'layout',
                             curval: pstate.layout, onch: hich }),
-                        pstate.layout === "collage" ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__components_form_RangeField__["a" /* default */], { val: pstate.max_image, onch: hich, name: 'max_image',
-                            aclass: '', label: 'Maximum image to load', min: 1, max: 1000 }) : null,
                         pstate.layout === "carousel" ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__components_form_RangeField__["a" /* default */], { val: pstate.total_image_carousel, onch: hich, name: 'total_image_carousel',
                             aclass: '', label: 'Total image to load', min: 1, max: 33 }) : null,
                         pstate.layout === "collage" ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__components_form_RangeField__["a" /* default */], { val: pstate.initial_load, onch: hich, name: 'initial_load',

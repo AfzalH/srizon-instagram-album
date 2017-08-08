@@ -10,8 +10,8 @@ class SettingsForm extends React.Component {
             <div className="row">
                 {global ?
                     <div className="col s12 m6 top20 pr50">
-                        <TextField val={pstate.cache_time} onch={hich} name="cache_time"
-                                   label="Global Caching Time (For API)"/>
+                        <RangeField val={pstate.cache_time} onch={hich} name="cache_time"
+                                    label="Global Caching Time For API data - In Minutes" min={10} max={10080}/>
                     </div> : null}
                 <div className={global? "col s12 m6 top20 pr50": "col s12 top20 plr0"}>
                     <div>
@@ -20,15 +20,12 @@ class SettingsForm extends React.Component {
                                     curval={pstate.layout} onch={hich}/>
                         <RadioField val="carousel" label="Carousel" name="layout"
                                     curval={pstate.layout} onch={hich}/>
-                        {pstate.layout === "collage" ?
-                            <RangeField val={pstate.max_image} onch={hich} name="max_image"
-                                       aclass="" label="Maximum image to load" min={1} max={1000}/> : null}
                         {pstate.layout === "carousel" ?
                             <RangeField val={pstate.total_image_carousel} onch={hich} name="total_image_carousel"
-                                       aclass="" label="Total image to load" min={1} max={33}/> : null}
+                                        aclass="" label="Total image to load" min={1} max={33}/> : null}
                         {pstate.layout === "collage" ?
                             <RangeField val={pstate.initial_load} onch={hich} name="initial_load"
-                                       label="Image to load initially and on `Load More`" min={1} max={33}/> : null}
+                                        label="Image to load initially and on `Load More`" min={1} max={33}/> : null}
                         {pstate.layout === "collage" ?
                             <TextField val={pstate.load_more_text} onch={hich} name="load_more_text"
                                        label="Load More Text"/> : null}

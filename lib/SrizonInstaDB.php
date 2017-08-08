@@ -20,7 +20,7 @@ CREATE TABLE ' . $t_albums . ' (
 );
 CREATE TABLE ' . $t_cache . ' (
   id int(11) NOT NULL AUTO_INCREMENT,
-  url varchar(255),
+  url varchar(511),
   data mediumtext,
   storetime varchar(255),
   album_id int(11),
