@@ -30171,12 +30171,12 @@ var SettingsForm = function (_React$Component) {
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
                 { className: 'row' },
-                global ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'div',
-                    { className: 'col s12 m6 top20 pr50' },
+                    { className: global ? "col s12 m6 top20 pr50" : "col s12 top20 plr0" },
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__components_form_RangeField__["a" /* default */], { val: pstate.cache_time, onch: hich, name: 'cache_time',
-                        label: 'Global Caching Time For API data - In Minutes', min: 10, max: 10080 })
-                ) : null,
+                        label: 'Cache Time For API data (Mins)', min: 10, max: 10080 })
+                ),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'div',
                     { className: global ? "col s12 m6 top20 pr50" : "col s12 top20 plr0" },

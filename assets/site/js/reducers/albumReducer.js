@@ -6,7 +6,8 @@ export default function albumReducer(state = initialState, action) {
                 ...state,
                 [action.id]: {
                     options_loaded: false,
-                    data_loaded: false
+                    data_loaded: false,
+                    loading_more: false
                 }
             };
             break;
@@ -30,12 +31,22 @@ export default function albumReducer(state = initialState, action) {
                 }
             };
             break;
+        case 'ALBUM_DATA_LOADING_MORE':
+            return{
+                ...state,
+                [action.id]:{
+                    ...state[action.id],
+                    loading_more: true
+                }
+            };
+            break;
         case 'ALBUM_DATA_LOADED_MORE':
             return {
                 ...state,
                 [action.id]: {
                     ...state[action.id],
                     data_loaded: true,
+                    loading_more: false,
                     data: {
                         data: [...state[action.id].data.data, ...action.payload.data],
                         meta: action.payload.meta,

@@ -3,6 +3,7 @@ import Collage from '../lib/Gallery';
 import Lightbox from 'react-images';
 import debounce from 'lodash.debounce';
 import throttle from 'lodash.throttle';
+import CircularLoaderRow from '../../../admin/js/components/partials/CircularLoaderRow';
 
 class AlbumCollage extends React.Component {
     constructor() {
@@ -45,13 +46,10 @@ class AlbumCollage extends React.Component {
         });
     }
 
-    componentDidMount() {
-        this.updateColDebounced();
-        window.addEventListener("resize", this.updateColDebounced);
-
+    setTooltip() {
         jQuery('.srizon img').hover(function () {
             var title = jQuery(this).attr('alt');
-            if(title) {
+            if (title) {
                 jQuery('<p class="srizon-tooltip"></p>').text(title).appendTo('body').fadeIn('slow');
             }
         }, function () {
@@ -61,11 +59,18 @@ class AlbumCollage extends React.Component {
         });
     }
 
+    componentDidMount() {
+        this.updateColDebounced();
+        this.setTooltip();
+        window.addEventListener("resize", this.updateColDebounced);
+    }
+
     componentWillUnmount() {
         window.removeEventListener("resize", this.updateColDebounced);
     }
 
     componentDidUpdate() {
+        this.setTooltip();
         this.updateColDebounced();
     }
 
@@ -119,9 +124,11 @@ class AlbumCollage extends React.Component {
                 {album.data.pagination.next_url ?
                     <div className="row top20">
                         <div className="col s12 center">
-                            <button className="btn no-transform"
-                                    onClick={throttle(()=>loadMoreData(album.options.id,album.data.pagination.next_url),2000)}>
-                                {album.options.options.load_more_text}</button>
+                            {album.loading_more ?
+                                <CircularLoaderRow /> :
+                                <button className="btn no-transform"
+                                        onClick={throttle(()=>loadMoreData(album.options.id,album.data.pagination.next_url),2000)}>
+                                    {album.options.options.load_more_text}</button>}
                         </div>
                     </div> : null}
             </div>

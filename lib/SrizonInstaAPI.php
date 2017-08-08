@@ -10,12 +10,16 @@ if ( ! class_exists( 'SrizonInstaAPI' ) ) {
 			}
 			$cache = SrizonInstaDB::getAPICache( $url );
 			if ( $cache ) {
-				return $cache;
+				$response            = $cache->data;
+				$response->storetime = $cache->storetime;
+
+				return $response;
 			} else {
 				$response = self::getAPI( $url, true );
 				if ( ! is_wp_error( $response ) ) {
 					SrizonInstaDB::updateAPICache( $url, $album_id, $response );
 				}
+				$response->storetime = time();
 
 				return $response;
 			}
@@ -62,6 +66,21 @@ if ( ! class_exists( 'SrizonInstaAPI' ) ) {
 			} else {
 				return new WP_Error( 'wrong_album_type', 'Wrong Album Type', [ 'status' => 404 ] );
 			}
+		}
+
+		static function syncAlbum( $id ) {
+			$albumdata = self::getAlbumData( $id );
+			$album_opt = SrizonInstaDB::getAlbum( $id );
+			$cachetime = 60 * (int) $album_opt->options->cache_time;
+			$timediff  = time() - $albumdata->storetime;
+
+			if ( $timediff > $cachetime ) {
+				SrizonInstaDB::DeleteAlbumCache( $id );
+				$fresh_albumdata = self::getAlbumData($id);
+				return $fresh_albumdata;
+			}
+
+			return false;
 		}
 
 		static function getUserAlbumData( $userid, $id, $count = 20 ) {

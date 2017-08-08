@@ -27591,7 +27591,108 @@ exports.importantify = importantify;
 /* 273 */,
 /* 274 */,
 /* 275 */,
-/* 276 */,
+/* 276 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+
+
+var CircularLoaderRow = function CircularLoaderRow() {
+    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        "div",
+        null,
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            "div",
+            { className: "center top50" },
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                "div",
+                { className: "preloader-wrapper big active" },
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    "div",
+                    { className: "spinner-layer spinner-blue" },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        "div",
+                        { className: "circle-clipper left" },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("div", { className: "circle" })
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        "div",
+                        { className: "gap-patch" },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("div", { className: "circle" })
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        "div",
+                        { className: "circle-clipper right" },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("div", { className: "circle" })
+                    )
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    "div",
+                    { className: "spinner-layer spinner-red" },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        "div",
+                        { className: "circle-clipper left" },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("div", { className: "circle" })
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        "div",
+                        { className: "gap-patch" },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("div", { className: "circle" })
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        "div",
+                        { className: "circle-clipper right" },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("div", { className: "circle" })
+                    )
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    "div",
+                    { className: "spinner-layer spinner-yellow" },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        "div",
+                        { className: "circle-clipper left" },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("div", { className: "circle" })
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        "div",
+                        { className: "gap-patch" },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("div", { className: "circle" })
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        "div",
+                        { className: "circle-clipper right" },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("div", { className: "circle" })
+                    )
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    "div",
+                    { className: "spinner-layer spinner-green" },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        "div",
+                        { className: "circle-clipper left" },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("div", { className: "circle" })
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        "div",
+                        { className: "gap-patch" },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("div", { className: "circle" })
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        "div",
+                        { className: "circle-clipper right" },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("div", { className: "circle" })
+                    )
+                )
+            )
+        )
+    );
+};
+
+/* harmony default export */ __webpack_exports__["a"] = (CircularLoaderRow);
+
+/***/ }),
 /* 277 */,
 /* 278 */
 /***/ (function(module, exports, __webpack_require__) {
@@ -28538,7 +28639,8 @@ function albumReducer() {
         case 'INIT_ALBUMS':
             return _extends({}, state, _defineProperty({}, action.id, {
                 options_loaded: false,
-                data_loaded: false
+                data_loaded: false,
+                loading_more: false
             }));
             break;
         case 'ALBUM_OPTIONS_LOADED':
@@ -28553,9 +28655,15 @@ function albumReducer() {
                 data: action.payload
             })));
             break;
+        case 'ALBUM_DATA_LOADING_MORE':
+            return _extends({}, state, _defineProperty({}, action.id, _extends({}, state[action.id], {
+                loading_more: true
+            })));
+            break;
         case 'ALBUM_DATA_LOADED_MORE':
             return _extends({}, state, _defineProperty({}, action.id, _extends({}, state[action.id], {
                 data_loaded: true,
+                loading_more: false,
                 data: {
                     data: [].concat(_toConsumableArray(state[action.id].data.data), _toConsumableArray(action.payload.data)),
                     meta: action.payload.meta,
@@ -28691,13 +28799,30 @@ function getAlbumData(id) {
                     id: id,
                     payload: response.data.data
                 });
+                dispatch(backgroundUpdate(id));
             }
+        });
+    };
+}
+
+function backgroundUpdate(id) {
+    return function (dispatch) {
+        axios.post(srzinstbase + 'album-sync', { id: id }).then(function (response) {
+            dispatch({
+                type: 'ALBUM_DATA_SYNCED',
+                id: id,
+                payload: response.data.data
+            });
         });
     };
 }
 
 function loadMoreData(id, url) {
     return function (dispatch) {
+        dispatch({
+            type: 'ALBUM_DATA_LOADING_MORE',
+            id: id
+        });
         axios.post(srzinstbase + 'album-load-more', { id: id, url: url }).then(function (response) {
             if (response.data.result == 'success') {
                 dispatch({
@@ -30781,6 +30906,7 @@ module.exports = throttle;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_lodash_debounce___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_lodash_debounce__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_lodash_throttle__ = __webpack_require__(326);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_lodash_throttle___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_lodash_throttle__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__admin_js_components_partials_CircularLoaderRow__ = __webpack_require__(276);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -30788,6 +30914,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
 
 
 
@@ -30847,11 +30974,8 @@ var AlbumCollage = function (_React$Component) {
             });
         }
     }, {
-        key: 'componentDidMount',
-        value: function componentDidMount() {
-            this.updateColDebounced();
-            window.addEventListener("resize", this.updateColDebounced);
-
+        key: 'setTooltip',
+        value: function setTooltip() {
             jQuery('.srizon img').hover(function () {
                 var title = jQuery(this).attr('alt');
                 if (title) {
@@ -30864,6 +30988,13 @@ var AlbumCollage = function (_React$Component) {
             });
         }
     }, {
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            this.updateColDebounced();
+            this.setTooltip();
+            window.addEventListener("resize", this.updateColDebounced);
+        }
+    }, {
         key: 'componentWillUnmount',
         value: function componentWillUnmount() {
             window.removeEventListener("resize", this.updateColDebounced);
@@ -30871,6 +31002,7 @@ var AlbumCollage = function (_React$Component) {
     }, {
         key: 'componentDidUpdate',
         value: function componentDidUpdate() {
+            this.setTooltip();
             this.updateColDebounced();
         }
     }, {
@@ -30924,7 +31056,7 @@ var AlbumCollage = function (_React$Component) {
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'div',
                         { className: 'col s12 center' },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        album.loading_more ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__admin_js_components_partials_CircularLoaderRow__["a" /* default */], null) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             'button',
                             { className: 'btn no-transform',
                                 onClick: __WEBPACK_IMPORTED_MODULE_4_lodash_throttle___default()(function () {

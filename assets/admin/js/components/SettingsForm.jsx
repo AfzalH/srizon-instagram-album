@@ -8,11 +8,11 @@ class SettingsForm extends React.Component {
         const {hich, pstate, global=false} = this.props;
         return (
             <div className="row">
-                {global ?
-                    <div className="col s12 m6 top20 pr50">
-                        <RangeField val={pstate.cache_time} onch={hich} name="cache_time"
-                                    label="Global Caching Time For API data - In Minutes" min={10} max={10080}/>
-                    </div> : null}
+
+                <div className={global? "col s12 m6 top20 pr50": "col s12 top20 plr0"}>
+                    <RangeField val={pstate.cache_time} onch={hich} name="cache_time"
+                                label="Cache Time For API data (Mins)" min={10} max={10080}/>
+                </div>
                 <div className={global? "col s12 m6 top20 pr50": "col s12 top20 plr0"}>
                     <div>
                         <p className="top0">Layout</p>

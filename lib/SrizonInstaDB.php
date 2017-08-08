@@ -22,7 +22,7 @@ CREATE TABLE ' . $t_cache . ' (
   id int(11) NOT NULL AUTO_INCREMENT,
   url varchar(511),
   data mediumtext,
-  storetime varchar(255),
+  storetime int(11),
   album_id int(11),
   options text,
   unique index(url),
@@ -65,14 +65,22 @@ CREATE TABLE ' . $t_cache . ' (
 		$table = $wpdb->prefix . 'srzinst_albums';
 		$q     = $wpdb->prepare( "delete from $table where id = %d", $id );
 		$wpdb->query( $q );
+		self::DeleteAlbumCache( $id );
+	}
+
+	static function DeleteAlbumCache( $id ) {
+		global $wpdb;
+		$table = $wpdb->prefix . 'srzinst_cache';
+		$q     = $wpdb->prepare( "delete from $table where album_id = %d", $id );
+		$wpdb->query( $q );
 	}
 
 	static function getAlbum( $id ) {
 		global $wpdb;
-		$table          = $wpdb->prefix . 'srzinst_albums';
-		$q              = $wpdb->prepare( "SELECT * FROM $table WHERE id = %d", $id );
-		$album          = $wpdb->get_row( $q );
-		if($album) {
+		$table = $wpdb->prefix . 'srzinst_albums';
+		$q     = $wpdb->prepare( "SELECT * FROM $table WHERE id = %d", $id );
+		$album = $wpdb->get_row( $q );
+		if ( $album ) {
 			$album->options = maybe_unserialize( $album->options );
 		}
 
@@ -98,7 +106,7 @@ CREATE TABLE ' . $t_cache . ' (
 		if ( $data ) {
 			$data->data = unserialize( $data->data );
 
-			return $data->data;
+			return $data;
 		}
 
 		return false;
@@ -106,6 +114,7 @@ CREATE TABLE ' . $t_cache . ' (
 
 	static function updateAPICache( $url, $album_id, $data ) {
 		global $wpdb;
+		$wpdb->show_errors();
 		$table = $wpdb->prefix . 'srzinst_cache';
 
 		$tdata['url']       = $url;
