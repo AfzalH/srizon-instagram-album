@@ -49,15 +49,17 @@ export function loadMoreData(id, url) {
             type: 'ALBUM_DATA_LOADING_MORE',
             id: id
         });
-        axios.post(srzinstbase + 'album-load-more', {id: id, url: url})
-            .then((response)=> {
-                if (response.data.result == 'success') {
-                    dispatch({
-                        type: 'ALBUM_DATA_LOADED_MORE',
-                        id: id,
-                        payload: response.data.data
-                    });
-                }
-            });
+        if(url) {
+            axios.post(srzinstbase + 'album-load-more', {id: id, url: url})
+                .then((response)=> {
+                    if (response.data.result == 'success') {
+                        dispatch({
+                            type: 'ALBUM_DATA_LOADED_MORE',
+                            id: id,
+                            payload: response.data.data
+                        });
+                    }
+                });
+        }
     }
 }

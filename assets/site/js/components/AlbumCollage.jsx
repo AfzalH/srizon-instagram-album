@@ -14,6 +14,7 @@ class AlbumCollage extends React.Component {
         this.gotoNext = this.gotoNext.bind(this);
         this.gotoPrevious = this.gotoPrevious.bind(this);
         this.updateColDebounced = debounce(this.updateCol.bind(this), 200);
+        this.loadMore = throttle(()=>this.props.loadMoreData(this.props.album.options.id,this.props.album.data.pagination.next_url),2000)
     }
 
     openLightbox(index, event) {
@@ -38,9 +39,9 @@ class AlbumCollage extends React.Component {
     }
 
     gotoNext() {
-        // if (this.state.photos.length - 2 === this.state.currentImage) {
-        //     this.loadMorePhotos();
-        // }
+        if ((this.props.album.data.data.length - 5) < this.state.currentImage) {
+            this.loadMore();
+        }
         this.setState({
             currentImage: this.state.currentImage + 1
         });
@@ -88,7 +89,7 @@ class AlbumCollage extends React.Component {
     }
 
     render() {
-        const {album, loadMoreData} = this.props;
+        const {album} = this.props;
         const images = album.data.data.map((img)=>({
             src: img.images.standard_resolution.url,
             srcset: [
@@ -127,7 +128,7 @@ class AlbumCollage extends React.Component {
                             {album.loading_more ?
                                 <CircularLoaderRow /> :
                                 <button className="btn no-transform"
-                                        onClick={throttle(()=>loadMoreData(album.options.id,album.data.pagination.next_url),2000)}>
+                                        onClick={this.loadMore}>
                                     {album.options.options.load_more_text}</button>}
                         </div>
                     </div> : null}

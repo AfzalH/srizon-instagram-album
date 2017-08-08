@@ -28823,15 +28823,17 @@ function loadMoreData(id, url) {
             type: 'ALBUM_DATA_LOADING_MORE',
             id: id
         });
-        axios.post(srzinstbase + 'album-load-more', { id: id, url: url }).then(function (response) {
-            if (response.data.result == 'success') {
-                dispatch({
-                    type: 'ALBUM_DATA_LOADED_MORE',
-                    id: id,
-                    payload: response.data.data
-                });
-            }
-        });
+        if (url) {
+            axios.post(srzinstbase + 'album-load-more', { id: id, url: url }).then(function (response) {
+                if (response.data.result == 'success') {
+                    dispatch({
+                        type: 'ALBUM_DATA_LOADED_MORE',
+                        id: id,
+                        payload: response.data.data
+                    });
+                }
+            });
+        }
     };
 }
 
@@ -30936,6 +30938,9 @@ var AlbumCollage = function (_React$Component) {
         _this.gotoNext = _this.gotoNext.bind(_this);
         _this.gotoPrevious = _this.gotoPrevious.bind(_this);
         _this.updateColDebounced = __WEBPACK_IMPORTED_MODULE_3_lodash_debounce___default()(_this.updateCol.bind(_this), 200);
+        _this.loadMore = __WEBPACK_IMPORTED_MODULE_4_lodash_throttle___default()(function () {
+            return _this.props.loadMoreData(_this.props.album.options.id, _this.props.album.data.pagination.next_url);
+        }, 2000);
         return _this;
     }
 
@@ -30966,9 +30971,9 @@ var AlbumCollage = function (_React$Component) {
     }, {
         key: 'gotoNext',
         value: function gotoNext() {
-            // if (this.state.photos.length - 2 === this.state.currentImage) {
-            //     this.loadMorePhotos();
-            // }
+            if (this.props.album.data.data.length - 5 < this.state.currentImage) {
+                this.loadMore();
+            }
             this.setState({
                 currentImage: this.state.currentImage + 1
             });
@@ -31019,9 +31024,7 @@ var AlbumCollage = function (_React$Component) {
     }, {
         key: 'render',
         value: function render() {
-            var _props = this.props,
-                album = _props.album,
-                loadMoreData = _props.loadMoreData;
+            var album = this.props.album;
 
             var images = album.data.data.map(function (img) {
                 return {
@@ -31059,9 +31062,7 @@ var AlbumCollage = function (_React$Component) {
                         album.loading_more ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__admin_js_components_partials_CircularLoaderRow__["a" /* default */], null) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             'button',
                             { className: 'btn no-transform',
-                                onClick: __WEBPACK_IMPORTED_MODULE_4_lodash_throttle___default()(function () {
-                                    return loadMoreData(album.options.id, album.data.pagination.next_url);
-                                }, 2000) },
+                                onClick: this.loadMore },
                             album.options.options.load_more_text
                         )
                     )

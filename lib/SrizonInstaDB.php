@@ -25,7 +25,7 @@ CREATE TABLE ' . $t_cache . ' (
   storetime int(11),
   album_id int(11),
   options text,
-  unique index(url),
+  index(url),
   PRIMARY KEY (id)
 );	
 ';
