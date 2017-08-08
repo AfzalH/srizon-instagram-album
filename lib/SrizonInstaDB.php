@@ -117,13 +117,13 @@ CREATE TABLE ' . $t_cache . ' (
 		$wpdb->show_errors();
 		$table = $wpdb->prefix . 'srzinst_cache';
 
-		$tdata['url']       = $url;
 		$tdata['album_id']  = $album_id;
 		$tdata['data']      = maybe_serialize( $data );
 		$tdata['storetime'] = time();
 
 		$res = $wpdb->update( $table, $tdata, [ 'url' => $url ] );
 		if ( ! $res ) {
+			$tdata['url']       = $url;
 			$wpdb->insert( $table, $tdata );
 		}
 	}
