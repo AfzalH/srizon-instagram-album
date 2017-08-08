@@ -106,7 +106,6 @@ CREATE TABLE ' . $t_cache . ' (
 
 	static function updateAPICache( $url, $album_id, $data ) {
 		global $wpdb;
-		$wpdb->show_errors();
 		$table = $wpdb->prefix . 'srzinst_cache';
 
 		$tdata['url']       = $url;

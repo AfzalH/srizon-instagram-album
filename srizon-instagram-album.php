@@ -14,6 +14,11 @@ function srizon_instagram_album_load_textdomain() {
 	load_plugin_textdomain( 'srizon-instagram-album', false, basename( dirname( __FILE__ ) ) . '/languages/' );
 }
 
+if(true){
+	ini_set("log_errors", 1);
+	ini_set("error_log", "/tmp/php-error.log");
+}
+
 add_action( 'plugins_loaded', 'srizon_instagram_album_load_textdomain' );
 
 require_once 'lib/SrizonInstaDB.php';
