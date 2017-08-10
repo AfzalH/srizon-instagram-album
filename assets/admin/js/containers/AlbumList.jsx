@@ -4,34 +4,38 @@ import AlbumListItem from './AlbumListItem';
 import CardLoading from '../components/partials/CardLoading';
 import AddUserAlbumCard from './AddUserAlbumCard';
 import AddHashtagAlbumCard from './AddHashtagAlbumCard';
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import SelectUser from '../components/add-new/SelectUser';
 import {cancelUserAlbum, saveUserAlbum} from '../actions/albumsAction';
+import FlipMove from 'react-flip-move';
 
 
 // smart component with redux connect
 
 const AlbumList = ({loaded, albums, saving_user, saving_hashtag, select_user, users, cancelUserAlbum, title, saveUserAlbum}) => (
     <div className="row">
-        <ReactCSSTransitionGroup transitionName="scale" transitionEnterTimeout={500} transitionLeaveTimeout={500}>
-            {saving_user ?
-                select_user ?
-                    <SelectUser key="select_user" users={users} cancelUserAlbum={cancelUserAlbum} title={title}
-                                saveUserAlbum={saveUserAlbum}/> :
+        <FlipMove duration={500} easing="ease-out">
+            <div key="static1">
+                {saving_user ?
+                    select_user ?
+                        <SelectUser key="select_user" users={users} cancelUserAlbum={cancelUserAlbum} title={title}
+                                    saveUserAlbum={saveUserAlbum}/> :
+                        <CardLoading title="Saving"/> :
+                    <AddUserAlbumCard />
+                }
+            </div>
+            <div key="static2">
+                {saving_hashtag ?
                     <CardLoading title="Saving"/> :
-                <AddUserAlbumCard />
-            }
-            {saving_hashtag ?
-                <CardLoading title="Saving"/> :
-                <AddHashtagAlbumCard />
-            }
+                    <AddHashtagAlbumCard />
+                }
+            </div>
             {!loaded ?
-                <CardLoading title="Loading Albums" /> :
+                <div key="static3"><CardLoading title="Loading Albums"/></div> :
                 albums.map(album=>(
                     <AlbumListItem key={album.id} album={album}/>
                 ))
             }
-        </ReactCSSTransitionGroup>
+        </FlipMove>
     </div>
 );
 

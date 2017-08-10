@@ -1,18 +1,18 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import TempMessage from '../components/partials/TempMessage';
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+import FlipMove from 'react-flip-move';
 
 
 // smart component with redux connect
 
 const FlashMessages = ({count, messages, hidemsg}) => (
     <div className="fixed-top-right">
-        <ReactCSSTransitionGroup transitionName="slide-up" transitionEnterTimeout={500} transitionLeaveTimeout={500}>
+        <FlipMove duration={500} easing="ease-out">
             {
                 count ? messages.map(msg=><TempMessage key={msg.id} msg={msg} hidemsg={hidemsg}/>) : null
             }
-        </ReactCSSTransitionGroup>
+        </FlipMove>
     </div>
 );
 

@@ -11733,74 +11733,8 @@ function updateAlbum(id, settings) {
 }
 
 /***/ }),
-/* 104 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = !!(typeof window !== 'undefined' && window.document && window.document.createElement);
-module.exports = exports['default'];
-
-/***/ }),
-/* 105 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-exports.nameShape = undefined;
-exports.transitionTimeout = transitionTimeout;
-
-var _react = __webpack_require__(2);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _propTypes = __webpack_require__(8);
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function transitionTimeout(transitionType) {
-  var timeoutPropName = 'transition' + transitionType + 'Timeout';
-  var enabledPropName = 'transition' + transitionType;
-
-  return function (props) {
-    // If the transition is enabled
-    if (props[enabledPropName]) {
-      // If no timeout duration is provided
-      if (props[timeoutPropName] == null) {
-        return new Error(timeoutPropName + ' wasn\'t supplied to CSSTransitionGroup: ' + 'this can cause unreliable animations and won\'t be supported in ' + 'a future version of React. See ' + 'https://fb.me/react-animation-transition-group-timeout for more ' + 'information.');
-
-        // If the duration isn't a number
-      } else if (typeof props[timeoutPropName] !== 'number') {
-        return new Error(timeoutPropName + ' must be a number (in milliseconds)');
-      }
-    }
-
-    return null;
-  };
-}
-
-var nameShape = exports.nameShape = _propTypes2.default.oneOfType([_propTypes2.default.string, _propTypes2.default.shape({
-  enter: _propTypes2.default.string,
-  leave: _propTypes2.default.string,
-  active: _propTypes2.default.string
-}), _propTypes2.default.shape({
-  enter: _propTypes2.default.string,
-  enterActive: _propTypes2.default.string,
-  leave: _propTypes2.default.string,
-  leaveActive: _propTypes2.default.string,
-  appear: _propTypes2.default.string,
-  appearActive: _propTypes2.default.string
-})]);
-
-/***/ }),
+/* 104 */,
+/* 105 */,
 /* 106 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -25643,1031 +25577,17 @@ function successAlbumUpdated() {
 }
 
 /***/ }),
-/* 241 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-var _react = __webpack_require__(2);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _propTypes = __webpack_require__(8);
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
-var _TransitionGroup = __webpack_require__(242);
-
-var _TransitionGroup2 = _interopRequireDefault(_TransitionGroup);
-
-var _CSSTransitionGroupChild = __webpack_require__(246);
-
-var _CSSTransitionGroupChild2 = _interopRequireDefault(_CSSTransitionGroupChild);
-
-var _PropTypes = __webpack_require__(105);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var propTypes = {
-  transitionName: _PropTypes.nameShape.isRequired,
-
-  transitionAppear: _propTypes2.default.bool,
-  transitionEnter: _propTypes2.default.bool,
-  transitionLeave: _propTypes2.default.bool,
-  transitionAppearTimeout: (0, _PropTypes.transitionTimeout)('Appear'),
-  transitionEnterTimeout: (0, _PropTypes.transitionTimeout)('Enter'),
-  transitionLeaveTimeout: (0, _PropTypes.transitionTimeout)('Leave')
-};
-
-var defaultProps = {
-  transitionAppear: false,
-  transitionEnter: true,
-  transitionLeave: true
-};
-
-var CSSTransitionGroup = function (_React$Component) {
-  _inherits(CSSTransitionGroup, _React$Component);
-
-  function CSSTransitionGroup() {
-    var _temp, _this, _ret;
-
-    _classCallCheck(this, CSSTransitionGroup);
-
-    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, _React$Component.call.apply(_React$Component, [this].concat(args))), _this), _this._wrapChild = function (child) {
-      return _react2.default.createElement(_CSSTransitionGroupChild2.default, {
-        name: _this.props.transitionName,
-        appear: _this.props.transitionAppear,
-        enter: _this.props.transitionEnter,
-        leave: _this.props.transitionLeave,
-        appearTimeout: _this.props.transitionAppearTimeout,
-        enterTimeout: _this.props.transitionEnterTimeout,
-        leaveTimeout: _this.props.transitionLeaveTimeout
-      }, child);
-    }, _temp), _possibleConstructorReturn(_this, _ret);
-  }
-
-  // We need to provide this childFactory so that
-  // ReactCSSTransitionGroupChild can receive updates to name, enter, and
-  // leave while it is leaving.
-
-
-  CSSTransitionGroup.prototype.render = function render() {
-    return _react2.default.createElement(_TransitionGroup2.default, _extends({}, this.props, { childFactory: this._wrapChild }));
-  };
-
-  return CSSTransitionGroup;
-}(_react2.default.Component);
-
-CSSTransitionGroup.displayName = 'CSSTransitionGroup';
-
-
-CSSTransitionGroup.propTypes =  true ? propTypes : {};
-CSSTransitionGroup.defaultProps = defaultProps;
-
-exports.default = CSSTransitionGroup;
-module.exports = exports['default'];
-
-/***/ }),
-/* 242 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-var _chainFunction = __webpack_require__(243);
-
-var _chainFunction2 = _interopRequireDefault(_chainFunction);
-
-var _react = __webpack_require__(2);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _propTypes = __webpack_require__(8);
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
-var _warning = __webpack_require__(244);
-
-var _warning2 = _interopRequireDefault(_warning);
-
-var _ChildMapping = __webpack_require__(245);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var propTypes = {
-  component: _propTypes2.default.any,
-  childFactory: _propTypes2.default.func,
-  children: _propTypes2.default.node
-};
-
-var defaultProps = {
-  component: 'span',
-  childFactory: function childFactory(child) {
-    return child;
-  }
-};
-
-var TransitionGroup = function (_React$Component) {
-  _inherits(TransitionGroup, _React$Component);
-
-  function TransitionGroup(props, context) {
-    _classCallCheck(this, TransitionGroup);
-
-    var _this = _possibleConstructorReturn(this, _React$Component.call(this, props, context));
-
-    _this.performAppear = function (key, component) {
-      _this.currentlyTransitioningKeys[key] = true;
-
-      if (component.componentWillAppear) {
-        component.componentWillAppear(_this._handleDoneAppearing.bind(_this, key, component));
-      } else {
-        _this._handleDoneAppearing(key, component);
-      }
-    };
-
-    _this._handleDoneAppearing = function (key, component) {
-      if (component.componentDidAppear) {
-        component.componentDidAppear();
-      }
-
-      delete _this.currentlyTransitioningKeys[key];
-
-      var currentChildMapping = (0, _ChildMapping.getChildMapping)(_this.props.children);
-
-      if (!currentChildMapping || !currentChildMapping.hasOwnProperty(key)) {
-        // This was removed before it had fully appeared. Remove it.
-        _this.performLeave(key, component);
-      }
-    };
-
-    _this.performEnter = function (key, component) {
-      _this.currentlyTransitioningKeys[key] = true;
-
-      if (component.componentWillEnter) {
-        component.componentWillEnter(_this._handleDoneEntering.bind(_this, key, component));
-      } else {
-        _this._handleDoneEntering(key, component);
-      }
-    };
-
-    _this._handleDoneEntering = function (key, component) {
-      if (component.componentDidEnter) {
-        component.componentDidEnter();
-      }
-
-      delete _this.currentlyTransitioningKeys[key];
-
-      var currentChildMapping = (0, _ChildMapping.getChildMapping)(_this.props.children);
-
-      if (!currentChildMapping || !currentChildMapping.hasOwnProperty(key)) {
-        // This was removed before it had fully entered. Remove it.
-        _this.performLeave(key, component);
-      }
-    };
-
-    _this.performLeave = function (key, component) {
-      _this.currentlyTransitioningKeys[key] = true;
-
-      if (component.componentWillLeave) {
-        component.componentWillLeave(_this._handleDoneLeaving.bind(_this, key, component));
-      } else {
-        // Note that this is somewhat dangerous b/c it calls setState()
-        // again, effectively mutating the component before all the work
-        // is done.
-        _this._handleDoneLeaving(key, component);
-      }
-    };
-
-    _this._handleDoneLeaving = function (key, component) {
-      if (component.componentDidLeave) {
-        component.componentDidLeave();
-      }
-
-      delete _this.currentlyTransitioningKeys[key];
-
-      var currentChildMapping = (0, _ChildMapping.getChildMapping)(_this.props.children);
-
-      if (currentChildMapping && currentChildMapping.hasOwnProperty(key)) {
-        // This entered again before it fully left. Add it again.
-        _this.keysToEnter.push(key);
-      } else {
-        _this.setState(function (state) {
-          var newChildren = _extends({}, state.children);
-          delete newChildren[key];
-          return { children: newChildren };
-        });
-      }
-    };
-
-    _this.childRefs = Object.create(null);
-
-    _this.state = {
-      children: (0, _ChildMapping.getChildMapping)(props.children)
-    };
-    return _this;
-  }
-
-  TransitionGroup.prototype.componentWillMount = function componentWillMount() {
-    this.currentlyTransitioningKeys = {};
-    this.keysToEnter = [];
-    this.keysToLeave = [];
-  };
-
-  TransitionGroup.prototype.componentDidMount = function componentDidMount() {
-    var initialChildMapping = this.state.children;
-    for (var key in initialChildMapping) {
-      if (initialChildMapping[key]) {
-        this.performAppear(key, this.childRefs[key]);
-      }
-    }
-  };
-
-  TransitionGroup.prototype.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
-    var nextChildMapping = (0, _ChildMapping.getChildMapping)(nextProps.children);
-    var prevChildMapping = this.state.children;
-
-    this.setState({
-      children: (0, _ChildMapping.mergeChildMappings)(prevChildMapping, nextChildMapping)
-    });
-
-    for (var key in nextChildMapping) {
-      var hasPrev = prevChildMapping && prevChildMapping.hasOwnProperty(key);
-      if (nextChildMapping[key] && !hasPrev && !this.currentlyTransitioningKeys[key]) {
-        this.keysToEnter.push(key);
-      }
-    }
-
-    for (var _key in prevChildMapping) {
-      var hasNext = nextChildMapping && nextChildMapping.hasOwnProperty(_key);
-      if (prevChildMapping[_key] && !hasNext && !this.currentlyTransitioningKeys[_key]) {
-        this.keysToLeave.push(_key);
-      }
-    }
-
-    // If we want to someday check for reordering, we could do it here.
-  };
-
-  TransitionGroup.prototype.componentDidUpdate = function componentDidUpdate() {
-    var _this2 = this;
-
-    var keysToEnter = this.keysToEnter;
-    this.keysToEnter = [];
-    keysToEnter.forEach(function (key) {
-      return _this2.performEnter(key, _this2.childRefs[key]);
-    });
-
-    var keysToLeave = this.keysToLeave;
-    this.keysToLeave = [];
-    keysToLeave.forEach(function (key) {
-      return _this2.performLeave(key, _this2.childRefs[key]);
-    });
-  };
-
-  TransitionGroup.prototype.render = function render() {
-    var _this3 = this;
-
-    // TODO: we could get rid of the need for the wrapper node
-    // by cloning a single child
-    var childrenToRender = [];
-
-    var _loop = function _loop(key) {
-      var child = _this3.state.children[key];
-      if (child) {
-        var isCallbackRef = typeof child.ref !== 'string';
-        var factoryChild = _this3.props.childFactory(child);
-        var ref = function ref(r) {
-          _this3.childRefs[key] = r;
-        };
-
-         true ? (0, _warning2.default)(isCallbackRef, 'string refs are not supported on children of TransitionGroup and will be ignored. ' + 'Please use a callback ref instead: https://facebook.github.io/react/docs/refs-and-the-dom.html#the-ref-callback-attribute') : void 0;
-
-        // Always chaining the refs leads to problems when the childFactory
-        // wraps the child. The child ref callback gets called twice with the
-        // wrapper and the child. So we only need to chain the ref if the
-        // factoryChild is not different from child.
-        if (factoryChild === child && isCallbackRef) {
-          ref = (0, _chainFunction2.default)(child.ref, ref);
-        }
-
-        // You may need to apply reactive updates to a child as it is leaving.
-        // The normal React way to do it won't work since the child will have
-        // already been removed. In case you need this behavior you can provide
-        // a childFactory function to wrap every child, even the ones that are
-        // leaving.
-        childrenToRender.push(_react2.default.cloneElement(factoryChild, {
-          key: key,
-          ref: ref
-        }));
-      }
-    };
-
-    for (var key in this.state.children) {
-      _loop(key);
-    }
-
-    // Do not forward TransitionGroup props to primitive DOM nodes
-    var props = _extends({}, this.props);
-    delete props.transitionLeave;
-    delete props.transitionName;
-    delete props.transitionAppear;
-    delete props.transitionEnter;
-    delete props.childFactory;
-    delete props.transitionLeaveTimeout;
-    delete props.transitionEnterTimeout;
-    delete props.transitionAppearTimeout;
-    delete props.component;
-
-    return _react2.default.createElement(this.props.component, props, childrenToRender);
-  };
-
-  return TransitionGroup;
-}(_react2.default.Component);
-
-TransitionGroup.displayName = 'TransitionGroup';
-
-
-TransitionGroup.propTypes =  true ? propTypes : {};
-TransitionGroup.defaultProps = defaultProps;
-
-exports.default = TransitionGroup;
-module.exports = exports['default'];
-
-/***/ }),
-/* 243 */
-/***/ (function(module, exports) {
-
-
-module.exports = function chain(){
-  var len = arguments.length
-  var args = [];
-
-  for (var i = 0; i < len; i++)
-    args[i] = arguments[i]
-
-  args = args.filter(function(fn){ return fn != null })
-
-  if (args.length === 0) return undefined
-  if (args.length === 1) return args[0]
-
-  return args.reduce(function(current, next){
-    return function chainedFunction() {
-      current.apply(this, arguments);
-      next.apply(this, arguments);
-    };
-  })
-}
-
-
-/***/ }),
-/* 244 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/**
- * Copyright 2014-2015, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- */
-
-
-
-/**
- * Similar to invariant but only logs a warning if the condition is not met.
- * This can be used to log issues in development environments in critical
- * paths. Removing the logging code for production environments will keep the
- * same logic and follow the same code paths.
- */
-
-var warning = function() {};
-
-if (true) {
-  warning = function(condition, format, args) {
-    var len = arguments.length;
-    args = new Array(len > 2 ? len - 2 : 0);
-    for (var key = 2; key < len; key++) {
-      args[key - 2] = arguments[key];
-    }
-    if (format === undefined) {
-      throw new Error(
-        '`warning(condition, format, ...args)` requires a warning ' +
-        'message argument'
-      );
-    }
-
-    if (format.length < 10 || (/^[s\W]*$/).test(format)) {
-      throw new Error(
-        'The warning format should be able to uniquely identify this ' +
-        'warning. Please, use a more descriptive format than: ' + format
-      );
-    }
-
-    if (!condition) {
-      var argIndex = 0;
-      var message = 'Warning: ' +
-        format.replace(/%s/g, function() {
-          return args[argIndex++];
-        });
-      if (typeof console !== 'undefined') {
-        console.error(message);
-      }
-      try {
-        // This error was thrown as a convenience so that you can use this stack
-        // to find the callsite that caused this warning to fire.
-        throw new Error(message);
-      } catch(x) {}
-    }
-  };
-}
-
-module.exports = warning;
-
-
-/***/ }),
-/* 245 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-exports.getChildMapping = getChildMapping;
-exports.mergeChildMappings = mergeChildMappings;
-
-var _react = __webpack_require__(2);
-
-/**
- * Given `this.props.children`, return an object mapping key to child.
- *
- * @param {*} children `this.props.children`
- * @return {object} Mapping of key to child
- */
-function getChildMapping(children) {
-  if (!children) {
-    return children;
-  }
-  var result = {};
-  _react.Children.map(children, function (child) {
-    return child;
-  }).forEach(function (child) {
-    result[child.key] = child;
-  });
-  return result;
-}
-
-/**
- * When you're adding or removing children some may be added or removed in the
- * same render pass. We want to show *both* since we want to simultaneously
- * animate elements in and out. This function takes a previous set of keys
- * and a new set of keys and merges them with its best guess of the correct
- * ordering. In the future we may expose some of the utilities in
- * ReactMultiChild to make this easy, but for now React itself does not
- * directly have this concept of the union of prevChildren and nextChildren
- * so we implement it here.
- *
- * @param {object} prev prev children as returned from
- * `ReactTransitionChildMapping.getChildMapping()`.
- * @param {object} next next children as returned from
- * `ReactTransitionChildMapping.getChildMapping()`.
- * @return {object} a key set that contains all keys in `prev` and all keys
- * in `next` in a reasonable order.
- */
-function mergeChildMappings(prev, next) {
-  prev = prev || {};
-  next = next || {};
-
-  function getValueForKey(key) {
-    if (next.hasOwnProperty(key)) {
-      return next[key];
-    }
-
-    return prev[key];
-  }
-
-  // For each key of `next`, the list of keys to insert before that key in
-  // the combined list
-  var nextKeysPending = {};
-
-  var pendingKeys = [];
-  for (var prevKey in prev) {
-    if (next.hasOwnProperty(prevKey)) {
-      if (pendingKeys.length) {
-        nextKeysPending[prevKey] = pendingKeys;
-        pendingKeys = [];
-      }
-    } else {
-      pendingKeys.push(prevKey);
-    }
-  }
-
-  var i = void 0;
-  var childMapping = {};
-  for (var nextKey in next) {
-    if (nextKeysPending.hasOwnProperty(nextKey)) {
-      for (i = 0; i < nextKeysPending[nextKey].length; i++) {
-        var pendingNextKey = nextKeysPending[nextKey][i];
-        childMapping[nextKeysPending[nextKey][i]] = getValueForKey(pendingNextKey);
-      }
-    }
-    childMapping[nextKey] = getValueForKey(nextKey);
-  }
-
-  // Finally, add the keys which didn't appear before any key in `next`
-  for (i = 0; i < pendingKeys.length; i++) {
-    childMapping[pendingKeys[i]] = getValueForKey(pendingKeys[i]);
-  }
-
-  return childMapping;
-}
-
-/***/ }),
-/* 246 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-var _addClass = __webpack_require__(247);
-
-var _addClass2 = _interopRequireDefault(_addClass);
-
-var _removeClass = __webpack_require__(249);
-
-var _removeClass2 = _interopRequireDefault(_removeClass);
-
-var _requestAnimationFrame = __webpack_require__(250);
-
-var _requestAnimationFrame2 = _interopRequireDefault(_requestAnimationFrame);
-
-var _properties = __webpack_require__(251);
-
-var _react = __webpack_require__(2);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _propTypes = __webpack_require__(8);
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
-var _reactDom = __webpack_require__(59);
-
-var _PropTypes = __webpack_require__(105);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var events = [];
-if (_properties.transitionEnd) events.push(_properties.transitionEnd);
-if (_properties.animationEnd) events.push(_properties.animationEnd);
-
-function addEndListener(node, listener) {
-  if (events.length) {
-    events.forEach(function (e) {
-      return node.addEventListener(e, listener, false);
-    });
-  } else {
-    setTimeout(listener, 0);
-  }
-
-  return function () {
-    if (!events.length) return;
-    events.forEach(function (e) {
-      return node.removeEventListener(e, listener, false);
-    });
-  };
-}
-
-var propTypes = {
-  children: _propTypes2.default.node,
-  name: _PropTypes.nameShape.isRequired,
-
-  // Once we require timeouts to be specified, we can remove the
-  // boolean flags (appear etc.) and just accept a number
-  // or a bool for the timeout flags (appearTimeout etc.)
-  appear: _propTypes2.default.bool,
-  enter: _propTypes2.default.bool,
-  leave: _propTypes2.default.bool,
-  appearTimeout: _propTypes2.default.number,
-  enterTimeout: _propTypes2.default.number,
-  leaveTimeout: _propTypes2.default.number
-};
-
-var CSSTransitionGroupChild = function (_React$Component) {
-  _inherits(CSSTransitionGroupChild, _React$Component);
-
-  function CSSTransitionGroupChild() {
-    var _temp, _this, _ret;
-
-    _classCallCheck(this, CSSTransitionGroupChild);
-
-    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, _React$Component.call.apply(_React$Component, [this].concat(args))), _this), _this.componentWillAppear = function (done) {
-      if (_this.props.appear) {
-        _this.transition('appear', done, _this.props.appearTimeout);
-      } else {
-        done();
-      }
-    }, _this.componentWillEnter = function (done) {
-      if (_this.props.enter) {
-        _this.transition('enter', done, _this.props.enterTimeout);
-      } else {
-        done();
-      }
-    }, _this.componentWillLeave = function (done) {
-      if (_this.props.leave) {
-        _this.transition('leave', done, _this.props.leaveTimeout);
-      } else {
-        done();
-      }
-    }, _temp), _possibleConstructorReturn(_this, _ret);
-  }
-
-  CSSTransitionGroupChild.prototype.componentWillMount = function componentWillMount() {
-    this.classNameAndNodeQueue = [];
-    this.transitionTimeouts = [];
-  };
-
-  CSSTransitionGroupChild.prototype.componentWillUnmount = function componentWillUnmount() {
-    this.unmounted = true;
-
-    if (this.timeout) {
-      clearTimeout(this.timeout);
-    }
-    this.transitionTimeouts.forEach(function (timeout) {
-      clearTimeout(timeout);
-    });
-
-    this.classNameAndNodeQueue.length = 0;
-  };
-
-  CSSTransitionGroupChild.prototype.transition = function transition(animationType, finishCallback, timeout) {
-    var node = (0, _reactDom.findDOMNode)(this);
-
-    if (!node) {
-      if (finishCallback) {
-        finishCallback();
-      }
-      return;
-    }
-
-    var className = this.props.name[animationType] || this.props.name + '-' + animationType;
-    var activeClassName = this.props.name[animationType + 'Active'] || className + '-active';
-    var timer = null;
-    var removeListeners = void 0;
-
-    (0, _addClass2.default)(node, className);
-
-    // Need to do this to actually trigger a transition.
-    this.queueClassAndNode(activeClassName, node);
-
-    // Clean-up the animation after the specified delay
-    var finish = function finish(e) {
-      if (e && e.target !== node) {
-        return;
-      }
-
-      clearTimeout(timer);
-      if (removeListeners) removeListeners();
-
-      (0, _removeClass2.default)(node, className);
-      (0, _removeClass2.default)(node, activeClassName);
-
-      if (removeListeners) removeListeners();
-
-      // Usually this optional callback is used for informing an owner of
-      // a leave animation and telling it to remove the child.
-      if (finishCallback) {
-        finishCallback();
-      }
-    };
-
-    if (timeout) {
-      timer = setTimeout(finish, timeout);
-      this.transitionTimeouts.push(timer);
-    } else if (_properties.transitionEnd) {
-      removeListeners = addEndListener(node, finish);
-    }
-  };
-
-  CSSTransitionGroupChild.prototype.queueClassAndNode = function queueClassAndNode(className, node) {
-    var _this2 = this;
-
-    this.classNameAndNodeQueue.push({
-      className: className,
-      node: node
-    });
-
-    if (!this.rafHandle) {
-      this.rafHandle = (0, _requestAnimationFrame2.default)(function () {
-        return _this2.flushClassNameAndNodeQueue();
-      });
-    }
-  };
-
-  CSSTransitionGroupChild.prototype.flushClassNameAndNodeQueue = function flushClassNameAndNodeQueue() {
-    if (!this.unmounted) {
-      this.classNameAndNodeQueue.forEach(function (obj) {
-        // This is for to force a repaint,
-        // which is necessary in order to transition styles when adding a class name.
-        /* eslint-disable no-unused-expressions */
-        obj.node.scrollTop;
-        /* eslint-enable no-unused-expressions */
-        (0, _addClass2.default)(obj.node, obj.className);
-      });
-    }
-    this.classNameAndNodeQueue.length = 0;
-    this.rafHandle = null;
-  };
-
-  CSSTransitionGroupChild.prototype.render = function render() {
-    var props = _extends({}, this.props);
-    delete props.name;
-    delete props.appear;
-    delete props.enter;
-    delete props.leave;
-    delete props.appearTimeout;
-    delete props.enterTimeout;
-    delete props.leaveTimeout;
-    delete props.children;
-    return _react2.default.cloneElement(_react2.default.Children.only(this.props.children), props);
-  };
-
-  return CSSTransitionGroupChild;
-}(_react2.default.Component);
-
-CSSTransitionGroupChild.displayName = 'CSSTransitionGroupChild';
-
-
-CSSTransitionGroupChild.propTypes =  true ? propTypes : {};
-
-exports.default = CSSTransitionGroupChild;
-module.exports = exports['default'];
-
-/***/ }),
-/* 247 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = addClass;
-
-var _hasClass = __webpack_require__(248);
-
-var _hasClass2 = _interopRequireDefault(_hasClass);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function addClass(element, className) {
-  if (element.classList) element.classList.add(className);else if (!(0, _hasClass2.default)(element)) element.className = element.className + ' ' + className;
-}
-module.exports = exports['default'];
-
-/***/ }),
-/* 248 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = hasClass;
-function hasClass(element, className) {
-  if (element.classList) return !!className && element.classList.contains(className);else return (" " + element.className + " ").indexOf(" " + className + " ") !== -1;
-}
-module.exports = exports["default"];
-
-/***/ }),
-/* 249 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-module.exports = function removeClass(element, className) {
-  if (element.classList) element.classList.remove(className);else element.className = element.className.replace(new RegExp('(^|\\s)' + className + '(?:\\s|$)', 'g'), '$1').replace(/\s+/g, ' ').replace(/^\s*|\s*$/g, '');
-};
-
-/***/ }),
-/* 250 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _inDOM = __webpack_require__(104);
-
-var _inDOM2 = _interopRequireDefault(_inDOM);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var vendors = ['', 'webkit', 'moz', 'o', 'ms'];
-var cancel = 'clearTimeout';
-var raf = fallback;
-var compatRaf = void 0;
-
-var getKey = function getKey(vendor, k) {
-  return vendor + (!vendor ? k : k[0].toUpperCase() + k.substr(1)) + 'AnimationFrame';
-};
-
-if (_inDOM2.default) {
-  vendors.some(function (vendor) {
-    var rafKey = getKey(vendor, 'request');
-
-    if (rafKey in window) {
-      cancel = getKey(vendor, 'cancel');
-      return raf = function raf(cb) {
-        return window[rafKey](cb);
-      };
-    }
-  });
-}
-
-/* https://github.com/component/raf */
-var prev = new Date().getTime();
-function fallback(fn) {
-  var curr = new Date().getTime(),
-      ms = Math.max(0, 16 - (curr - prev)),
-      req = setTimeout(fn, ms);
-
-  prev = curr;
-  return req;
-}
-
-compatRaf = function compatRaf(cb) {
-  return raf(cb);
-};
-compatRaf.cancel = function (id) {
-  window[cancel] && typeof window[cancel] === 'function' && window[cancel](id);
-};
-exports.default = compatRaf;
-module.exports = exports['default'];
-
-/***/ }),
-/* 251 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.animationEnd = exports.animationDelay = exports.animationTiming = exports.animationDuration = exports.animationName = exports.transitionEnd = exports.transitionDuration = exports.transitionDelay = exports.transitionTiming = exports.transitionProperty = exports.transform = undefined;
-
-var _inDOM = __webpack_require__(104);
-
-var _inDOM2 = _interopRequireDefault(_inDOM);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var transform = 'transform';
-var prefix = void 0,
-    transitionEnd = void 0,
-    animationEnd = void 0;
-var transitionProperty = void 0,
-    transitionDuration = void 0,
-    transitionTiming = void 0,
-    transitionDelay = void 0;
-var animationName = void 0,
-    animationDuration = void 0,
-    animationTiming = void 0,
-    animationDelay = void 0;
-
-if (_inDOM2.default) {
-  var _getTransitionPropert = getTransitionProperties();
-
-  prefix = _getTransitionPropert.prefix;
-  exports.transitionEnd = transitionEnd = _getTransitionPropert.transitionEnd;
-  exports.animationEnd = animationEnd = _getTransitionPropert.animationEnd;
-
-
-  exports.transform = transform = prefix + '-' + transform;
-  exports.transitionProperty = transitionProperty = prefix + '-transition-property';
-  exports.transitionDuration = transitionDuration = prefix + '-transition-duration';
-  exports.transitionDelay = transitionDelay = prefix + '-transition-delay';
-  exports.transitionTiming = transitionTiming = prefix + '-transition-timing-function';
-
-  exports.animationName = animationName = prefix + '-animation-name';
-  exports.animationDuration = animationDuration = prefix + '-animation-duration';
-  exports.animationTiming = animationTiming = prefix + '-animation-delay';
-  exports.animationDelay = animationDelay = prefix + '-animation-timing-function';
-}
-
-exports.transform = transform;
-exports.transitionProperty = transitionProperty;
-exports.transitionTiming = transitionTiming;
-exports.transitionDelay = transitionDelay;
-exports.transitionDuration = transitionDuration;
-exports.transitionEnd = transitionEnd;
-exports.animationName = animationName;
-exports.animationDuration = animationDuration;
-exports.animationTiming = animationTiming;
-exports.animationDelay = animationDelay;
-exports.animationEnd = animationEnd;
-exports.default = {
-  transform: transform,
-  end: transitionEnd,
-  property: transitionProperty,
-  timing: transitionTiming,
-  delay: transitionDelay,
-  duration: transitionDuration
-};
-
-
-function getTransitionProperties() {
-  var style = document.createElement('div').style;
-
-  var vendorMap = {
-    O: function O(e) {
-      return 'o' + e.toLowerCase();
-    },
-    Moz: function Moz(e) {
-      return e.toLowerCase();
-    },
-    Webkit: function Webkit(e) {
-      return 'webkit' + e;
-    },
-    ms: function ms(e) {
-      return 'MS' + e;
-    }
-  };
-
-  var vendors = Object.keys(vendorMap);
-
-  var transitionEnd = void 0,
-      animationEnd = void 0;
-  var prefix = '';
-
-  for (var i = 0; i < vendors.length; i++) {
-    var vendor = vendors[i];
-
-    if (vendor + 'TransitionProperty' in style) {
-      prefix = '-' + vendor.toLowerCase();
-      transitionEnd = vendorMap[vendor]('TransitionEnd');
-      animationEnd = vendorMap[vendor]('AnimationEnd');
-      break;
-    }
-  }
-
-  if (!transitionEnd && 'transitionProperty' in style) transitionEnd = 'transitionend';
-
-  if (!animationEnd && 'animationName' in style) animationEnd = 'animationend';
-
-  style = null;
-
-  return { animationEnd: animationEnd, transitionEnd: transitionEnd, prefix: prefix };
-}
-
-/***/ }),
+/* 241 */,
+/* 242 */,
+/* 243 */,
+/* 244 */,
+/* 245 */,
+/* 246 */,
+/* 247 */,
+/* 248 */,
+/* 249 */,
+/* 250 */,
+/* 251 */,
 /* 252 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -27849,25 +26769,7 @@ var CircularLoaderRow = function CircularLoaderRow() {
 /* harmony default export */ __webpack_exports__["a"] = (CircularLoaderRow);
 
 /***/ }),
-/* 277 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- */
-
-
-
-module.exports = __webpack_require__(241);
-
-
-/***/ }),
+/* 277 */,
 /* 278 */,
 /* 279 */,
 /* 280 */,
@@ -28445,10 +27347,10 @@ function mapDispatchToProps(dispatch) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_partials_CardLoading__ = __webpack_require__(300);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__AddUserAlbumCard__ = __webpack_require__(302);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__AddHashtagAlbumCard__ = __webpack_require__(305);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_react_addons_css_transition_group__ = __webpack_require__(277);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_react_addons_css_transition_group___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_react_addons_css_transition_group__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_add_new_SelectUser__ = __webpack_require__(308);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__actions_albumsAction__ = __webpack_require__(103);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_add_new_SelectUser__ = __webpack_require__(308);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__actions_albumsAction__ = __webpack_require__(103);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_react_flip_move__ = __webpack_require__(376);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_react_flip_move___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8_react_flip_move__);
 
 
 
@@ -28475,12 +27377,24 @@ var AlbumList = function AlbumList(_ref) {
         'div',
         { className: 'row' },
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-            __WEBPACK_IMPORTED_MODULE_6_react_addons_css_transition_group___default.a,
-            { transitionName: 'scale', transitionEnterTimeout: 500, transitionLeaveTimeout: 500 },
-            saving_user ? select_user ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_7__components_add_new_SelectUser__["a" /* default */], { key: 'select_user', users: users, cancelUserAlbum: cancelUserAlbum, title: title,
-                saveUserAlbum: saveUserAlbum }) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_partials_CardLoading__["a" /* default */], { title: 'Saving' }) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__AddUserAlbumCard__["a" /* default */], null),
-            saving_hashtag ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_partials_CardLoading__["a" /* default */], { title: 'Saving' }) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__AddHashtagAlbumCard__["a" /* default */], null),
-            !loaded ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_partials_CardLoading__["a" /* default */], { title: 'Loading Albums' }) : albums.map(function (album) {
+            __WEBPACK_IMPORTED_MODULE_8_react_flip_move___default.a,
+            { duration: 500, easing: 'ease-out' },
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'div',
+                { key: 'static1' },
+                saving_user ? select_user ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6__components_add_new_SelectUser__["a" /* default */], { key: 'select_user', users: users, cancelUserAlbum: cancelUserAlbum, title: title,
+                    saveUserAlbum: saveUserAlbum }) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_partials_CardLoading__["a" /* default */], { title: 'Saving' }) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__AddUserAlbumCard__["a" /* default */], null)
+            ),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'div',
+                { key: 'static2' },
+                saving_hashtag ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_partials_CardLoading__["a" /* default */], { title: 'Saving' }) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__AddHashtagAlbumCard__["a" /* default */], null)
+            ),
+            !loaded ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'div',
+                { key: 'static3' },
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_partials_CardLoading__["a" /* default */], { title: 'Loading Albums' })
+            ) : albums.map(function (album) {
                 return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__AlbumListItem__["a" /* default */], { key: album.id, album: album });
             })
         )
@@ -28504,10 +27418,10 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         cancelUserAlbum: function cancelUserAlbum() {
-            dispatch(Object(__WEBPACK_IMPORTED_MODULE_8__actions_albumsAction__["b" /* cancelUserAlbum */])());
+            dispatch(Object(__WEBPACK_IMPORTED_MODULE_7__actions_albumsAction__["b" /* cancelUserAlbum */])());
         },
         saveUserAlbum: function saveUserAlbum(album) {
-            dispatch(Object(__WEBPACK_IMPORTED_MODULE_8__actions_albumsAction__["g" /* saveUserAlbum */])(album));
+            dispatch(Object(__WEBPACK_IMPORTED_MODULE_7__actions_albumsAction__["g" /* saveUserAlbum */])(album));
         }
     };
 }
@@ -29909,8 +28823,8 @@ function mapDispatchToProps(dispatch) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_redux__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_partials_TempMessage__ = __webpack_require__(311);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react_addons_css_transition_group__ = __webpack_require__(277);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react_addons_css_transition_group___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_react_addons_css_transition_group__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react_flip_move__ = __webpack_require__(376);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react_flip_move___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_react_flip_move__);
 
 
 
@@ -29926,8 +28840,8 @@ var FlashMessages = function FlashMessages(_ref) {
         'div',
         { className: 'fixed-top-right' },
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-            __WEBPACK_IMPORTED_MODULE_3_react_addons_css_transition_group___default.a,
-            { transitionName: 'slide-up', transitionEnterTimeout: 500, transitionLeaveTimeout: 500 },
+            __WEBPACK_IMPORTED_MODULE_3_react_flip_move___default.a,
+            { duration: 500, easing: 'ease-out' },
             count ? messages.map(function (msg) {
                 return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__components_partials_TempMessage__["a" /* default */], { key: msg.id, msg: msg, hidemsg: hidemsg });
             }) : null
@@ -30251,6 +29165,1525 @@ var RangeField = function RangeField(_ref) {
 };
 
 /* harmony default export */ __webpack_exports__["a"] = (RangeField);
+
+/***/ }),
+/* 375 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.omit = omit;
+exports.arraysEqual = arraysEqual;
+var isElementAnSFC = exports.isElementAnSFC = function isElementAnSFC(element) {
+  var isNativeDOMElement = typeof element.type === 'string';
+
+  if (isNativeDOMElement) {
+    return false;
+  }
+
+  return !element.type.prototype.isReactComponent;
+};
+function omit(obj) {
+  var attrs = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
+
+  var result = {};
+  Object.keys(obj).forEach(function (key) {
+    if (attrs.indexOf(key) === -1) {
+      result[key] = obj[key];
+    }
+  });
+  return result;
+}
+
+function arraysEqual(a, b) {
+  var sameObject = a === b;
+  if (sameObject) {
+    return true;
+  }
+
+  var notBothArrays = !Array.isArray(a) || !Array.isArray(b);
+  var differentLengths = a.length !== b.length;
+
+  if (notBothArrays || differentLengths) {
+    return false;
+  }
+
+  return a.every(function (element, index) {
+    return element === b[index];
+  });
+}
+
+function memoizeString(fn) {
+  var cache = {};
+
+  return function (str) {
+    if (!cache[str]) {
+      cache[str] = fn(str);
+    }
+    return cache[str];
+  };
+}
+
+var hyphenate = exports.hyphenate = memoizeString(function (str) {
+  return str.replace(/([A-Z])/g, '-$1').toLowerCase();
+});
+
+/***/ }),
+/* 376 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _FlipMove = __webpack_require__(377);
+
+var _FlipMove2 = _interopRequireDefault(_FlipMove);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = _FlipMove2.default;
+/**
+ * React Flip Move
+ * (c) 2016-present Joshua Comeau
+ */
+
+module.exports = exports['default'];
+
+/***/ }),
+/* 377 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(2);
+
+var _react2 = _interopRequireDefault(_react);
+
+__webpack_require__(378);
+
+var _propConverter = __webpack_require__(379);
+
+var _propConverter2 = _interopRequireDefault(_propConverter);
+
+var _domManipulation = __webpack_require__(382);
+
+var _helpers = __webpack_require__(375);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+/**
+ * React Flip Move
+ * (c) 2016-present Joshua Comeau
+ *
+ * For information on how this code is laid out, check out CODE_TOUR.md
+ */
+
+/* eslint-disable react/prop-types */
+
+var transitionEnd = (0, _domManipulation.whichTransitionEvent)();
+var noBrowserSupport = !transitionEnd;
+
+function getKey(childData) {
+  return childData.key || '';
+}
+
+var FlipMove = function (_Component) {
+  _inherits(FlipMove, _Component);
+
+  function FlipMove() {
+    var _ref;
+
+    var _temp, _this, _ret;
+
+    _classCallCheck(this, FlipMove);
+
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = FlipMove.__proto__ || Object.getPrototypeOf(FlipMove)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
+      children: _react.Children.toArray(_this.props.children).map(function (element) {
+        return _extends({}, element, {
+          element: element,
+          appearing: true
+        });
+      })
+    }, _this.childrenData = {}, _this.parentData = {
+      domNode: null,
+      boundingBox: null
+    }, _this.heightPlaceholderData = {
+      domNode: null
+    }, _this.remainingAnimations = 0, _this.childrenToAnimate = [], _this.runAnimation = function () {
+      var dynamicChildren = _this.state.children.filter(_this.doesChildNeedToBeAnimated);
+
+      dynamicChildren.forEach(function (child, n) {
+        _this.remainingAnimations += 1;
+        _this.childrenToAnimate.push(getKey(child));
+        _this.animateChild(child, n);
+      });
+
+      if (typeof _this.props.onStartAll === 'function') {
+        _this.callChildrenHook(_this.props.onStartAll);
+      }
+    }, _this.doesChildNeedToBeAnimated = function (child) {
+      // If the child doesn't have a key, it's an immovable child (one that we
+      // do not want to do FLIP stuff to.)
+      if (!getKey(child)) {
+        return false;
+      }
+
+      var childData = _this.getChildData(getKey(child));
+      var childDomNode = childData.domNode;
+      var childBoundingBox = childData.boundingBox;
+      var parentBoundingBox = _this.parentData.boundingBox;
+
+      if (!childDomNode) {
+        return false;
+      }
+
+      var _this$props = _this.props,
+          appearAnimation = _this$props.appearAnimation,
+          enterAnimation = _this$props.enterAnimation,
+          leaveAnimation = _this$props.leaveAnimation,
+          getPosition = _this$props.getPosition;
+
+
+      var isAppearingWithAnimation = child.appearing && appearAnimation;
+      var isEnteringWithAnimation = child.entering && enterAnimation;
+      var isLeavingWithAnimation = child.leaving && leaveAnimation;
+
+      if (isAppearingWithAnimation || isEnteringWithAnimation || isLeavingWithAnimation) {
+        return true;
+      }
+
+      // If it isn't entering/leaving, we want to animate it if it's
+      // on-screen position has changed.
+
+      var _getPositionDelta = (0, _domManipulation.getPositionDelta)({
+        childDomNode: childDomNode,
+        childBoundingBox: childBoundingBox,
+        parentBoundingBox: parentBoundingBox,
+        getPosition: getPosition
+      }),
+          _getPositionDelta2 = _slicedToArray(_getPositionDelta, 2),
+          dX = _getPositionDelta2[0],
+          dY = _getPositionDelta2[1];
+
+      return dX !== 0 || dY !== 0;
+    }, _temp), _possibleConstructorReturn(_this, _ret);
+  }
+  // Copy props.children into state.
+  // To understand why this is important (and not an anti-pattern), consider
+  // how "leave" animations work. An item has "left" when the component
+  // receives a new set of props that do NOT contain the item.
+  // If we just render the props as-is, the item would instantly disappear.
+  // We want to keep the item rendered for a little while, until its animation
+  // can complete. Because we cannot mutate props, we make `state` the source
+  // of truth.
+
+
+  // FlipMove needs to know quite a bit about its children in order to do
+  // its job. We store these as a property on the instance. We're not using
+  // state, because we don't want changes to trigger re-renders, we just
+  // need a place to keep the data for reference, when changes happen.
+  // This field should not be accessed directly. Instead, use getChildData,
+  // putChildData, etc...
+
+
+  // Similarly, track the dom node and box of our parent element.
+
+
+  // If `maintainContainerHeight` prop is set to true, we'll create a
+  // placeholder element which occupies space so that the parent height
+  // doesn't change when items are removed from the document flow (which
+  // happens during leave animations)
+
+
+  // Keep track of remaining animations so we know when to fire the
+  // all-finished callback, and clean up after ourselves.
+  // NOTE: we can't simply use childrenToAnimate.length to track remaining
+  // animations, because we need to maintain the list of animating children,
+  // to pass to the `onFinishAll` handler.
+
+
+  _createClass(FlipMove, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      // Run our `appearAnimation` if it was requested, right after the
+      // component mounts.
+      var shouldTriggerFLIP = this.props.appearAnimation && !this.isAnimationDisabled(this.props);
+
+      if (shouldTriggerFLIP) {
+        this.prepForAnimation();
+        this.runAnimation();
+      }
+    }
+  }, {
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps(nextProps) {
+      // When the component is handed new props, we need to figure out the
+      // "resting" position of all currently-rendered DOM nodes.
+      // We store that data in this.parent and this.children,
+      // so it can be used later to work out the animation.
+      this.updateBoundingBoxCaches();
+
+      // Convert opaque children object to array.
+      var nextChildren = _react.Children.toArray(nextProps.children);
+
+      // Next, we need to update our state, so that it contains our new set of
+      // children. If animation is disabled or unsupported, this is easy;
+      // we just copy our props into state.
+      // Assuming that we can animate, though, we have to do some work.
+      // Essentially, we want to keep just-deleted nodes in the DOM for a bit
+      // longer, so that we can animate them away.
+      this.setState({
+        children: this.isAnimationDisabled(nextProps) ? nextChildren.map(function (element) {
+          return _extends({}, element, { element: element });
+        }) : this.calculateNextSetOfChildren(nextChildren)
+      });
+    }
+  }, {
+    key: 'componentDidUpdate',
+    value: function componentDidUpdate(previousProps) {
+      // If the children have been re-arranged, moved, or added/removed,
+      // trigger the main FLIP animation.
+      //
+      // IMPORTANT: We need to make sure that the children have actually changed.
+      // At the end of the transition, we clean up nodes that need to be removed.
+      var oldChildrenKeys = _react.Children.toArray(this.props.children).map(function (d) {
+        return d.key;
+      });
+      var nextChildrenKeys = _react.Children.toArray(previousProps.children).map(function (d) {
+        return d.key;
+      });
+
+      var shouldTriggerFLIP = !(0, _helpers.arraysEqual)(oldChildrenKeys, nextChildrenKeys) && !this.isAnimationDisabled(this.props);
+
+      if (shouldTriggerFLIP) {
+        this.prepForAnimation();
+        this.runAnimation();
+      }
+    }
+  }, {
+    key: 'calculateNextSetOfChildren',
+    value: function calculateNextSetOfChildren(nextChildren) {
+      var _this2 = this;
+
+      // We want to:
+      //   - Mark all new children as `entering`
+      //   - Pull in previous children that aren't in nextChildren, and mark them
+      //     as `leaving`
+      //   - Preserve the nextChildren list order, with leaving children in their
+      //     appropriate places.
+      //
+
+      var updatedChildren = nextChildren.map(function (nextChild) {
+        var child = _this2.findChildByKey(nextChild.key || '');
+
+        // If the current child did exist, but it was in the midst of leaving,
+        // we want to treat it as though it's entering
+        var isEntering = !child || child.leaving;
+
+        return _extends({}, nextChild, { element: nextChild, entering: isEntering });
+      });
+
+      // This is tricky. We want to keep the nextChildren's ordering, but with
+      // any just-removed items maintaining their original position.
+      // eg.
+      //   this.state.children  = [ 1, 2, 3, 4 ]
+      //   nextChildren         = [ 3, 1 ]
+      //
+      // In this example, we've removed the '2' & '4'
+      // We want to end up with:  [ 2, 3, 1, 4 ]
+      //
+      // To accomplish that, we'll iterate through this.state.children. whenever
+      // we find a match, we'll append our `leaving` flag to it, and insert it
+      // into the nextChildren in its ORIGINAL position. Note that, as we keep
+      // inserting old items into the new list, the "original" position will
+      // keep incrementing.
+      var numOfChildrenLeaving = 0;
+      this.state.children.forEach(function (child, index) {
+        var isLeaving = !nextChildren.find(function (_ref2) {
+          var key = _ref2.key;
+          return key === getKey(child);
+        });
+
+        // If the child isn't leaving (or, if there is no leave animation),
+        // we don't need to add it into the state children.
+        if (!isLeaving || !_this2.props.leaveAnimation) return;
+
+        var nextChild = _extends({}, child, { leaving: true });
+        var nextChildIndex = index + numOfChildrenLeaving;
+
+        updatedChildren.splice(nextChildIndex, 0, nextChild);
+        numOfChildrenLeaving += 1;
+      });
+
+      return updatedChildren;
+    }
+  }, {
+    key: 'prepForAnimation',
+    value: function prepForAnimation() {
+      var _this3 = this;
+
+      // Our animation prep consists of:
+      // - remove children that are leaving from the DOM flow, so that the new
+      //   layout can be accurately calculated,
+      // - update the placeholder container height, if needed, to ensure that
+      //   the parent's height doesn't collapse.
+
+      var _props = this.props,
+          leaveAnimation = _props.leaveAnimation,
+          maintainContainerHeight = _props.maintainContainerHeight,
+          getPosition = _props.getPosition;
+
+      // we need to make all leaving nodes "invisible" to the layout calculations
+      // that will take place in the next step (this.runAnimation).
+
+      if (leaveAnimation) {
+        var leavingChildren = this.state.children.filter(function (child) {
+          return child.leaving;
+        });
+
+        leavingChildren.forEach(function (leavingChild) {
+          var childData = _this3.getChildData(getKey(leavingChild));
+
+          // We need to take the items out of the "flow" of the document, so that
+          // its siblings can move to take its place.
+          if (childData.boundingBox) {
+            (0, _domManipulation.removeNodeFromDOMFlow)(childData, _this3.props.verticalAlignment);
+          }
+        });
+
+        if (maintainContainerHeight && this.heightPlaceholderData.domNode) {
+          (0, _domManipulation.updateHeightPlaceholder)({
+            domNode: this.heightPlaceholderData.domNode,
+            parentData: this.parentData,
+            getPosition: getPosition
+          });
+        }
+      }
+
+      // For all children not in the middle of entering or leaving,
+      // we need to reset the transition, so that the NEW shuffle starts from
+      // the right place.
+      this.state.children.forEach(function (child) {
+        var _getChildData = _this3.getChildData(getKey(child)),
+            domNode = _getChildData.domNode;
+
+        // Ignore children that don't render DOM nodes (eg. by returning null)
+
+
+        if (!domNode) {
+          return;
+        }
+
+        if (!child.entering && !child.leaving) {
+          (0, _domManipulation.applyStylesToDOMNode)({
+            domNode: domNode,
+            styles: {
+              transition: ''
+            }
+          });
+        }
+      });
+    }
+  }, {
+    key: 'animateChild',
+    value: function animateChild(child, index) {
+      var _this4 = this;
+
+      var _getChildData2 = this.getChildData(getKey(child)),
+          domNode = _getChildData2.domNode;
+
+      if (!domNode) {
+        return;
+      }
+
+      // Apply the relevant style for this DOM node
+      // This is the offset from its actual DOM position.
+      // eg. if an item has been re-rendered 20px lower, we want to apply a
+      // style of 'transform: translate(-20px)', so that it appears to be where
+      // it started.
+      // In FLIP terminology, this is the 'Invert' stage.
+      (0, _domManipulation.applyStylesToDOMNode)({
+        domNode: domNode,
+        styles: this.computeInitialStyles(child)
+      });
+
+      // Start by invoking the onStart callback for this child.
+      if (this.props.onStart) this.props.onStart(child, domNode);
+
+      // Next, animate the item from it's artificially-offset position to its
+      // new, natural position.
+      requestAnimationFrame(function () {
+        requestAnimationFrame(function () {
+          // NOTE, RE: the double-requestAnimationFrame:
+          // Sadly, this is the most browser-compatible way to do this I've found.
+          // Essentially we need to set the initial styles outside of any request
+          // callbacks to avoid batching them. Then, a frame needs to pass with
+          // the styles above rendered. Then, on the second frame, we can apply
+          // our final styles to perform the animation.
+
+          // Our first order of business is to "undo" the styles applied in the
+          // previous frames, while also adding a `transition` property.
+          // This way, the item will smoothly transition from its old position
+          // to its new position.
+
+          // eslint-disable-next-line flowtype/require-variable-type
+          var styles = {
+            transition: (0, _domManipulation.createTransitionString)(index, _this4.props),
+            transform: '',
+            opacity: ''
+          };
+
+          if (child.appearing && _this4.props.appearAnimation) {
+            styles = _extends({}, styles, _this4.props.appearAnimation.to);
+          } else if (child.entering && _this4.props.enterAnimation) {
+            styles = _extends({}, styles, _this4.props.enterAnimation.to);
+          } else if (child.leaving && _this4.props.leaveAnimation) {
+            styles = _extends({}, styles, _this4.props.leaveAnimation.to);
+          }
+
+          // In FLIP terminology, this is the 'Play' stage.
+          (0, _domManipulation.applyStylesToDOMNode)({ domNode: domNode, styles: styles });
+        });
+      });
+
+      this.bindTransitionEndHandler(child);
+    }
+  }, {
+    key: 'bindTransitionEndHandler',
+    value: function bindTransitionEndHandler(child) {
+      var _this5 = this;
+
+      var _getChildData3 = this.getChildData(getKey(child)),
+          domNode = _getChildData3.domNode;
+
+      if (!domNode) {
+        return;
+      }
+
+      // The onFinish callback needs to be bound to the transitionEnd event.
+      // We also need to unbind it when the transition completes, so this ugly
+      // inline function is required (we need it here so it closes over
+      // dependent variables `child` and `domNode`)
+      var transitionEndHandler = function transitionEndHandler(ev) {
+        // It's possible that this handler is fired not on our primary transition,
+        // but on a nested transition (eg. a hover effect). Ignore these cases.
+        if (ev.target !== domNode) return;
+
+        // Remove the 'transition' inline style we added. This is cleanup.
+        domNode.style.transition = '';
+
+        // Trigger any applicable onFinish/onFinishAll hooks
+        _this5.triggerFinishHooks(child, domNode);
+
+        domNode.removeEventListener(transitionEnd, transitionEndHandler);
+
+        if (child.leaving) {
+          _this5.removeChildData(getKey(child));
+        }
+      };
+
+      domNode.addEventListener(transitionEnd, transitionEndHandler);
+    }
+  }, {
+    key: 'triggerFinishHooks',
+    value: function triggerFinishHooks(child, domNode) {
+      var _this6 = this;
+
+      if (this.props.onFinish) this.props.onFinish(child, domNode);
+
+      // Reduce the number of children we need to animate by 1,
+      // so that we can tell when all children have finished.
+      this.remainingAnimations -= 1;
+
+      if (this.remainingAnimations === 0) {
+        // Remove any items from the DOM that have left, and reset `entering`.
+        var nextChildren = this.state.children.filter(function (_ref3) {
+          var leaving = _ref3.leaving;
+          return !leaving;
+        }).map(function (item) {
+          return _extends({}, item, {
+            appearing: false,
+            entering: false
+          });
+        });
+
+        this.setState({ children: nextChildren }, function () {
+          if (typeof _this6.props.onFinishAll === 'function') {
+            _this6.callChildrenHook(_this6.props.onFinishAll);
+          }
+
+          // Reset our variables for the next iteration
+          _this6.childrenToAnimate = [];
+        });
+
+        // If the placeholder was holding the container open while elements were
+        // leaving, we we can now set its height to zero.
+        if (this.heightPlaceholderData.domNode) {
+          this.heightPlaceholderData.domNode.style.height = '0';
+        }
+      }
+    }
+  }, {
+    key: 'callChildrenHook',
+    value: function callChildrenHook(hook) {
+      var _this7 = this;
+
+      var elements = [];
+      var domNodes = [];
+
+      this.childrenToAnimate.forEach(function (childKey) {
+        // If this was an exit animation, the child may no longer exist.
+        // If so, skip it.
+        var child = _this7.findChildByKey(childKey);
+
+        if (!child) {
+          return;
+        }
+
+        elements.push(child);
+
+        if (_this7.hasChildData(childKey)) {
+          domNodes.push(_this7.getChildData(childKey).domNode);
+        }
+      });
+
+      hook(elements, domNodes);
+    }
+  }, {
+    key: 'updateBoundingBoxCaches',
+    value: function updateBoundingBoxCaches() {
+      var _this8 = this;
+
+      // This is the ONLY place that parentData and childrenData's
+      // bounding boxes are updated. They will be calculated at other times
+      // to be compared to this value, but it's important that the cache is
+      // updated once per update.
+      var parentDomNode = this.parentData.domNode;
+
+      if (!parentDomNode) {
+        return;
+      }
+
+      this.parentData.boundingBox = this.props.getPosition(parentDomNode);
+
+      this.state.children.forEach(function (child) {
+        var childKey = getKey(child);
+
+        // It is possible that a child does not have a `key` property;
+        // Ignore these children, they don't need to be moved.
+        if (!childKey) {
+          return;
+        }
+
+        // In very rare circumstances, for reasons unknown, the ref is never
+        // populated for certain children. In this case, avoid doing this update.
+        // see: https://github.com/joshwcomeau/react-flip-move/pull/91
+        if (!_this8.hasChildData(childKey)) {
+          return;
+        }
+
+        var childData = _this8.getChildData(childKey);
+
+        // If the child element returns null, we need to avoid trying to
+        // account for it
+        if (!childData.domNode || !child) {
+          return;
+        }
+
+        _this8.setChildData(childKey, {
+          boundingBox: (0, _domManipulation.getRelativeBoundingBox)({
+            childDomNode: childData.domNode,
+            parentDomNode: parentDomNode,
+            getPosition: _this8.props.getPosition
+          })
+        });
+      });
+    }
+  }, {
+    key: 'computeInitialStyles',
+    value: function computeInitialStyles(child) {
+      if (child.appearing) {
+        return this.props.appearAnimation ? this.props.appearAnimation.from : {};
+      } else if (child.entering) {
+        if (!this.props.enterAnimation) {
+          return {};
+        }
+        // If this child was in the middle of leaving, it still has its
+        // absolute positioning styles applied. We need to undo those.
+        return _extends({
+          position: '',
+          top: '',
+          left: '',
+          right: '',
+          bottom: ''
+        }, this.props.enterAnimation.from);
+      } else if (child.leaving) {
+        return this.props.leaveAnimation ? this.props.leaveAnimation.from : {};
+      }
+
+      var childData = this.getChildData(getKey(child));
+      var childDomNode = childData.domNode;
+      var childBoundingBox = childData.boundingBox;
+      var parentBoundingBox = this.parentData.boundingBox;
+
+      if (!childDomNode) {
+        return {};
+      }
+
+      var _getPositionDelta3 = (0, _domManipulation.getPositionDelta)({
+        childDomNode: childDomNode,
+        childBoundingBox: childBoundingBox,
+        parentBoundingBox: parentBoundingBox,
+        getPosition: this.props.getPosition
+      }),
+          _getPositionDelta4 = _slicedToArray(_getPositionDelta3, 2),
+          dX = _getPositionDelta4[0],
+          dY = _getPositionDelta4[1];
+
+      return {
+        transform: 'translate(' + dX + 'px, ' + dY + 'px)'
+      };
+    }
+
+    // eslint-disable-next-line class-methods-use-this
+
+  }, {
+    key: 'isAnimationDisabled',
+    value: function isAnimationDisabled(props) {
+      // If the component is explicitly passed a `disableAllAnimations` flag,
+      // we can skip this whole process. Similarly, if all of the numbers have
+      // been set to 0, there is no point in trying to animate; doing so would
+      // only cause a flicker (and the intent is probably to disable animations)
+      // We can also skip this rigamarole if there's no browser support for it.
+      return noBrowserSupport || props.disableAllAnimations || props.duration === 0 && props.delay === 0 && props.staggerDurationBy === 0 && props.staggerDelayBy === 0;
+    }
+  }, {
+    key: 'findChildByKey',
+    value: function findChildByKey(key) {
+      return this.state.children.find(function (child) {
+        return getKey(child) === key;
+      });
+    }
+  }, {
+    key: 'hasChildData',
+    value: function hasChildData(key) {
+      // Object has some built-in properties on its prototype, such as toString.  hasOwnProperty makes
+      // sure that key is present on childrenData itself, not on its prototype.
+      return Object.prototype.hasOwnProperty.call(this.childrenData, key);
+    }
+  }, {
+    key: 'getChildData',
+    value: function getChildData(key) {
+      return this.hasChildData(key) ? this.childrenData[key] : {};
+    }
+  }, {
+    key: 'setChildData',
+    value: function setChildData(key, data) {
+      this.childrenData[key] = _extends({}, this.getChildData(key), data);
+    }
+  }, {
+    key: 'removeChildData',
+    value: function removeChildData(key) {
+      delete this.childrenData[key];
+    }
+  }, {
+    key: 'createHeightPlaceholder',
+    value: function createHeightPlaceholder() {
+      var _this9 = this;
+
+      var typeName = this.props.typeName;
+
+      // If requested, create an invisible element at the end of the list.
+      // Its height will be modified to prevent the container from collapsing
+      // prematurely.
+
+      var isContainerAList = typeName === 'ul' || typeName === 'ol';
+      var placeholderType = isContainerAList ? 'li' : 'div';
+
+      return _react2.default.createElement(placeholderType, {
+        key: 'height-placeholder',
+        ref: function ref(domNode) {
+          _this9.heightPlaceholderData.domNode = domNode;
+        },
+        style: { visibility: 'hidden', height: 0 }
+      });
+    }
+  }, {
+    key: 'childrenWithRefs',
+    value: function childrenWithRefs() {
+      var _this10 = this;
+
+      // We need to clone the provided children, capturing a reference to the
+      // underlying DOM node. Flip Move needs to use the React escape hatches to
+      // be able to do its calculations.
+      return this.state.children.map(function (child) {
+        return _react2.default.cloneElement(child.element, {
+          ref: function ref(element) {
+            // Stateless Functional Components are not supported by FlipMove,
+            // because they don't have instances.
+            if (!element) {
+              return;
+            }
+
+            var domNode = (0, _domManipulation.getNativeNode)(element);
+            _this10.setChildData(getKey(child), { domNode: domNode });
+          }
+        });
+      });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _this11 = this;
+
+      var _props2 = this.props,
+          typeName = _props2.typeName,
+          delegated = _props2.delegated,
+          leaveAnimation = _props2.leaveAnimation,
+          maintainContainerHeight = _props2.maintainContainerHeight;
+
+
+      var props = _extends({}, delegated, {
+        ref: function ref(node) {
+          _this11.parentData.domNode = node;
+        }
+      });
+
+      var children = this.childrenWithRefs();
+      if (leaveAnimation && maintainContainerHeight) {
+        children.push(this.createHeightPlaceholder());
+      }
+
+      return _react2.default.createElement(typeName, props, children);
+    }
+  }]);
+
+  return FlipMove;
+}(_react.Component);
+
+exports.default = (0, _propConverter2.default)(FlipMove);
+module.exports = exports['default'];
+
+/***/ }),
+/* 378 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+// @noflow
+/**
+ * React Flip Move - Polyfills
+ * (c) 2016-present Joshua Comeau
+ */
+
+/* eslint-disable */
+
+if (!Array.prototype.find) {
+  Array.prototype.find = function (predicate) {
+    if (this === null) {
+      throw new TypeError('Array.prototype.find called on null or undefined');
+    }
+    if (typeof predicate !== 'function') {
+      throw new TypeError('predicate must be a function');
+    }
+    var list = Object(this);
+    var length = list.length >>> 0;
+    var thisArg = arguments[1];
+    var value = void 0;
+
+    for (var i = 0; i < length; i++) {
+      value = list[i];
+      if (predicate.call(thisArg, value, i, list)) {
+        return value;
+      }
+    }
+    return undefined;
+  };
+}
+
+if (!Array.prototype.every) {
+  Array.prototype.every = function (callbackfn, thisArg) {
+    'use strict';
+
+    var T, k;
+
+    if (this == null) {
+      throw new TypeError('this is null or not defined');
+    }
+
+    var O = Object(this);
+    var len = O.length >>> 0;
+
+    if (typeof callbackfn !== 'function') {
+      throw new TypeError();
+    }
+
+    if (arguments.length > 1) {
+      T = thisArg;
+    }
+
+    k = 0;
+
+    while (k < len) {
+
+      var kValue;
+
+      if (k in O) {
+        kValue = O[k];
+
+        var testResult = callbackfn.call(T, kValue, k, O);
+
+        if (!testResult) {
+          return false;
+        }
+      }
+      k++;
+    }
+    return true;
+  };
+}
+
+if (!Array.isArray) {
+  Array.isArray = function (arg) {
+    return Object.prototype.toString.call(arg) === '[object Array]';
+  };
+}
+
+/***/ }),
+/* 379 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(2);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _errorMessages = __webpack_require__(380);
+
+var _enterLeavePresets = __webpack_require__(381);
+
+var _helpers = __webpack_require__(375);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+/**
+ * React Flip Move | propConverter
+ * (c) 2016-present Joshua Comeau
+ *
+ * Abstracted away a bunch of the messy business with props.
+ *   - props flow types and defaultProps
+ *   - Type conversion (We accept 'string' and 'number' values for duration,
+ *     delay, and other fields, but we actually need them to be ints.)
+ *   - Children conversion (we need the children to be an array. May not always
+ *     be, if a single child is passed in.)
+ *   - Resolving animation presets into their base CSS styles
+ */
+/* eslint-disable block-scoped-var */
+
+var nodeEnv = void 0;
+try {
+  nodeEnv = "development";
+} catch (e) {
+  nodeEnv = 'development';
+}
+
+function propConverter(ComposedComponent) {
+  var _class, _temp;
+
+  return _temp = _class = function (_Component) {
+    _inherits(FlipMovePropConverter, _Component);
+
+    function FlipMovePropConverter() {
+      _classCallCheck(this, FlipMovePropConverter);
+
+      return _possibleConstructorReturn(this, (FlipMovePropConverter.__proto__ || Object.getPrototypeOf(FlipMovePropConverter)).apply(this, arguments));
+    }
+
+    _createClass(FlipMovePropConverter, [{
+      key: 'checkForStatelessFunctionalComponents',
+
+
+      // eslint-disable-next-line class-methods-use-this
+      value: function checkForStatelessFunctionalComponents(children) {
+        // Skip all console warnings in production.
+        // Bail early, to avoid unnecessary work.
+        if (nodeEnv === 'production') {
+          return;
+        }
+
+        // FlipMove does not support stateless functional components.
+        // Check to see if any supplied components won't work.
+        // If the child doesn't have a key, it means we aren't animating it.
+        // It's allowed to be an SFC, since we ignore it.
+        var childArray = _react.Children.toArray(children);
+        var noStateless = childArray.every(function (child) {
+          return !(0, _helpers.isElementAnSFC)(child) || typeof child.key === 'undefined';
+        });
+
+        if (!noStateless) {
+          (0, _errorMessages.statelessFunctionalComponentSupplied)();
+        }
+      }
+    }, {
+      key: 'convertProps',
+      value: function convertProps(props) {
+        var workingProps = {
+          // explicitly bypass the props that don't need conversion
+          children: props.children,
+          easing: props.easing,
+          onStart: props.onStart,
+          onFinish: props.onFinish,
+          onStartAll: props.onStartAll,
+          onFinishAll: props.onFinishAll,
+          typeName: props.typeName,
+          disableAllAnimations: props.disableAllAnimations,
+          getPosition: props.getPosition,
+          maintainContainerHeight: props.maintainContainerHeight,
+          verticalAlignment: props.verticalAlignment,
+
+          // Do string-to-int conversion for all timing-related props
+          duration: this.convertTimingProp('duration'),
+          delay: this.convertTimingProp('delay'),
+          staggerDurationBy: this.convertTimingProp('staggerDurationBy'),
+          staggerDelayBy: this.convertTimingProp('staggerDelayBy'),
+
+          // Our enter/leave animations can be specified as boolean (default or
+          // disabled), string (preset name), or object (actual animation values).
+          // Let's standardize this so that they're always objects
+          appearAnimation: this.convertAnimationProp(props.appearAnimation, _enterLeavePresets.appearPresets),
+          enterAnimation: this.convertAnimationProp(props.enterAnimation, _enterLeavePresets.enterPresets),
+          leaveAnimation: this.convertAnimationProp(props.leaveAnimation, _enterLeavePresets.leavePresets),
+
+          delegated: {}
+        };
+
+        this.checkForStatelessFunctionalComponents(workingProps.children);
+
+        // Accept `disableAnimations`, but add a deprecation warning
+        if (typeof props.disableAnimations !== 'undefined') {
+          if (nodeEnv !== 'production') {
+            (0, _errorMessages.deprecatedDisableAnimations)();
+          }
+
+          workingProps.disableAllAnimations = props.disableAnimations;
+        }
+
+        // Gather any additional props;
+        // they will be delegated to the ReactElement created.
+        var primaryPropKeys = Object.keys(workingProps);
+        var delegatedProps = (0, _helpers.omit)(this.props, primaryPropKeys);
+
+        // The FlipMove container element needs to have a non-static position.
+        // We use `relative` by default, but it can be overridden by the user.
+        // Now that we're delegating props, we need to merge this in.
+        delegatedProps.style = _extends({
+          position: 'relative'
+        }, delegatedProps.style);
+
+        workingProps.delegated = delegatedProps;
+
+        return workingProps;
+      }
+    }, {
+      key: 'convertTimingProp',
+      value: function convertTimingProp(prop) {
+        var rawValue = this.props[prop];
+
+        var value = typeof rawValue === 'number' ? rawValue : parseInt(rawValue, 10);
+
+        if (isNaN(value)) {
+          var defaultValue = FlipMovePropConverter.defaultProps[prop];
+
+          if (nodeEnv !== 'production') {
+            (0, _errorMessages.invalidTypeForTimingProp)({
+              prop: prop,
+              value: rawValue,
+              defaultValue: defaultValue
+            });
+          }
+
+          return defaultValue;
+        }
+
+        return value;
+      }
+
+      // eslint-disable-next-line class-methods-use-this
+
+    }, {
+      key: 'convertAnimationProp',
+      value: function convertAnimationProp(animation, presets) {
+        switch (typeof animation === 'undefined' ? 'undefined' : _typeof(animation)) {
+          case 'boolean':
+            {
+              // If it's true, we want to use the default preset.
+              // If it's false, we want to use the 'none' preset.
+              return presets[animation ? _enterLeavePresets.defaultPreset : _enterLeavePresets.disablePreset];
+            }
+
+          case 'string':
+            {
+              var presetKeys = Object.keys(presets);
+
+              if (presetKeys.indexOf(animation) === -1) {
+                if (nodeEnv !== 'production') {
+                  (0, _errorMessages.invalidEnterLeavePreset)({
+                    value: animation,
+                    acceptableValues: presetKeys.join(', '),
+                    defaultValue: _enterLeavePresets.defaultPreset
+                  });
+                }
+
+                return presets[_enterLeavePresets.defaultPreset];
+              }
+
+              return presets[animation];
+            }
+
+          default:
+            {
+              return animation;
+            }
+        }
+      }
+    }, {
+      key: 'render',
+      value: function render() {
+        return _react2.default.createElement(ComposedComponent, this.convertProps(this.props));
+      }
+    }]);
+
+    return FlipMovePropConverter;
+  }(_react.Component), _class.defaultProps = {
+    easing: 'ease-in-out',
+    duration: 350,
+    delay: 0,
+    staggerDurationBy: 0,
+    staggerDelayBy: 0,
+    typeName: 'div',
+    enterAnimation: _enterLeavePresets.defaultPreset,
+    leaveAnimation: _enterLeavePresets.defaultPreset,
+    disableAllAnimations: false,
+    getPosition: function getPosition(node) {
+      return node.getBoundingClientRect();
+    },
+    maintainContainerHeight: false,
+    verticalAlignment: 'top'
+  }, _temp;
+}
+
+exports.default = propConverter;
+module.exports = exports['default'];
+
+/***/ }),
+/* 380 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+
+function warnOnce(msg) {
+  var hasWarned = false;
+  return function () {
+    if (!hasWarned) {
+      console.warn(msg);
+      hasWarned = true;
+    }
+  };
+}
+var statelessFunctionalComponentSupplied = exports.statelessFunctionalComponentSupplied = warnOnce('\n>> Error, via react-flip-move <<\n\nYou provided a stateless functional component as a child to <FlipMove>. Unfortunately, SFCs aren\'t supported, because Flip Move needs access to the backing instances via refs, and SFCs don\'t have a public instance that holds that info.\n\nPlease wrap your components in a native element (eg. <div>), or a non-functional component.\n');
+
+var invalidTypeForTimingProp = exports.invalidTypeForTimingProp = function invalidTypeForTimingProp(args) {
+  return console.error('\n>> Error, via react-flip-move <<\n\nThe prop you provided for \'' + args.prop + '\' is invalid. It needs to be a positive integer, or a string that can be resolved to a number. The value you provided is \'' + args.value + '\'.\n\nAs a result,  the default value for this parameter will be used, which is \'' + args.defaultValue + '\'.\n');
+};
+
+var deprecatedDisableAnimations = exports.deprecatedDisableAnimations = warnOnce('\n>> Warning, via react-flip-move <<\n\nThe \'disableAnimations\' prop you provided is deprecated. Please switch to use \'disableAllAnimations\'.\n\nThis will become a silent error in future versions of react-flip-move.\n');
+
+var invalidEnterLeavePreset = exports.invalidEnterLeavePreset = function invalidEnterLeavePreset(args) {
+  return console.error('\n>> Error, via react-flip-move <<\n\nThe enter/leave preset you provided is invalid. We don\'t currently have a \'' + args.value + ' preset.\'\n\nAcceptable values are ' + args.acceptableValues + '. The default value of \'' + args.defaultValue + '\' will be used.\n');
+};
+
+/***/ }),
+/* 381 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var enterPresets = exports.enterPresets = {
+  elevator: {
+    from: { transform: 'scale(0)', opacity: '0' },
+    to: { transform: '', opacity: '' }
+  },
+  fade: {
+    from: { opacity: '0' },
+    to: { opacity: '' }
+  },
+  accordionVertical: {
+    from: { transform: 'scaleY(0)', transformOrigin: 'center top' },
+    to: { transform: '', transformOrigin: 'center top' }
+  },
+  accordionHorizontal: {
+    from: { transform: 'scaleX(0)', transformOrigin: 'left center' },
+    to: { transform: '', transformOrigin: 'left center' }
+  },
+  none: null
+};
+/**
+ * React Flip Move | enterLeavePresets
+ * (c) 2016-present Joshua Comeau
+ *
+ * This contains the master list of presets available for enter/leave animations,
+ * along with the mapping between preset and styles.
+ */
+var leavePresets = exports.leavePresets = {
+  elevator: {
+    from: { transform: 'scale(1)', opacity: '1' },
+    to: { transform: 'scale(0)', opacity: '0' }
+  },
+  fade: {
+    from: { opacity: '1' },
+    to: { opacity: '0' }
+  },
+  accordionVertical: {
+    from: { transform: 'scaleY(1)', transformOrigin: 'center top' },
+    to: { transform: 'scaleY(0)', transformOrigin: 'center top' }
+  },
+  accordionHorizontal: {
+    from: { transform: 'scaleX(1)', transformOrigin: 'left center' },
+    to: { transform: 'scaleX(0)', transformOrigin: 'left center' }
+  },
+  none: null
+};
+
+// For now, appearPresets will be identical to enterPresets.
+// Assigning a custom export in case we ever want to add appear-specific ones.
+var appearPresets = exports.appearPresets = enterPresets;
+
+// Embarrassingly enough, v2.0 launched with typo'ed preset names.
+// To avoid penning a new major version over something so inconsequential,
+// we're supporting both spellings. In a future version, these alternatives
+// may be deprecated.
+// $FlowFixMe
+enterPresets.accordianVertical = enterPresets.accordionVertical;
+// $FlowFixMe
+enterPresets.accordianHorizontal = enterPresets.accordionHorizontal;
+// $FlowFixMe
+leavePresets.accordianVertical = leavePresets.accordionVertical;
+// $FlowFixMe
+leavePresets.accordianHorizontal = leavePresets.accordionHorizontal;
+
+var defaultPreset = exports.defaultPreset = 'elevator';
+var disablePreset = exports.disablePreset = 'none';
+
+/***/ }),
+/* 382 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.createTransitionString = exports.getNativeNode = exports.updateHeightPlaceholder = exports.removeNodeFromDOMFlow = exports.getPositionDelta = exports.getRelativeBoundingBox = undefined;
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+/**
+ * React Flip Move
+ * (c) 2016-present Joshua Comeau
+ *
+ * These methods read from and write to the DOM.
+ * They almost always have side effects, and will hopefully become the
+ * only spot in the codebase with impure functions.
+ */
+
+
+exports.applyStylesToDOMNode = applyStylesToDOMNode;
+exports.whichTransitionEvent = whichTransitionEvent;
+
+var _reactDom = __webpack_require__(59);
+
+var _helpers = __webpack_require__(375);
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function applyStylesToDOMNode(_ref) {
+  var domNode = _ref.domNode,
+      styles = _ref.styles;
+
+  // Can't just do an object merge because domNode.styles is no regular object.
+  // Need to do it this way for the engine to fire its `set` listeners.
+  Object.keys(styles).forEach(function (key) {
+    domNode.style.setProperty((0, _helpers.hyphenate)(key), styles[key]);
+  });
+}
+
+// Modified from Modernizr
+function whichTransitionEvent() {
+  var transitions = {
+    transition: 'transitionend',
+    '-o-transition': 'oTransitionEnd',
+    '-moz-transition': 'transitionend',
+    '-webkit-transition': 'webkitTransitionEnd'
+  };
+
+  // If we're running in a browserless environment (eg. SSR), it doesn't apply.
+  // Return a placeholder string, for consistent type return.
+  if (typeof document === 'undefined') return '';
+
+  var el = document.createElement('fakeelement');
+
+  var match = Object.keys(transitions).find(function (t) {
+    return el.style.getPropertyValue(t) !== undefined;
+  });
+
+  // If no `transition` is found, we must be running in a browser so ancient,
+  // React itself won't run. Return an empty string, for consistent type return
+  return match ? transitions[match] : '';
+}
+
+var getRelativeBoundingBox = exports.getRelativeBoundingBox = function getRelativeBoundingBox(_ref2) {
+  var childDomNode = _ref2.childDomNode,
+      parentDomNode = _ref2.parentDomNode,
+      getPosition = _ref2.getPosition;
+
+  var parentBox = getPosition(parentDomNode);
+
+  var _getPosition = getPosition(childDomNode),
+      top = _getPosition.top,
+      left = _getPosition.left,
+      right = _getPosition.right,
+      bottom = _getPosition.bottom,
+      width = _getPosition.width,
+      height = _getPosition.height;
+
+  return {
+    top: top - parentBox.top,
+    left: left - parentBox.left,
+    right: parentBox.right - right,
+    bottom: parentBox.bottom - bottom,
+    width: width,
+    height: height
+  };
+};
+
+/** getPositionDelta
+ * This method returns the delta between two bounding boxes, to figure out
+ * how many pixels on each axis the element has moved.
+ *
+ */
+var getPositionDelta = exports.getPositionDelta = function getPositionDelta(_ref3) {
+  var childDomNode = _ref3.childDomNode,
+      childBoundingBox = _ref3.childBoundingBox,
+      parentBoundingBox = _ref3.parentBoundingBox,
+      getPosition = _ref3.getPosition;
+
+  // TEMP: A mystery bug is sometimes causing unnecessary boundingBoxes to
+  var defaultBox = { top: 0, left: 0, right: 0, bottom: 0, height: 0, width: 0 };
+
+  // Our old box is its last calculated position, derived on mount or at the
+  // start of the previous animation.
+  var oldRelativeBox = childBoundingBox || defaultBox;
+  var parentBox = parentBoundingBox || defaultBox;
+
+  // Our new box is the new final resting place: Where we expect it to wind up
+  // after the animation. First we get the box in absolute terms (AKA relative
+  // to the viewport), and then we calculate its relative box (relative to the
+  // parent container)
+  var newAbsoluteBox = getPosition(childDomNode);
+  var newRelativeBox = {
+    top: newAbsoluteBox.top - parentBox.top,
+    left: newAbsoluteBox.left - parentBox.left
+  };
+
+  return [oldRelativeBox.left - newRelativeBox.left, oldRelativeBox.top - newRelativeBox.top];
+};
+
+/** removeNodeFromDOMFlow
+ * This method does something very sneaky: it removes a DOM node from the
+ * document flow, but without actually changing its on-screen position.
+ *
+ * It works by calculating where the node is, and then applying styles
+ * so that it winds up being positioned absolutely, but in exactly the
+ * same place.
+ *
+ * This is a vital part of the FLIP technique.
+ */
+var removeNodeFromDOMFlow = exports.removeNodeFromDOMFlow = function removeNodeFromDOMFlow(childData, verticalAlignment) {
+  var domNode = childData.domNode,
+      boundingBox = childData.boundingBox;
+
+
+  if (!domNode || !boundingBox) {
+    return;
+  }
+
+  // For this to work, we have to offset any given `margin`.
+  var computed = window.getComputedStyle(domNode);
+
+  // We need to clean up margins, by converting and removing suffix:
+  // eg. '21px' -> 21
+  var marginAttrs = ['margin-top', 'margin-left', 'margin-right'];
+  var margins = marginAttrs.reduce(function (acc, margin) {
+    var propertyVal = computed.getPropertyValue(margin);
+
+    return _extends({}, acc, _defineProperty({}, margin, Number(propertyVal.replace('px', ''))));
+  }, {});
+
+  // If we're bottom-aligned, we need to add the height of the child to its
+  // top offset. This is because, when the container is bottom-aligned, its
+  // height shrinks from the top, not the bottom. We're removing this node
+  // from the flow, so the top is going to drop by its height.
+  var topOffset = verticalAlignment === 'bottom' ? boundingBox.top - boundingBox.height : boundingBox.top;
+
+  var styles = {
+    position: 'absolute',
+    top: topOffset - margins['margin-top'] + 'px',
+    left: boundingBox.left - margins['margin-left'] + 'px',
+    right: boundingBox.right - margins['margin-right'] + 'px'
+  };
+
+  applyStylesToDOMNode({ domNode: domNode, styles: styles });
+};
+
+/** updateHeightPlaceholder
+ * An optional property to FlipMove is a `maintainContainerHeight` boolean.
+ * This property creates a node that fills space, so that the parent
+ * container doesn't collapse when its children are removed from the
+ * document flow.
+ */
+var updateHeightPlaceholder = exports.updateHeightPlaceholder = function updateHeightPlaceholder(_ref4) {
+  var domNode = _ref4.domNode,
+      parentData = _ref4.parentData,
+      getPosition = _ref4.getPosition;
+
+  var parentDomNode = parentData.domNode;
+  var parentBoundingBox = parentData.boundingBox;
+
+  if (!parentDomNode || !parentBoundingBox) {
+    return;
+  }
+
+  // We need to find the height of the container *without* the placeholder.
+  // Since it's possible that the placeholder might already be present,
+  // we first set its height to 0.
+  // This allows the container to collapse down to the size of just its
+  // content (plus container padding or borders if any).
+  applyStylesToDOMNode({ domNode: domNode, styles: { height: '0' } });
+
+  // Find the distance by which the container would be collapsed by elements
+  // leaving. We compare the freshly-available parent height with the original,
+  // cached container height.
+  var originalParentHeight = parentBoundingBox.height;
+  var collapsedParentHeight = getPosition(parentDomNode).height;
+  var reductionInHeight = originalParentHeight - collapsedParentHeight;
+
+  // If the container has become shorter, update the padding element's
+  // height to take up the difference. Otherwise set its height to zero,
+  // so that it has no effect.
+  var styles = {
+    height: reductionInHeight > 0 ? reductionInHeight + 'px' : '0'
+  };
+
+  applyStylesToDOMNode({ domNode: domNode, styles: styles });
+};
+
+var getNativeNode = exports.getNativeNode = function getNativeNode(element) {
+  // When running in a windowless environment, abort!
+  if (typeof HTMLElement === 'undefined') {
+    return null;
+  }
+
+  // `element` may already be a native node.
+  if (element instanceof HTMLElement) {
+    return element;
+  }
+
+  // While ReactDOM's `findDOMNode` is discouraged, it's the only
+  // publicly-exposed way to find the underlying DOM node for
+  // composite components.
+  var foundNode = (0, _reactDom.findDOMNode)(element);
+
+  if (!(foundNode instanceof HTMLElement)) {
+    // Text nodes are not supported
+    return null;
+  }
+
+  return foundNode;
+};
+
+var createTransitionString = exports.createTransitionString = function createTransitionString(index, props) {
+  var delay = props.delay,
+      duration = props.duration;
+  var staggerDurationBy = props.staggerDurationBy,
+      staggerDelayBy = props.staggerDelayBy,
+      easing = props.easing;
+
+
+  delay += index * staggerDelayBy;
+  duration += index * staggerDurationBy;
+
+  var cssProperties = ['transform', 'opacity'];
+
+  return cssProperties.map(function (prop) {
+    return prop + ' ' + duration + 'ms ' + easing + ' ' + delay + 'ms';
+  }).join(', ');
+};
 
 /***/ })
 /******/ ]);
