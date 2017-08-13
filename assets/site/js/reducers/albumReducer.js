@@ -7,6 +7,8 @@ export default function albumReducer(state = initialState, action) {
                 [action.id]: {
                     options_loaded: false,
                     data_loaded: false,
+                    prefetching: false,
+                    prefetched_data: false,
                     loading_more: false
                 }
             };
@@ -40,6 +42,30 @@ export default function albumReducer(state = initialState, action) {
                 }
             };
             break;
+        case 'ALBUM_DATA_PREFETCHING':
+            return{
+                ...state,
+                [action.id]:{
+                    ...state[action.id],
+                    prefetching: true,
+                    prefetched_data: false
+                }
+            };
+            break;
+        case 'ALBUM_DATA_PREFETCHED':
+            return{
+                ...state,
+                [action.id]:{
+                    ...state[action.id],
+                    prefetching: false,
+                    prefetched_data: {
+                        data: [...action.payload.data],
+                        meta: action.payload.meta,
+                        pagination: action.payload.pagination
+                    }
+                }
+            };
+            break;
         case 'ALBUM_DATA_LOADED_MORE':
             return {
                 ...state,
@@ -52,6 +78,23 @@ export default function albumReducer(state = initialState, action) {
                         meta: action.payload.meta,
                         pagination: action.payload.pagination
                     }
+                }
+            };
+            break;
+        case 'ALBUM_DATA_LOADED_MORE_PREFETCH':
+            return {
+                ...state,
+                [action.id]: {
+                    ...state[action.id],
+                    data_loaded: true,
+                    loading_more: false,
+                    data: {
+                        data: [...state[action.id].data.data, ...action.payload.data],
+                        meta: action.payload.meta,
+                        pagination: action.payload.pagination
+                    },
+                    prefetching: false,
+                    prefetched_data: false
                 }
             };
             break;

@@ -1,3 +1,5 @@
+import store from '../store';
+
 export function getAlbum(id) {
     return (dispatch)=> {
         axios.get(srzinstbase + 'album/' + id)
@@ -25,6 +27,7 @@ export function getAlbumData(id) {
                         payload: response.data.data
                     });
                     dispatch(backgroundUpdate(id));
+                    dispatch(preFetchData(id, response.data.data.pagination.next_url));
                 }
             });
     }
@@ -45,16 +48,47 @@ function backgroundUpdate(id) {
 
 export function loadMoreData(id, url) {
     return (dispatch)=> {
-        dispatch({
-            type: 'ALBUM_DATA_LOADING_MORE',
-            id: id
-        });
-        if(url) {
+        const prefetched_data = store.getState().albums[id].prefetched_data;
+        if (prefetched_data) {
+            dispatch({
+                type: 'ALBUM_DATA_LOADED_MORE_PREFETCH',
+                id: id,
+                payload: prefetched_data
+            });
+            dispatch(preFetchData(id, prefetched_data.pagination.next_url));
+        }
+        else if (url) {
+            dispatch({
+                type: 'ALBUM_DATA_LOADING_MORE',
+                id: id
+            });
             axios.post(srzinstbase + 'album-load-more', {id: id, url: url})
                 .then((response)=> {
                     if (response.data.result == 'success') {
                         dispatch({
                             type: 'ALBUM_DATA_LOADED_MORE',
+                            id: id,
+                            payload: response.data.data
+                        });
+                        dispatch(preFetchData(id, response.data.data.pagination.next_url));
+                    }
+                });
+        }
+    }
+}
+
+export function preFetchData(id, url) {
+    return (dispatch)=> {
+        if (url) {
+            dispatch({
+                type: 'ALBUM_DATA_PREFETCHING',
+                id: id
+            });
+            axios.post(srzinstbase + 'album-load-more', {id: id, url: url})
+                .then((response)=> {
+                    if (response.data.result == 'success') {
+                        dispatch({
+                            type: 'ALBUM_DATA_PREFETCHED',
                             id: id,
                             payload: response.data.data
                         });

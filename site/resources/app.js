@@ -28640,6 +28640,8 @@ function albumReducer() {
             return _extends({}, state, _defineProperty({}, action.id, {
                 options_loaded: false,
                 data_loaded: false,
+                prefetching: false,
+                prefetched_data: false,
                 loading_more: false
             }));
             break;
@@ -28660,6 +28662,22 @@ function albumReducer() {
                 loading_more: true
             })));
             break;
+        case 'ALBUM_DATA_PREFETCHING':
+            return _extends({}, state, _defineProperty({}, action.id, _extends({}, state[action.id], {
+                prefetching: true,
+                prefetched_data: false
+            })));
+            break;
+        case 'ALBUM_DATA_PREFETCHED':
+            return _extends({}, state, _defineProperty({}, action.id, _extends({}, state[action.id], {
+                prefetching: false,
+                prefetched_data: {
+                    data: [].concat(_toConsumableArray(action.payload.data)),
+                    meta: action.payload.meta,
+                    pagination: action.payload.pagination
+                }
+            })));
+            break;
         case 'ALBUM_DATA_LOADED_MORE':
             return _extends({}, state, _defineProperty({}, action.id, _extends({}, state[action.id], {
                 data_loaded: true,
@@ -28669,6 +28687,19 @@ function albumReducer() {
                     meta: action.payload.meta,
                     pagination: action.payload.pagination
                 }
+            })));
+            break;
+        case 'ALBUM_DATA_LOADED_MORE_PREFETCH':
+            return _extends({}, state, _defineProperty({}, action.id, _extends({}, state[action.id], {
+                data_loaded: true,
+                loading_more: false,
+                data: {
+                    data: [].concat(_toConsumableArray(state[action.id].data.data), _toConsumableArray(action.payload.data)),
+                    meta: action.payload.meta,
+                    pagination: action.payload.pagination
+                },
+                prefetching: false,
+                prefetched_data: false
             })));
             break;
         default:
@@ -28775,6 +28806,10 @@ function mapDispatchToProps(dispatch) {
 /* harmony export (immutable) */ __webpack_exports__["a"] = getAlbum;
 /* harmony export (immutable) */ __webpack_exports__["b"] = getAlbumData;
 /* harmony export (immutable) */ __webpack_exports__["c"] = loadMoreData;
+/* unused harmony export preFetchData */
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__store__ = __webpack_require__(318);
+
+
 function getAlbum(id) {
     return function (dispatch) {
         axios.get(srzinstbase + 'album/' + id).then(function (response) {
@@ -28800,6 +28835,7 @@ function getAlbumData(id) {
                     payload: response.data.data
                 });
                 dispatch(backgroundUpdate(id));
+                dispatch(preFetchData(id, response.data.data.pagination.next_url));
             }
         });
     };
@@ -28819,15 +28855,44 @@ function backgroundUpdate(id) {
 
 function loadMoreData(id, url) {
     return function (dispatch) {
-        dispatch({
-            type: 'ALBUM_DATA_LOADING_MORE',
-            id: id
-        });
-        if (url) {
+        var prefetched_data = __WEBPACK_IMPORTED_MODULE_0__store__["a" /* default */].getState().albums[id].prefetched_data;
+        if (prefetched_data) {
+            dispatch({
+                type: 'ALBUM_DATA_LOADED_MORE_PREFETCH',
+                id: id,
+                payload: prefetched_data
+            });
+            dispatch(preFetchData(id, prefetched_data.pagination.next_url));
+        } else if (url) {
+            dispatch({
+                type: 'ALBUM_DATA_LOADING_MORE',
+                id: id
+            });
             axios.post(srzinstbase + 'album-load-more', { id: id, url: url }).then(function (response) {
                 if (response.data.result == 'success') {
                     dispatch({
                         type: 'ALBUM_DATA_LOADED_MORE',
+                        id: id,
+                        payload: response.data.data
+                    });
+                    dispatch(preFetchData(id, response.data.data.pagination.next_url));
+                }
+            });
+        }
+    };
+}
+
+function preFetchData(id, url) {
+    return function (dispatch) {
+        if (url) {
+            dispatch({
+                type: 'ALBUM_DATA_PREFETCHING',
+                id: id
+            });
+            axios.post(srzinstbase + 'album-load-more', { id: id, url: url }).then(function (response) {
+                if (response.data.result == 'success') {
+                    dispatch({
+                        type: 'ALBUM_DATA_PREFETCHED',
                         id: id,
                         payload: response.data.data
                     });
