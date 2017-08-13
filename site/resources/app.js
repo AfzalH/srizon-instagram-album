@@ -28023,14 +28023,26 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 var render = function render() {
-    jQuery('.srzinst').each(function () {
-        var id = jQuery(this).data('id');
+    var elements = document.querySelectorAll('.srzinst');
+    Array.prototype.forEach.call(elements, function (el, i) {
+        var id = el.getAttribute('data-id');
         __WEBPACK_IMPORTED_MODULE_1_react_dom___default.a.render(__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             __WEBPACK_IMPORTED_MODULE_3_react_redux__["a" /* Provider */],
             { store: __WEBPACK_IMPORTED_MODULE_2__store__["a" /* default */] },
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__containers_Base__["a" /* default */], { id: id })
-        ), this);
+        ), elements[i]);
     });
+
+    // jQuery('.srzinst').each(function () {
+    //     const id = jQuery(this).data('id');
+    //     ReactDOM.render(
+    //         <Provider store={store}>
+    //             <Base id={id}/>
+    //         </Provider>
+    //         ,
+    //         this
+    //     );
+    // });
 };
 
 window.axios = __webpack_require__(241);
@@ -28040,11 +28052,18 @@ if (wpApiSettings) {
     window.axios.defaults.headers.common['X-WP-Nonce'] = wpApiSettings.nonce;
     window.srzinstbase = wpApiSettings.root + 'srizon-instagram/v1/';
 }
-jQuery('.srzinst').each(function () {
-    var id = jQuery(this).data('id');
+var elements = document.querySelectorAll('.srzinst');
+Array.prototype.forEach.call(elements, function (el) {
+    var id = el.getAttribute('data-id');
     __WEBPACK_IMPORTED_MODULE_2__store__["a" /* default */].dispatch({ type: 'INIT_ALBUMS', id: id });
-    // axios.get(srzinstbase + 'album/' + id);
 });
+
+// jQuery('.srzinst').each(function () {
+//     const id = jQuery(this).data('id');
+//     store.dispatch({type: 'INIT_ALBUMS', id: id});
+//     // axios.get(srzinstbase + 'album/' + id);
+// });
+
 __WEBPACK_IMPORTED_MODULE_2__store__["a" /* default */].subscribe(render);
 render();
 

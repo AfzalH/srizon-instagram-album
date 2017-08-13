@@ -16,7 +16,7 @@ function srizon_instagram_load_site_resources() {
 	wp_enqueue_style( 'srizon-materialize', srizon_instagram_get_resource_url( 'site/resources/materialize.css' ), null, '1.0' );
 	wp_enqueue_style( 'srizon-instagram-site', srizon_instagram_get_resource_url( 'site/resources/app.css' ), null, '1.0' );
 
-	wp_enqueue_script( 'srizon-materialize', srizon_instagram_get_resource_url( 'site/resources/materialize.js' ), [ 'jquery' ], '1.0', true );
+	//wp_enqueue_script( 'srizon-materialize', srizon_instagram_get_resource_url( 'site/resources/materialize.js' ), [ 'jquery' ], '1.0', true );
 	//wp_enqueue_script( 'react', 'https://unpkg.com/react@15/dist/react.min.js', null, '15' );
 	//wp_enqueue_script( 'react-dom', 'https://unpkg.com/react-dom@15/dist/react-dom.min.js', null, '15' );
 	wp_enqueue_script( 'srizon-instagram-site', srizon_instagram_get_resource_url( 'site/resources/app.js' ), null, '1.0', true );
