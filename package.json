@@ -17,6 +17,7 @@
     "cross-env": "^5.0.1",
     "laravel-mix": "^1.0",
     "lodash": "^4.17.4",
+    "lodash.replace": "*",
     "nanobar": "^0.4.2",
     "react": "^15.6.1",
     "react-addons-css-transition-group": "^15.6.0",

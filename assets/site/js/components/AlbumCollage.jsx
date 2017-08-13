@@ -3,6 +3,7 @@ import Collage from '../lib/Gallery';
 import Lightbox from 'react-images';
 import debounce from 'lodash.debounce';
 import throttle from 'lodash.throttle';
+import replace from 'lodash.replace';
 import CircularLoaderRow from '../../../admin/js/components/partials/CircularLoaderRow';
 
 class AlbumCollage extends React.Component {
@@ -14,7 +15,7 @@ class AlbumCollage extends React.Component {
         this.gotoNext = this.gotoNext.bind(this);
         this.gotoPrevious = this.gotoPrevious.bind(this);
         this.updateColDebounced = debounce(this.updateCol.bind(this), 200);
-        this.loadMore = throttle(()=>this.props.loadMoreData(this.props.album.options.id,this.props.album.data.pagination.next_url),2000)
+        this.loadMore = throttle(()=>this.props.loadMoreData(this.props.album.options.id, this.props.album.data.pagination.next_url), 2000)
     }
 
     openLightbox(index, event) {
@@ -23,6 +24,9 @@ class AlbumCollage extends React.Component {
             currentImage: index,
             lightboxIsOpen: true
         });
+        if ((this.props.album.data.data.length - 3) < index) {
+            this.loadMore();
+        }
     }
 
     closeLightbox() {
@@ -78,14 +82,21 @@ class AlbumCollage extends React.Component {
     updateCol() {
         let newCol = 2;
         const width = this.refs["collage" + this.props.album.options.id].state.containerWidth;
-        if (width < 250) newCol = 1;
-        else if (width < 600) newCol = 2;
-        else if (width < 900) newCol = 3;
-        else newCol = 4;
+        if (width < 250) newCol = 2;
+        else if (width < 600) newCol = 3;
+        else if (width < 900) newCol = 4;
+        else newCol = 5;
 
         if (this.state.cols != newCol) {
             this.setState({cols: newCol});
         }
+    }
+
+    getOriginal(url) {
+        let orig = url;
+        orig = replace(orig, '/s640x640', '');
+        orig = replace(orig, '/p640x640', '');
+        return orig;
     }
 
     render() {
@@ -93,6 +104,7 @@ class AlbumCollage extends React.Component {
         const images = album.data.data.map((img)=>({
             src: img.images.standard_resolution.url,
             srcset: [
+                this.getOriginal(img.images.standard_resolution.url) + ' ' + img.images.standard_resolution.width * 2 + 'w',
                 img.images.standard_resolution.url + ' ' + img.images.standard_resolution.width + 'w',
                 img.images.low_resolution.url + ' ' + img.images.low_resolution.width + 'w',
                 img.images.thumbnail.url + ' ' + img.images.thumbnail.width + 'w'

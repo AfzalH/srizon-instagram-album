@@ -28,7 +28,7 @@ class SettingsForm extends React.Component {
                                         label="Image to load initially and on `Load More`" min={1} max={33}/> : null}
                         {pstate.layout === "collage" ?
                             <TextField val={pstate.load_more_text} onch={hich} name="load_more_text"
-                                       label="Load More Text"/> : null}
+                                       label="Load More Button Text"/> : null}
                     </div>
                 </div>
             </div>
