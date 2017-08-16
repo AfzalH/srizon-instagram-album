@@ -81,7 +81,7 @@ CREATE TABLE ' . $t_cache . ' (
 		$q     = $wpdb->prepare( "SELECT * FROM $table WHERE id = %d", $id );
 		$album = $wpdb->get_row( $q );
 		if ( $album ) {
-			$album->options = maybe_unserialize( $album->options );
+			$album->options = array_merge( srizon_instagram_album_global_defaults(), (array) maybe_unserialize( $album->options ) );
 		}
 
 		return $album;
@@ -92,7 +92,7 @@ CREATE TABLE ' . $t_cache . ' (
 		$table  = $wpdb->prefix . 'srzinst_albums';
 		$albums = $wpdb->get_results( "SELECT * FROM $table order by id desc" );
 		foreach ( $albums as $album ) {
-			$album->options = maybe_unserialize( $album->options );
+			$album->options = array_merge( srizon_instagram_album_global_defaults(), (array) maybe_unserialize( $album->options ) );
 		}
 
 		return $albums;
@@ -123,7 +123,7 @@ CREATE TABLE ' . $t_cache . ' (
 
 		$res = $wpdb->update( $table, $tdata, [ 'url' => $url ] );
 		if ( ! $res ) {
-			$tdata['url']       = $url;
+			$tdata['url'] = $url;
 			$wpdb->insert( $table, $tdata );
 		}
 	}

@@ -22,7 +22,7 @@ function srizon_instagram_get_settings() {
 function srizon_instagram_get_global_settings() {
 	$global_settings = get_option( 'srizon_instagram_global_settings', false );
 	if ( $global_settings ) {
-		return $global_settings;
+		return array_merge( srizon_instagram_album_global_defaults(), (array) $global_settings );
 	} else {
 		return srizon_instagram_album_global_defaults();
 	}

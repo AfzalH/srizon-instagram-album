@@ -122,7 +122,7 @@ class AlbumCollage extends React.Component {
         return (
             <div>
                 <Collage ref={"collage"+album.options.id} photos={images} cols={this.state.cols}
-                         onClickPhoto={this.openLightbox} margin={album.options.options.collage_margin}/>
+                         onClickPhoto={this.openLightbox} margin={parseInt(album.options.options.collage_margin)}/>
                 <Lightbox
                     theme={{container: { background: 'rgba(0, 0, 0, 0.85)' }}}
                     images={images}

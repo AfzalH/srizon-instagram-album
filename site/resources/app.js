@@ -30155,7 +30155,7 @@ var AlbumCollage = function (_React$Component) {
                 'div',
                 null,
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__lib_Gallery__["a" /* default */], { ref: "collage" + album.options.id, photos: images, cols: this.state.cols,
-                    onClickPhoto: this.openLightbox, margin: album.options.options.collage_margin }),
+                    onClickPhoto: this.openLightbox, margin: parseInt(album.options.options.collage_margin) }),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_images___default.a, {
                     theme: { container: { background: 'rgba(0, 0, 0, 0.85)' } },
                     images: images,
