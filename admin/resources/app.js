@@ -26827,6 +26827,7 @@ var TextField = function TextField(_ref) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_form_TextField__ = __webpack_require__(264);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_form_RangeField__ = __webpack_require__(293);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_form_RadioField__ = __webpack_require__(294);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_form_SwitchField__ = __webpack_require__(384);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -26840,63 +26841,99 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
 
+
 var SettingsForm = function (_React$Component) {
-    _inherits(SettingsForm, _React$Component);
+            _inherits(SettingsForm, _React$Component);
 
-    function SettingsForm() {
-        _classCallCheck(this, SettingsForm);
+            function SettingsForm() {
+                        _classCallCheck(this, SettingsForm);
 
-        return _possibleConstructorReturn(this, (SettingsForm.__proto__ || Object.getPrototypeOf(SettingsForm)).apply(this, arguments));
-    }
+                        return _possibleConstructorReturn(this, (SettingsForm.__proto__ || Object.getPrototypeOf(SettingsForm)).apply(this, arguments));
+            }
 
-    _createClass(SettingsForm, [{
-        key: 'render',
-        value: function render() {
-            var _props = this.props,
-                hich = _props.hich,
-                pstate = _props.pstate,
-                _props$global = _props.global,
-                global = _props$global === undefined ? false : _props$global;
+            _createClass(SettingsForm, [{
+                        key: 'render',
+                        value: function render() {
+                                    var _props = this.props,
+                                        hich = _props.hich,
+                                        pstate = _props.pstate,
+                                        _props$global = _props.global,
+                                        global = _props$global === undefined ? false : _props$global;
 
-            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                'div',
-                { className: 'row' },
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'div',
-                    { className: global ? "col s12 m6 top20 pr50" : "col s12 top20 plr0" },
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__components_form_RangeField__["a" /* default */], { val: pstate.cache_time, onch: hich, name: 'cache_time',
-                        label: 'Cache Time For API data (Mins)', min: 10, max: 10080 })
-                ),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'div',
-                    { className: global ? "col s12 m6 top20 pr50" : "col s12 top20 plr0" },
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'div',
-                        null,
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'p',
-                            { className: 'top0' },
-                            'Layout'
-                        ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_form_RadioField__["a" /* default */], { val: 'collage', label: 'Responsive Collage', name: 'layout',
-                            curval: pstate.layout, onch: hich }),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_form_RadioField__["a" /* default */], { val: 'carousel', label: 'Carousel', name: 'layout',
-                            curval: pstate.layout, onch: hich }),
-                        pstate.layout === "carousel" ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__components_form_RangeField__["a" /* default */], { val: pstate.total_image_carousel, onch: hich, name: 'total_image_carousel',
-                            aclass: '', label: 'Total image to load', min: 1, max: 33 }) : null,
-                        pstate.layout === "collage" ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__components_form_RangeField__["a" /* default */], { val: pstate.initial_load, onch: hich, name: 'initial_load',
-                            label: 'Image to load initially and on `Load More`', min: 1, max: 33 }) : null,
-                        pstate.layout === "collage" ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__components_form_RangeField__["a" /* default */], { val: pstate.collage_margin, onch: hich, name: 'collage_margin',
-                            label: 'Margin size (In-between Images)', min: 0, max: 10 }) : null,
-                        pstate.layout === "collage" ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__components_form_TextField__["a" /* default */], { val: pstate.load_more_text, onch: hich, name: 'load_more_text',
-                            label: 'Load More Button Text' }) : null
-                    )
-                )
-            );
-        }
-    }]);
+                                    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                                'div',
+                                                { className: 'row' },
+                                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                                            'div',
+                                                            { className: global ? "col s12 m6 top20 pr50" : "col s12 top20 plr0" },
+                                                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__components_form_RangeField__["a" /* default */], { val: pstate.cache_time, onch: hich, name: 'cache_time',
+                                                                        label: 'Cache Time For API data (Mins)', min: 10, max: 10080 }),
+                                                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                                                        'p',
+                                                                        { className: 'top0' },
+                                                                        'Layout'
+                                                            ),
+                                                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_form_RadioField__["a" /* default */], { val: 'collage', label: 'Responsive Collage', name: 'layout',
+                                                                        curval: pstate.layout, onch: hich }),
+                                                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_form_RadioField__["a" /* default */], { val: 'carousel', label: 'Carousel', name: 'layout',
+                                                                        curval: pstate.layout, onch: hich })
+                                                ),
+                                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                                            'div',
+                                                            { className: global ? "col s12 m6 top20 pr50" : "col s12 top20 plr0" },
+                                                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                                                        'div',
+                                                                        null,
+                                                                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                                                                    'p',
+                                                                                    null,
+                                                                                    'Layout Related Parameters:'
+                                                                        ),
+                                                                        pstate.layout === "carousel" ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__components_form_RangeField__["a" /* default */], { val: pstate.total_image_carousel, onch: hich, name: 'total_image_carousel',
+                                                                                    aclass: '', label: 'Total image to load', min: 1, max: 33 }) : null,
+                                                                        pstate.layout === "collage" ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                                                                    'div',
+                                                                                    null,
+                                                                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__components_form_RangeField__["a" /* default */], { val: pstate.initial_load, onch: hich, name: 'initial_load',
+                                                                                                label: 'Image to load initially and on `Load More`', min: 1, max: 33 }),
+                                                                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__components_form_RangeField__["a" /* default */], { val: pstate.collage_margin, onch: hich, name: 'collage_margin',
+                                                                                                label: 'Margin size (In-between Images)', min: 0, max: 10 }),
+                                                                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                                                                                'div',
+                                                                                                { className: 'top10' },
+                                                                                                'Thumb Size'
+                                                                                    ),
+                                                                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_form_RadioField__["a" /* default */], { val: '0', label: 'Big', name: 'collage_thumb_size',
+                                                                                                curval: pstate.collage_thumb_size, onch: hich }),
+                                                                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_form_RadioField__["a" /* default */], { val: '1', label: 'Medium', name: 'collage_thumb_size',
+                                                                                                curval: pstate.collage_thumb_size, onch: hich }),
+                                                                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_form_RadioField__["a" /* default */], { val: '2', label: 'Small', name: 'collage_thumb_size',
+                                                                                                curval: pstate.collage_thumb_size, onch: hich }),
+                                                                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__components_form_SwitchField__["a" /* default */], { name: 'collage_show_hover', val: pstate.collage_show_hover, onch: hich,
+                                                                                                label: 'Show caption on hover', aclass: 'top20' }),
+                                                                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                                                                                'div',
+                                                                                                { className: 'top30' },
+                                                                                                'Load More Method'
+                                                                                    ),
+                                                                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_form_RadioField__["a" /* default */], { val: 'disabled', label: 'Disabled', name: 'collage_load_more_method',
+                                                                                                curval: pstate.collage_load_more_method, onch: hich }),
+                                                                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_form_RadioField__["a" /* default */], { val: 'lightbox', label: 'Lightbox Navigation', name: 'collage_load_more_method',
+                                                                                                curval: pstate.collage_load_more_method, onch: hich }),
+                                                                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_form_RadioField__["a" /* default */], { val: 'button', label: 'Button', name: 'collage_load_more_method',
+                                                                                                curval: pstate.collage_load_more_method, onch: hich }),
+                                                                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_form_RadioField__["a" /* default */], { val: 'auto', label: 'Auto Load (on Scroll)', name: 'collage_load_more_method',
+                                                                                                curval: pstate.collage_load_more_method, onch: hich }),
+                                                                                    pstate.collage_load_more_method == 'button' ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__components_form_TextField__["a" /* default */], { val: pstate.load_more_text, onch: hich, name: 'load_more_text',
+                                                                                                label: 'Load More Button Text', aclass: 'top40' }) : null
+                                                                        ) : null
+                                                            )
+                                                )
+                                    );
+                        }
+            }]);
 
-    return SettingsForm;
+            return SettingsForm;
 }(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Component);
 
 /* harmony default export */ __webpack_exports__["a"] = (SettingsForm);
@@ -28125,7 +28162,7 @@ var RadioField = function RadioField(_ref) {
         "p",
         { className: aclass },
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", { type: "radio", name: name, id: val, onChange: onch,
-            value: val, checked: curval === val }),
+            value: val, checked: curval == val }),
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             "label",
             { htmlFor: val },
@@ -30650,6 +30687,118 @@ var TempMessage = function (_React$Component) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 317 */,
+/* 318 */,
+/* 319 */,
+/* 320 */,
+/* 321 */,
+/* 322 */,
+/* 323 */,
+/* 324 */,
+/* 325 */,
+/* 326 */,
+/* 327 */,
+/* 328 */,
+/* 329 */,
+/* 330 */,
+/* 331 */,
+/* 332 */,
+/* 333 */,
+/* 334 */,
+/* 335 */,
+/* 336 */,
+/* 337 */,
+/* 338 */,
+/* 339 */,
+/* 340 */,
+/* 341 */,
+/* 342 */,
+/* 343 */,
+/* 344 */,
+/* 345 */,
+/* 346 */,
+/* 347 */,
+/* 348 */,
+/* 349 */,
+/* 350 */,
+/* 351 */,
+/* 352 */,
+/* 353 */,
+/* 354 */,
+/* 355 */,
+/* 356 */,
+/* 357 */,
+/* 358 */,
+/* 359 */,
+/* 360 */,
+/* 361 */,
+/* 362 */,
+/* 363 */,
+/* 364 */,
+/* 365 */,
+/* 366 */,
+/* 367 */,
+/* 368 */,
+/* 369 */,
+/* 370 */,
+/* 371 */,
+/* 372 */,
+/* 373 */,
+/* 374 */,
+/* 375 */,
+/* 376 */,
+/* 377 */,
+/* 378 */,
+/* 379 */,
+/* 380 */,
+/* 381 */,
+/* 382 */,
+/* 383 */,
+/* 384 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+
+
+var SwitchField = function SwitchField(_ref) {
+    var val = _ref.val,
+        onch = _ref.onch,
+        name = _ref.name,
+        label = _ref.label,
+        aclass = _ref.aclass,
+        _ref$offtext = _ref.offtext,
+        offtext = _ref$offtext === undefined ? 'Disabled' : _ref$offtext,
+        _ref$ontext = _ref.ontext,
+        ontext = _ref$ontext === undefined ? 'Enabled' : _ref$ontext;
+    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        'div',
+        { className: aclass },
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            'p',
+            null,
+            label
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            'div',
+            { className: 'switch' },
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'label',
+                null,
+                offtext,
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'checkbox', name: name, onChange: onch, checked: val }),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('span', {
+                    className: 'lever' }),
+                ontext
+            )
+        )
+    );
+};
+
+/* harmony default export */ __webpack_exports__["a"] = (SwitchField);
 
 /***/ })
 /******/ ]);

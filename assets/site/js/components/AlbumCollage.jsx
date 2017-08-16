@@ -4,6 +4,7 @@ import Lightbox from 'react-images';
 import debounce from 'lodash.debounce';
 import throttle from 'lodash.throttle';
 import replace from 'lodash.replace';
+import Waypoint from 'react-waypoint';
 import CircularLoaderRow from '../../../admin/js/components/partials/CircularLoaderRow';
 
 class AlbumCollage extends React.Component {
@@ -19,13 +20,16 @@ class AlbumCollage extends React.Component {
     }
 
     openLightbox(index, event) {
+        const {album} = this.props;
         event.preventDefault();
         this.setState({
             currentImage: index,
             lightboxIsOpen: true
         });
-        if ((this.props.album.data.data.length - 3) < index) {
-            this.loadMore();
+        if ((album.data.data.length - 3) < index) {
+            if (album.options.options.collage_load_more_method != 'disabled') {
+                this.loadMore();
+            }
         }
     }
 
@@ -43,8 +47,11 @@ class AlbumCollage extends React.Component {
     }
 
     gotoNext() {
-        if ((this.props.album.data.data.length - 5) < this.state.currentImage) {
-            this.loadMore();
+        const {album} = this.props;
+        if ((album.data.data.length - 5) < this.state.currentImage) {
+            if (album.options.options.collage_load_more_method != 'disabled') {
+                this.loadMore();
+            }
         }
         this.setState({
             currentImage: this.state.currentImage + 1
@@ -52,7 +59,7 @@ class AlbumCollage extends React.Component {
     }
 
     setTooltip() {
-        jQuery('.srizon img').hover(function () {
+        jQuery('.srizon .show-tool-tip img').hover(function () {
             var title = jQuery(this).attr('alt');
             if (title) {
                 jQuery('<p class="srizon-tooltip"></p>').text(title).appendTo('body').fadeIn('slow');
@@ -80,12 +87,13 @@ class AlbumCollage extends React.Component {
     }
 
     updateCol() {
+        const {album} = this.props;
         let newCol = 2;
-        const width = this.refs["collage" + this.props.album.options.id].state.containerWidth;
-        if (width < 250) newCol = 2;
-        else if (width < 600) newCol = 3;
-        else if (width < 900) newCol = 4;
-        else newCol = 5;
+        const width = this.refs["collage" + album.options.id].state.containerWidth;
+        if (width < 300) newCol = 1 + parseInt(album.options.options.collage_thumb_size);
+        else if (width < 600) newCol = 2 + parseInt(album.options.options.collage_thumb_size);
+        else if (width < 900) newCol = 3 + parseInt(album.options.options.collage_thumb_size);
+        else newCol = 4 + parseInt(album.options.options.collage_thumb_size);
 
         if (this.state.cols != newCol) {
             this.setState({cols: newCol});
@@ -120,7 +128,7 @@ class AlbumCollage extends React.Component {
             caption: img.caption ? img.caption.text : null
         }));
         return (
-            <div>
+            <div className={album.options.options.collage_show_hover?"show-tool-tip":null}>
                 <Collage ref={"collage"+album.options.id} photos={images} cols={this.state.cols}
                          onClickPhoto={this.openLightbox} margin={parseInt(album.options.options.collage_margin)}/>
                 <Lightbox
@@ -134,7 +142,7 @@ class AlbumCollage extends React.Component {
                     isOpen={this.state.lightboxIsOpen}
                     width={1600}
                 />
-                {album.data.pagination.next_url ?
+                {album.data.pagination.next_url && album.options.options.collage_load_more_method == 'button' ?
                     <div className="row top20">
                         <div className="col s12 center">
                             {album.loading_more ?
@@ -143,7 +151,12 @@ class AlbumCollage extends React.Component {
                                         onClick={this.loadMore}>
                                     {album.options.options.load_more_text}</button>}
                         </div>
-                    </div> : null}
+                    </div> :
+                    album.data.pagination.next_url && album.options.options.collage_load_more_method == 'auto' ?
+                        album.loading_more ?
+                            <CircularLoaderRow /> :
+                            <Waypoint onEnter={this.loadMore}/> : null
+                }
             </div>
 
         )
