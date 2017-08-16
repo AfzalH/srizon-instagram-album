@@ -27,6 +27,9 @@ class SettingsForm extends React.Component {
                             <RangeField val={pstate.initial_load} onch={hich} name="initial_load"
                                         label="Image to load initially and on `Load More`" min={1} max={33}/> : null}
                         {pstate.layout === "collage" ?
+                            <RangeField val={pstate.collage_margin} onch={hich} name="collage_margin"
+                                        label="Margin size (In-between Images)" min={0} max={10}/> : null}
+                        {pstate.layout === "collage" ?
                             <TextField val={pstate.load_more_text} onch={hich} name="load_more_text"
                                        label="Load More Button Text"/> : null}
                     </div>
