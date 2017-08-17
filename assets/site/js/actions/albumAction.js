@@ -51,6 +51,10 @@ export function loadMoreData(id, url) {
         const prefetched_data = store.getState().albums[id].prefetched_data;
         if (prefetched_data) {
             dispatch({
+                type: 'ALBUM_DATA_LOADING_MORE',
+                id: id
+            });
+            dispatch({
                 type: 'ALBUM_DATA_LOADED_MORE_PREFETCH',
                 id: id,
                 payload: prefetched_data

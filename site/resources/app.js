@@ -28338,6 +28338,10 @@ function loadMoreData(id, url) {
         var prefetched_data = __WEBPACK_IMPORTED_MODULE_0__store__["a" /* default */].getState().albums[id].prefetched_data;
         if (prefetched_data) {
             dispatch({
+                type: 'ALBUM_DATA_LOADING_MORE',
+                id: id
+            });
+            dispatch({
                 type: 'ALBUM_DATA_LOADED_MORE_PREFETCH',
                 id: id,
                 payload: prefetched_data

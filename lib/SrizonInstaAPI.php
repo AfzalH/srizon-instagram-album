@@ -53,11 +53,11 @@ if ( ! class_exists( 'SrizonInstaAPI' ) ) {
 		static function getAlbumData( $id ) {
 			$album_opt = SrizonInstaDB::getAlbum( $id );
 			$count     = 20;
-			if ( $album_opt->options->layout == 'collage' ) {
-				$count = $album_opt->options->initial_load;
+			if ( $album_opt->options['layout'] == 'collage' ) {
+				$count = $album_opt->options['initial_load'];
 			}
-			if ( $album_opt->options->layout == 'carousel' ) {
-				$count = $album_opt->options->total_image_carousel;
+			if ( $album_opt->options['layout'] == 'carousel' ) {
+				$count = $album_opt->options['total_image_carousel'];
 			}
 			if ( $album_opt->albumtype == 'user' ) {
 				return self::getUserAlbumData( $album_opt->userid, $id, $count );
@@ -71,7 +71,7 @@ if ( ! class_exists( 'SrizonInstaAPI' ) ) {
 		static function syncAlbum( $id ) {
 			$albumdata = self::getAlbumData( $id );
 			$album_opt = SrizonInstaDB::getAlbum( $id );
-			$cachetime = 60 * (int) $album_opt->options->cache_time;
+			$cachetime = 60 * (int) $album_opt->options['cache_time'];
 			$timediff  = time() - $albumdata->storetime;
 
 			if ( $timediff > $cachetime ) {
