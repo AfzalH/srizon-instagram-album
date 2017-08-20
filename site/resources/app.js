@@ -30048,7 +30048,7 @@ var AlbumCollage = function (_React$Component) {
         _this.updateColDebounced = __WEBPACK_IMPORTED_MODULE_3_lodash_debounce___default()(_this.updateCol.bind(_this), 200);
         _this.loadMore = __WEBPACK_IMPORTED_MODULE_4_lodash_throttle___default()(function () {
             return _this.props.loadMoreData(_this.props.album.options.id, _this.props.album.data.pagination.next_url);
-        }, 2000);
+        }, 500);
         return _this;
     }
 
@@ -30197,7 +30197,12 @@ var AlbumCollage = function (_React$Component) {
                             album.options.options.load_more_text
                         )
                     )
-                ) : album.data.pagination.next_url && album.options.options.collage_load_more_method == 'auto' ? album.loading_more ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_7__admin_js_components_partials_CircularLoaderRow__["a" /* default */], null) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6_react_waypoint___default.a, { onEnter: this.loadMore }) : null
+                ) : album.data.pagination.next_url && album.options.options.collage_load_more_method == 'auto' ? album.loading_more ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_7__admin_js_components_partials_CircularLoaderRow__["a" /* default */], null) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    null,
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_7__admin_js_components_partials_CircularLoaderRow__["a" /* default */], null),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6_react_waypoint___default.a, { onEnter: this.loadMore })
+                ) : null
             );
         }
     }]);

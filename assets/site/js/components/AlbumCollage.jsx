@@ -16,7 +16,7 @@ class AlbumCollage extends React.Component {
         this.gotoNext = this.gotoNext.bind(this);
         this.gotoPrevious = this.gotoPrevious.bind(this);
         this.updateColDebounced = debounce(this.updateCol.bind(this), 200);
-        this.loadMore = throttle(()=>this.props.loadMoreData(this.props.album.options.id, this.props.album.data.pagination.next_url), 2000)
+        this.loadMore = throttle(()=>this.props.loadMoreData(this.props.album.options.id, this.props.album.data.pagination.next_url), 500)
     }
 
     openLightbox(index, event) {
@@ -154,8 +154,12 @@ class AlbumCollage extends React.Component {
                     </div> :
                     album.data.pagination.next_url && album.options.options.collage_load_more_method == 'auto' ?
                         album.loading_more ?
-                            <CircularLoaderRow /> :
-                            <Waypoint onEnter={this.loadMore}/> : null
+                            <CircularLoaderRow />
+                            :
+                            <div>
+                                <CircularLoaderRow />
+                                <Waypoint onEnter={this.loadMore}/>
+                            </div> : null
                 }
             </div>
 
