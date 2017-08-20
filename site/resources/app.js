@@ -28492,7 +28492,7 @@ var AlbumCarousel = function (_React$Component) {
     _createClass(AlbumCarousel, [{
         key: 'componentDidMount',
         value: function componentDidMount() {
-            jQuery('.image-gallery-thumbnails-container img').hover(function () {
+            jQuery('.show-tool-tip .image-gallery-thumbnails-container img').hover(function () {
                 var title = jQuery(this).attr('alt');
                 if (title) {
                     jQuery('<p class="srizon-tooltip"></p>').text(title).appendTo('body').fadeIn('slow');
@@ -28512,16 +28512,25 @@ var AlbumCarousel = function (_React$Component) {
                 return {
                     original: img.images.standard_resolution.url,
                     thumbnail: img.images.low_resolution.url,
-                    description: img.caption ? img.caption.text : null,
+                    description: img.caption && album.options.options.carousel_img_txt_overlay ? img.caption.text : null,
                     thumbnailAlt: img.caption ? img.caption.text : null,
                     originalAlt: img.caption ? img.caption.text : null
                 };
             });
-            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_image_gallery___default.a, {
-                items: images,
-                showFullscreenButton: false,
-                showPlayButton: false,
-                slideInterval: 5000 });
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'div',
+                { className: album.options.options.carousel_thumb_show_hover ? "show-tool-tip" : null },
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_image_gallery___default.a, {
+                    showThumbnails: album.options.options.carousel_show_thumb,
+                    thumbnailPosition: album.options.options.carousel_thumb_position,
+                    showIndex: album.options.options.carousel_show_count,
+                    autoPlay: album.options.options.carousel_auto_play,
+                    slideInterval: album.options.options.carousel_slide_interval * 1000,
+                    items: images,
+                    showPlayButton: false,
+                    showFullscreenButton: false
+                })
+            );
         }
     }]);
 

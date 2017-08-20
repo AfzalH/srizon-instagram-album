@@ -26889,8 +26889,44 @@ var SettingsForm = function (_React$Component) {
                                                                                     null,
                                                                                     'Layout Related Parameters:'
                                                                         ),
-                                                                        pstate.layout === "carousel" ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__components_form_RangeField__["a" /* default */], { val: pstate.total_image_carousel, onch: hich, name: 'total_image_carousel',
-                                                                                    aclass: '', label: 'Total image to load', min: 1, max: 33 }) : null,
+                                                                        pstate.layout === "carousel" ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                                                                    'div',
+                                                                                    null,
+                                                                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__components_form_RangeField__["a" /* default */], { val: pstate.total_image_carousel, onch: hich, name: 'total_image_carousel',
+                                                                                                aclass: '', label: 'Total image to load (max 33 for this layout)', min: 1,
+                                                                                                max: 33 }),
+                                                                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__components_form_SwitchField__["a" /* default */], { name: 'carousel_thumb_show_hover', val: pstate.carousel_thumb_show_hover,
+                                                                                                onch: hich,
+                                                                                                label: 'Show caption on Thumbnail hover', aclass: 'top20' }),
+                                                                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__components_form_SwitchField__["a" /* default */], { name: 'carousel_img_txt_overlay', val: pstate.carousel_img_txt_overlay,
+                                                                                                onch: hich,
+                                                                                                label: 'Show description overlay on Full Image', aclass: 'top20' }),
+                                                                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__components_form_SwitchField__["a" /* default */], { name: 'carousel_show_count', val: pstate.carousel_show_count,
+                                                                                                onch: hich,
+                                                                                                label: 'Show image count', aclass: 'top20' }),
+                                                                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__components_form_SwitchField__["a" /* default */], { name: 'carousel_show_thumb', val: pstate.carousel_show_thumb, onch: hich,
+                                                                                                label: 'Show Thumbnails', aclass: 'top20' }),
+                                                                                    pstate.carousel_show_thumb ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                                                                                'div',
+                                                                                                null,
+                                                                                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                                                                                            'div',
+                                                                                                            { className: 'top20' },
+                                                                                                            'Thumb Position'
+                                                                                                ),
+                                                                                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_form_RadioField__["a" /* default */], { val: 'bottom', label: 'Bottom', name: 'carousel_thumb_position',
+                                                                                                            curval: pstate.carousel_thumb_position, onch: hich }),
+                                                                                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_form_RadioField__["a" /* default */], { val: 'top', label: 'Top', name: 'carousel_thumb_position',
+                                                                                                            curval: pstate.carousel_thumb_position, onch: hich }),
+                                                                                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_form_RadioField__["a" /* default */], { val: 'left', label: 'Left', name: 'carousel_thumb_position',
+                                                                                                            curval: pstate.carousel_thumb_position, onch: hich })
+                                                                                    ) : null,
+                                                                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__components_form_SwitchField__["a" /* default */], { name: 'carousel_auto_play', val: pstate.carousel_auto_play, onch: hich,
+                                                                                                label: 'Auto Play (Auto Slide)', aclass: 'top20' }),
+                                                                                    pstate.carousel_auto_play ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__components_form_RangeField__["a" /* default */], { val: pstate.carousel_slide_interval, onch: hich,
+                                                                                                name: 'carousel_slide_interval',
+                                                                                                label: 'Slider Interval (second)', min: 1, max: 10 }) : null
+                                                                        ) : null,
                                                                         pstate.layout === "collage" ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                                                                     'div',
                                                                                     null,

@@ -23,8 +23,41 @@ class SettingsForm extends React.Component {
                     <div>
                         <p>Layout Related Parameters:</p>
                         {pstate.layout === "carousel" ?
-                            <RangeField val={pstate.total_image_carousel} onch={hich} name="total_image_carousel"
-                                        aclass="" label="Total image to load" min={1} max={33}/> : null}
+                            <div>
+                                <RangeField val={pstate.total_image_carousel} onch={hich} name="total_image_carousel"
+                                            aclass="" label="Total image to load (max 33 for this layout)" min={1}
+                                            max={33}/>
+                                <SwitchField name="carousel_thumb_show_hover" val={pstate.carousel_thumb_show_hover}
+                                             onch={hich}
+                                             label="Show caption on Thumbnail hover" aclass="top20"/>
+                                <SwitchField name="carousel_img_txt_overlay" val={pstate.carousel_img_txt_overlay}
+                                             onch={hich}
+                                             label="Show description overlay on Full Image" aclass="top20"/>
+                                <SwitchField name="carousel_show_count" val={pstate.carousel_show_count}
+                                             onch={hich}
+                                             label="Show image count" aclass="top20"/>
+                                <SwitchField name="carousel_show_thumb" val={pstate.carousel_show_thumb} onch={hich}
+                                             label="Show Thumbnails" aclass="top20"/>
+                                {pstate.carousel_show_thumb ?
+                                    <div>
+                                        <div className="top20">Thumb Position</div>
+                                        <RadioField val="bottom" label="Bottom" name="carousel_thumb_position"
+                                                    curval={pstate.carousel_thumb_position} onch={hich}/>
+                                        <RadioField val="top" label="Top" name="carousel_thumb_position"
+                                                    curval={pstate.carousel_thumb_position} onch={hich}/>
+                                        <RadioField val="left" label="Left" name="carousel_thumb_position"
+                                                    curval={pstate.carousel_thumb_position} onch={hich}/>
+                                    </div>
+                                    : null}
+                                <SwitchField name="carousel_auto_play" val={pstate.carousel_auto_play} onch={hich}
+                                             label="Auto Play (Auto Slide)" aclass="top20"/>
+                                {pstate.carousel_auto_play ?
+                                    <RangeField val={pstate.carousel_slide_interval} onch={hich}
+                                                name="carousel_slide_interval"
+                                                label="Slider Interval (second)" min={1} max={10}/>
+                                    : null
+                                }
+                            </div> : null}
                         {pstate.layout === "collage" ?
                             <div>
                                 <RangeField val={pstate.initial_load} onch={hich} name="initial_load"
