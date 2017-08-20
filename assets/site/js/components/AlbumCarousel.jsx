@@ -1,6 +1,6 @@
 import React from 'react';
 import ImageGallery from 'react-image-gallery';
-
+import replace from 'lodash.replace';
 
 class AlbumCarousel extends React.Component {
     componentDidMount() {
@@ -16,10 +16,17 @@ class AlbumCarousel extends React.Component {
         });
     }
 
+    getOriginal(url) {
+        let orig = url;
+        orig = replace(orig, '/s640x640', '');
+        orig = replace(orig, '/p640x640', '');
+        return orig;
+    }
+
     render() {
         const {album} = this.props;
         const images = album.data.data.map((img)=>({
-            original: img.images.standard_resolution.url,
+            original: this.getOriginal(img.images.standard_resolution.url),
             thumbnail: img.images.low_resolution.url,
             description: (img.caption && album.options.options.carousel_img_txt_overlay) ? img.caption.text : null,
             thumbnailAlt: img.caption ? img.caption.text : null,

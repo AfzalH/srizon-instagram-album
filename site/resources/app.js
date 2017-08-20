@@ -28469,6 +28469,8 @@ var LayoutSelector = function (_React$Component) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_image_gallery__ = __webpack_require__(324);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_image_gallery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react_image_gallery__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_lodash_replace__ = __webpack_require__(376);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_lodash_replace___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_lodash_replace__);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -28476,6 +28478,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
 
 
 
@@ -28504,13 +28507,23 @@ var AlbumCarousel = function (_React$Component) {
             });
         }
     }, {
+        key: 'getOriginal',
+        value: function getOriginal(url) {
+            var orig = url;
+            orig = __WEBPACK_IMPORTED_MODULE_2_lodash_replace___default()(orig, '/s640x640', '');
+            orig = __WEBPACK_IMPORTED_MODULE_2_lodash_replace___default()(orig, '/p640x640', '');
+            return orig;
+        }
+    }, {
         key: 'render',
         value: function render() {
+            var _this2 = this;
+
             var album = this.props.album;
 
             var images = album.data.data.map(function (img) {
                 return {
-                    original: img.images.standard_resolution.url,
+                    original: _this2.getOriginal(img.images.standard_resolution.url),
                     thumbnail: img.images.low_resolution.url,
                     description: img.caption && album.options.options.carousel_img_txt_overlay ? img.caption.text : null,
                     thumbnailAlt: img.caption ? img.caption.text : null,
