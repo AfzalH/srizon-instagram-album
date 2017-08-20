@@ -47,18 +47,22 @@ function srizon_instagram_save_global_settings( $req ) {
 add_action( 'rest_api_init', function () {
 
 	register_rest_route( 'srizon-instagram/v1', '/settings/', [
-		'methods'  => 'GET',
-		'callback' => 'srizon_instagram_get_settings',
+		'methods'             => 'GET',
+		'callback'            => 'srizon_instagram_get_settings',
+		'permission_callback' => 'srizon_instagram_permission_admin',
 	] );
 
 	register_rest_route( 'srizon-instagram/v1', '/disconnect-user/', [
-		'methods'  => 'GET',
-		'callback' => 'srizon_instagram_disconnect_user',
+		'methods'             => 'GET',
+		'callback'            => 'srizon_instagram_disconnect_user',
+		'permission_callback' => 'srizon_instagram_permission_admin',
+
 	] );
 
 	register_rest_route( 'srizon-instagram/v1', '/save-global-settings/', [
-		'methods'  => 'POST',
-		'callback' => 'srizon_instagram_save_global_settings',
+		'methods'             => 'POST',
+		'callback'            => 'srizon_instagram_save_global_settings',
+		'permission_callback' => 'srizon_instagram_permission_admin',
 	] );
 } );
 

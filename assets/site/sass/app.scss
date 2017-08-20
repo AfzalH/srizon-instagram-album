@@ -10,22 +10,41 @@
       font-size: 48px;
     }
   }
-  .srzinst{
-    img{
+  .srzinst {
+    img {
       box-shadow: none !important;
+    }
+  }
+  .image-gallery-thumbnail {
+    a {
+      text-decoration: none !important;
+      &:hover {
+        text-decoration: none !important;
+        border: none !important;
+      }
+    }
+    img {
+      vertical-align: middle !important;
+      width: 100% !important;
+      border: none !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      &:hover {
+        border: none !important;;
+      }
     }
   }
 }
 
-#lightboxBackdrop{
+#lightboxBackdrop {
   button {
     background: none !important;
   }
-  figure{
+  figure {
     text-align: center;
-    div{
+    div {
       max-width: 800px;
-      figcaption{
+      figcaption {
         text-align: left;
       }
     }

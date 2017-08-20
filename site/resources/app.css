@@ -627,6 +627,27 @@
           box-shadow: none !important;
 }
 
+.srizon .image-gallery-thumbnail a {
+  text-decoration: none !important;
+}
+
+.srizon .image-gallery-thumbnail a:hover {
+  text-decoration: none !important;
+  border: none !important;
+}
+
+.srizon .image-gallery-thumbnail img {
+  vertical-align: middle !important;
+  width: 100% !important;
+  border: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.srizon .image-gallery-thumbnail img:hover {
+  border: none !important;
+}
+
 #lightboxBackdrop button {
   background: none !important;
 }

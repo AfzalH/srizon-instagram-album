@@ -207,6 +207,7 @@ add_action( 'rest_api_init', function () {
 	register_rest_route( 'srizon-instagram/v1', '/useralbum/', [
 		'methods'  => 'POST',
 		'callback' => 'srizon_instagram_save_user_album',
+		'permission_callback' => 'srizon_instagram_permission_admin',
 	] );
 
 	register_rest_route( 'srizon-instagram/v1', '/album/', [
@@ -230,6 +231,7 @@ add_action( 'rest_api_init', function () {
 	register_rest_route( 'srizon-instagram/v1', '/album/(?P<id>[\d]+)', [
 		'methods'  => 'DELETE',
 		'callback' => 'srizon_instagram_delete_album',
+		'permission_callback' => 'srizon_instagram_permission_admin',
 	] );
 	register_rest_route( 'srizon-instagram/v1', '/album/(?P<id>[\d]+)', [
 		'methods'  => 'GET',
@@ -239,9 +241,11 @@ add_action( 'rest_api_init', function () {
 	register_rest_route( 'srizon-instagram/v1', '/hashtagalbum/', [
 		'methods'  => 'POST',
 		'callback' => 'srizon_instagram_save_hashtag_album',
+		'permission_callback' => 'srizon_instagram_permission_admin',
 	] );
 	register_rest_route( 'srizon-instagram/v1', '/album-settings/', [
 		'methods'  => 'POST',
 		'callback' => 'srizon_instagram_update_album_settings',
+		'permission_callback' => 'srizon_instagram_permission_admin',
 	] );
 } );
