@@ -32,6 +32,7 @@ if ( is_admin() ) {
 }
 
 register_activation_hook( __FILE__, 'srizon_instagram_activate' );
+add_action( 'wpmu_new_blog', 'srizon_instagram_on_create_blog', 10, 6 );
 
 function srizon_instagram_activate( $network_wide ) {
 	global $wpdb;
@@ -44,6 +45,15 @@ function srizon_instagram_activate( $network_wide ) {
 		}
 	} else {
 		SrizonInstaDB::CreateDBTables();
+	}
+}
+
+function srizon_instagram_on_create_blog( $blog_id, $user_id, $domain, $path, $site_id, $meta ) {
+	// need to remove -pro from free version
+	if ( is_plugin_active_for_network( 'srizon-instagram-album/srizon-instagram-album.php' ) ) {
+		switch_to_blog( $blog_id );
+		SrizonInstaDB::CreateDBTables();
+		restore_current_blog();
 	}
 }
 
