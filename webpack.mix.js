@@ -11,12 +11,12 @@ let mix = require('laravel-mix');
  |
  */
 
-// mix.webpackConfig({
-//     externals: {
-//         "react": "React",
-//         "react-dom": "ReactDOM"
-//     }
-// });
+mix.webpackConfig({
+    externals: {
+        "react": "React",
+        "react-dom": "ReactDOM"
+    }
+});
 
 mix.react('assets/admin/js/app.jsx', 'admin/resources')
     .react('assets/site/js/app.jsx', 'site/resources')
@@ -24,5 +24,9 @@ mix.react('assets/admin/js/app.jsx', 'admin/resources')
     .sass('assets/site/sass/app.scss', 'site/resources')
     .sass('assets/lib/srizon-materialize/sass/materialize.scss', 'admin/resources')
     .sass('assets/lib/srizon-materialize-site/sass/materialize.scss', 'site/resources')
+    .copy('assets/lib/react/react.min.js', 'admin/resources/react.min.js')
+    .copy('assets/lib/react/react-dom.min.js', 'admin/resources/react-dom.min.js')
+    .copy('assets/lib/react/react.min.js', 'site/resources/react.min.js')
+    .copy('assets/lib/react/react-dom.min.js', 'site/resources/react-dom.min.js')
     .copy('assets/lib/srizon-materialize/js/bin/materialize.min.js', 'admin/resources/materialize.js')
     .copy('assets/lib/srizon-materialize/js/bin/materialize.min.js', 'site/resources/materialize.js');
