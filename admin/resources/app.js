@@ -5511,7 +5511,33 @@ var AppTitle = function (_React$Component) {
                             )
                         )
                     )
-                ) : ''
+                ) : '',
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { className: 'col m12' },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'p',
+                        null,
+                        'You\'re using the free version. ',
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'a',
+                            { href: 'https://srizon.com', target: '_blank' },
+                            'Get Pro Version'
+                        ),
+                        ' for professional support and added feature. Created by ',
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'a',
+                            { href: 'https://srizon.com', target: '_blank' },
+                            'Srizon Soft'
+                        ),
+                        '. Post a ',
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'a',
+                            { href: 'https://srizon.com', target: '_blank' },
+                            'review'
+                        )
+                    )
+                )
             );
         }
     }]);
@@ -5597,133 +5623,143 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
 var SettingsForm = function (_React$Component) {
-            _inherits(SettingsForm, _React$Component);
+    _inherits(SettingsForm, _React$Component);
 
-            function SettingsForm() {
-                        _classCallCheck(this, SettingsForm);
+    function SettingsForm() {
+        _classCallCheck(this, SettingsForm);
 
-                        return _possibleConstructorReturn(this, (SettingsForm.__proto__ || Object.getPrototypeOf(SettingsForm)).apply(this, arguments));
-            }
+        return _possibleConstructorReturn(this, (SettingsForm.__proto__ || Object.getPrototypeOf(SettingsForm)).apply(this, arguments));
+    }
 
-            _createClass(SettingsForm, [{
-                        key: 'render',
-                        value: function render() {
-                                    var _props = this.props,
-                                        hich = _props.hich,
-                                        pstate = _props.pstate,
-                                        _props$global = _props.global,
-                                        global = _props$global === undefined ? false : _props$global;
+    _createClass(SettingsForm, [{
+        key: 'render',
+        value: function render() {
+            var _props = this.props,
+                hich = _props.hich,
+                pstate = _props.pstate,
+                _props$global = _props.global,
+                global = _props$global === undefined ? false : _props$global;
 
-                                    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                                'div',
-                                                { className: 'row' },
-                                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                                            'div',
-                                                            { className: global ? "col s12 m6 top20 pr50" : "col s12 top20 plr0" },
-                                                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__components_form_RangeField__["a" /* default */], { val: pstate.cache_time, onch: hich, name: 'cache_time',
-                                                                        label: 'Cache Time For API data (Mins)', min: 10, max: 10080 }),
-                                                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                                                        'p',
-                                                                        { className: 'top0' },
-                                                                        'Layout'
-                                                            ),
-                                                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_form_RadioField__["a" /* default */], { val: 'collage', label: 'Responsive Collage', name: 'layout',
-                                                                        curval: pstate.layout, onch: hich }),
-                                                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_form_RadioField__["a" /* default */], { val: 'carousel', label: 'Carousel', name: 'layout',
-                                                                        curval: pstate.layout, onch: hich })
-                                                ),
-                                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                                            'div',
-                                                            { className: global ? "col s12 m6 top20 pr50" : "col s12 top20 plr0" },
-                                                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                                                        'div',
-                                                                        null,
-                                                                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                                                                    'p',
-                                                                                    null,
-                                                                                    'Layout Related Parameters:'
-                                                                        ),
-                                                                        pstate.layout === "carousel" ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                                                                    'div',
-                                                                                    null,
-                                                                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__components_form_RangeField__["a" /* default */], { val: pstate.total_image_carousel, onch: hich, name: 'total_image_carousel',
-                                                                                                aclass: '', label: 'Total image to load (max 33 for this layout)', min: 1,
-                                                                                                max: 33 }),
-                                                                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__components_form_SwitchField__["a" /* default */], { name: 'carousel_thumb_show_hover', val: pstate.carousel_thumb_show_hover,
-                                                                                                onch: hich,
-                                                                                                label: 'Show caption on Thumbnail hover', aclass: 'top20' }),
-                                                                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__components_form_SwitchField__["a" /* default */], { name: 'carousel_img_txt_overlay', val: pstate.carousel_img_txt_overlay,
-                                                                                                onch: hich,
-                                                                                                label: 'Show description overlay on Full Image', aclass: 'top20' }),
-                                                                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__components_form_SwitchField__["a" /* default */], { name: 'carousel_show_count', val: pstate.carousel_show_count,
-                                                                                                onch: hich,
-                                                                                                label: 'Show image count', aclass: 'top20' }),
-                                                                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__components_form_SwitchField__["a" /* default */], { name: 'carousel_show_thumb', val: pstate.carousel_show_thumb, onch: hich,
-                                                                                                label: 'Show Thumbnails', aclass: 'top20' }),
-                                                                                    pstate.carousel_show_thumb ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                                                                                'div',
-                                                                                                null,
-                                                                                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                                                                                            'div',
-                                                                                                            { className: 'top20' },
-                                                                                                            'Thumb Position'
-                                                                                                ),
-                                                                                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_form_RadioField__["a" /* default */], { val: 'bottom', label: 'Bottom', name: 'carousel_thumb_position',
-                                                                                                            curval: pstate.carousel_thumb_position, onch: hich }),
-                                                                                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_form_RadioField__["a" /* default */], { val: 'top', label: 'Top', name: 'carousel_thumb_position',
-                                                                                                            curval: pstate.carousel_thumb_position, onch: hich }),
-                                                                                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_form_RadioField__["a" /* default */], { val: 'left', label: 'Left', name: 'carousel_thumb_position',
-                                                                                                            curval: pstate.carousel_thumb_position, onch: hich })
-                                                                                    ) : null,
-                                                                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__components_form_SwitchField__["a" /* default */], { name: 'carousel_auto_play', val: pstate.carousel_auto_play, onch: hich,
-                                                                                                label: 'Auto Play (Auto Slide)', aclass: 'top20' }),
-                                                                                    pstate.carousel_auto_play ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__components_form_RangeField__["a" /* default */], { val: pstate.carousel_slide_interval, onch: hich,
-                                                                                                name: 'carousel_slide_interval',
-                                                                                                label: 'Slider Interval (second)', min: 1, max: 10 }) : null
-                                                                        ) : null,
-                                                                        pstate.layout === "collage" ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                                                                    'div',
-                                                                                    null,
-                                                                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__components_form_RangeField__["a" /* default */], { val: pstate.initial_load, onch: hich, name: 'initial_load',
-                                                                                                label: 'Image to load initially and on `Load More`', min: 1, max: 33 }),
-                                                                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__components_form_RangeField__["a" /* default */], { val: pstate.collage_margin, onch: hich, name: 'collage_margin',
-                                                                                                label: 'Margin size (In-between Images)', min: 0, max: 10 }),
-                                                                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                                                                                'div',
-                                                                                                { className: 'top10' },
-                                                                                                'Thumb Size'
-                                                                                    ),
-                                                                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_form_RadioField__["a" /* default */], { val: '0', label: 'Big', name: 'collage_thumb_size',
-                                                                                                curval: pstate.collage_thumb_size, onch: hich }),
-                                                                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_form_RadioField__["a" /* default */], { val: '1', label: 'Medium', name: 'collage_thumb_size',
-                                                                                                curval: pstate.collage_thumb_size, onch: hich }),
-                                                                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_form_RadioField__["a" /* default */], { val: '2', label: 'Small', name: 'collage_thumb_size',
-                                                                                                curval: pstate.collage_thumb_size, onch: hich }),
-                                                                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__components_form_SwitchField__["a" /* default */], { name: 'collage_show_hover', val: pstate.collage_show_hover, onch: hich,
-                                                                                                label: 'Show caption on hover', aclass: 'top20' }),
-                                                                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                                                                                'div',
-                                                                                                { className: 'top30' },
-                                                                                                'Load More Method'
-                                                                                    ),
-                                                                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_form_RadioField__["a" /* default */], { val: 'disabled', label: 'Disabled', name: 'collage_load_more_method',
-                                                                                                curval: pstate.collage_load_more_method, onch: hich }),
-                                                                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_form_RadioField__["a" /* default */], { val: 'lightbox', label: 'Lightbox Navigation', name: 'collage_load_more_method',
-                                                                                                curval: pstate.collage_load_more_method, onch: hich }),
-                                                                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_form_RadioField__["a" /* default */], { val: 'button', label: 'Button', name: 'collage_load_more_method',
-                                                                                                curval: pstate.collage_load_more_method, onch: hich }),
-                                                                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_form_RadioField__["a" /* default */], { val: 'auto', label: 'Auto Load (on Scroll)', name: 'collage_load_more_method',
-                                                                                                curval: pstate.collage_load_more_method, onch: hich }),
-                                                                                    pstate.collage_load_more_method == 'button' ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__components_form_TextField__["a" /* default */], { val: pstate.load_more_text, onch: hich, name: 'load_more_text',
-                                                                                                label: 'Load More Button Text', aclass: 'top40' }) : null
-                                                                        ) : null
-                                                            )
-                                                )
-                                    );
-                        }
-            }]);
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'div',
+                { className: 'row' },
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { className: global ? "col s12 m6 top20 pr50" : "col s12 plr0" },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__components_form_RangeField__["a" /* default */], { val: pstate.cache_time, onch: hich, name: 'cache_time',
+                        label: 'Cache Time For API data (Mins)', min: 10, max: 10080 }),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'p',
+                        { className: 'top0' },
+                        'Layout'
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_form_RadioField__["a" /* default */], { val: 'collage', label: 'Responsive Collage', name: 'layout',
+                        curval: pstate.layout, onch: hich }),
+                    pstate.layout == "collage" ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'p',
+                        { className: 'left35' },
+                        'Max ~50 Images For this layout on free version. ',
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'a',
+                            { target: '_blank', href: 'https://srizon.com' },
+                            'Get Pro'
+                        )
+                    ) : null,
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_form_RadioField__["a" /* default */], { val: 'carousel', label: 'Carousel (max 33 image)', name: 'layout',
+                        curval: pstate.layout, onch: hich })
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { className: global ? "col s12 m6 top20 pr50" : "col s12 top20 plr0" },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        null,
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'p',
+                            null,
+                            'Layout Related Parameters:'
+                        ),
+                        pstate.layout === "carousel" ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'div',
+                            null,
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__components_form_RangeField__["a" /* default */], { val: pstate.total_image_carousel, onch: hich, name: 'total_image_carousel',
+                                aclass: '', label: 'Total image to load (max 33 for this layout)', min: 1,
+                                max: 33 }),
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__components_form_SwitchField__["a" /* default */], { name: 'carousel_thumb_show_hover', val: pstate.carousel_thumb_show_hover,
+                                onch: hich,
+                                label: 'Show caption on Thumbnail hover', aclass: 'top20' }),
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__components_form_SwitchField__["a" /* default */], { name: 'carousel_img_txt_overlay', val: pstate.carousel_img_txt_overlay,
+                                onch: hich,
+                                label: 'Show description overlay on Full Image', aclass: 'top20' }),
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__components_form_SwitchField__["a" /* default */], { name: 'carousel_show_count', val: pstate.carousel_show_count,
+                                onch: hich,
+                                label: 'Show image count', aclass: 'top20' }),
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__components_form_SwitchField__["a" /* default */], { name: 'carousel_show_thumb', val: pstate.carousel_show_thumb, onch: hich,
+                                label: 'Show Thumbnails', aclass: 'top20' }),
+                            pstate.carousel_show_thumb ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                'div',
+                                null,
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    'div',
+                                    { className: 'top20' },
+                                    'Thumb Position'
+                                ),
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_form_RadioField__["a" /* default */], { val: 'bottom', label: 'Bottom', name: 'carousel_thumb_position',
+                                    curval: pstate.carousel_thumb_position, onch: hich }),
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_form_RadioField__["a" /* default */], { val: 'top', label: 'Top', name: 'carousel_thumb_position',
+                                    curval: pstate.carousel_thumb_position, onch: hich }),
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_form_RadioField__["a" /* default */], { val: 'left', label: 'Left', name: 'carousel_thumb_position',
+                                    curval: pstate.carousel_thumb_position, onch: hich })
+                            ) : null,
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__components_form_SwitchField__["a" /* default */], { name: 'carousel_auto_play', val: pstate.carousel_auto_play, onch: hich,
+                                label: 'Auto Play (Auto Slide)', aclass: 'top20' }),
+                            pstate.carousel_auto_play ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__components_form_RangeField__["a" /* default */], { val: pstate.carousel_slide_interval, onch: hich,
+                                name: 'carousel_slide_interval',
+                                label: 'Slider Interval (second)', min: 1, max: 10 }) : null
+                        ) : null,
+                        pstate.layout === "collage" ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'div',
+                            null,
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__components_form_RangeField__["a" /* default */], { val: pstate.initial_load, onch: hich, name: 'initial_load',
+                                label: 'Image to load initially and on `Load More`', min: 1, max: 33 }),
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__components_form_RangeField__["a" /* default */], { val: pstate.collage_margin, onch: hich, name: 'collage_margin',
+                                label: 'Margin size (In-between Images)', min: 0, max: 10 }),
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                'div',
+                                { className: 'top10' },
+                                'Thumb Size'
+                            ),
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_form_RadioField__["a" /* default */], { val: '0', label: 'Big', name: 'collage_thumb_size',
+                                curval: pstate.collage_thumb_size, onch: hich }),
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_form_RadioField__["a" /* default */], { val: '1', label: 'Medium', name: 'collage_thumb_size',
+                                curval: pstate.collage_thumb_size, onch: hich }),
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_form_RadioField__["a" /* default */], { val: '2', label: 'Small', name: 'collage_thumb_size',
+                                curval: pstate.collage_thumb_size, onch: hich }),
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__components_form_SwitchField__["a" /* default */], { name: 'collage_show_hover', val: pstate.collage_show_hover, onch: hich,
+                                label: 'Show caption on hover', aclass: 'top20' }),
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                'div',
+                                { className: 'top30' },
+                                'Load More Method'
+                            ),
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_form_RadioField__["a" /* default */], { val: 'disabled', label: 'Disabled', name: 'collage_load_more_method',
+                                curval: pstate.collage_load_more_method, onch: hich }),
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_form_RadioField__["a" /* default */], { val: 'lightbox', label: 'Lightbox Navigation', name: 'collage_load_more_method',
+                                curval: pstate.collage_load_more_method, onch: hich }),
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_form_RadioField__["a" /* default */], { val: 'button', label: 'Button', name: 'collage_load_more_method',
+                                curval: pstate.collage_load_more_method, onch: hich }),
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_form_RadioField__["a" /* default */], { val: 'auto', label: 'Auto Load (on Scroll)', name: 'collage_load_more_method',
+                                curval: pstate.collage_load_more_method, onch: hich }),
+                            pstate.collage_load_more_method == 'button' ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__components_form_TextField__["a" /* default */], { val: pstate.load_more_text, onch: hich, name: 'load_more_text',
+                                label: 'Load More Button Text', aclass: 'top40' }) : null
+                        ) : null
+                    )
+                )
+            );
+        }
+    }]);
 
-            return SettingsForm;
+    return SettingsForm;
 }(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Component);
 
 /* harmony default export */ __webpack_exports__["a"] = (SettingsForm);
