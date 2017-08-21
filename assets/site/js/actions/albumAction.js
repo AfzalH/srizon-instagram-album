@@ -1,9 +1,9 @@
 import store from '../store';
 
 export function getAlbum(id) {
-    return (dispatch)=> {
+    return (dispatch) => {
         axios.get(srzinstbase + 'album/' + id)
-            .then((response)=> {
+            .then((response) => {
                 if (response.data.result == 'success') {
                     dispatch({
                         type: 'ALBUM_OPTIONS_LOADED',
@@ -11,15 +11,22 @@ export function getAlbum(id) {
                         payload: response.data.album
                     });
                 }
-            });
-        axios.post(srzinstbase + 'album-data', {id: id});
+            })
+            .catch((error) => {
+                if (error.response) {
+                    dispatch({ type: 'ALBUM_ERROR_RECEIVED', id: id, payload: error.response });
+                }
+                else if (error.request) {
+                    dispatch({ type: 'ALBUM_ERROR_REQUESTING', id: id, payload: error.request });
+                }
+            })
     }
 }
 
 export function getAlbumData(id) {
-    return (dispatch)=> {
-        axios.post(srzinstbase + 'album-data', {id: id})
-            .then((response)=> {
+    return (dispatch) => {
+        axios.post(srzinstbase + 'album-data', { id: id })
+            .then((response) => {
                 if (response.data.result == 'success') {
                     dispatch({
                         type: 'ALBUM_DATA_LOADED',
@@ -29,14 +36,22 @@ export function getAlbumData(id) {
                     dispatch(backgroundUpdate(id));
                     dispatch(preFetchData(id, response.data.data.pagination.next_url));
                 }
-            });
+            })
+            .catch((error) => {
+                if (error.response) {
+                    dispatch({ type: 'ALBUM_DATA_ERROR_RECEIVED', id: id, payload: error.response });
+                }
+                else if (error.request) {
+                    dispatch({ type: 'ALBUM_DATA_ERROR_REQUESTING', id: id, payload: error.request });
+                }
+            })
     }
 }
 
 function backgroundUpdate(id) {
-    return (dispatch)=> {
-        axios.post(srzinstbase + 'album-sync', {id: id})
-            .then((response)=> {
+    return (dispatch) => {
+        axios.post(srzinstbase + 'album-sync', { id: id })
+            .then((response) => {
                 dispatch({
                     type: 'ALBUM_DATA_SYNCED',
                     id: id,
@@ -47,7 +62,7 @@ function backgroundUpdate(id) {
 }
 
 export function loadMoreData(id, url) {
-    return (dispatch)=> {
+    return (dispatch) => {
         const prefetched_data = store.getState().albums[id].prefetched_data;
         if (prefetched_data) {
             dispatch({
@@ -66,8 +81,8 @@ export function loadMoreData(id, url) {
                 type: 'ALBUM_DATA_LOADING_MORE',
                 id: id
             });
-            axios.post(srzinstbase + 'album-load-more', {id: id, url: url})
-                .then((response)=> {
+            axios.post(srzinstbase + 'album-load-more', { id: id, url: url })
+                .then((response) => {
                     if (response.data.result == 'success') {
                         dispatch({
                             type: 'ALBUM_DATA_LOADED_MORE',
@@ -82,14 +97,14 @@ export function loadMoreData(id, url) {
 }
 
 export function preFetchData(id, url) {
-    return (dispatch)=> {
+    return (dispatch) => {
         if (url) {
             dispatch({
                 type: 'ALBUM_DATA_PREFETCHING',
                 id: id
             });
-            axios.post(srzinstbase + 'album-load-more', {id: id, url: url})
-                .then((response)=> {
+            axios.post(srzinstbase + 'album-load-more', { id: id, url: url })
+                .then((response) => {
                     if (response.data.result == 'success') {
                         dispatch({
                             type: 'ALBUM_DATA_PREFETCHED',

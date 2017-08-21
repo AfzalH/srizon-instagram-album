@@ -9,6 +9,7 @@ export default function albumReducer(state = initialState, action) {
                     data_loaded: false,
                     prefetching: false,
                     prefetched_data: false,
+                    error_received: false,
                     loading_more: false
                 }
             };
@@ -19,7 +20,17 @@ export default function albumReducer(state = initialState, action) {
                 [action.id]: {
                     ...state[action.id],
                     options_loaded: true,
+                    error_received: false,
                     options: action.payload
+                }
+            };
+            break;
+        case 'ALBUM_ERROR_RECEIVED':
+            return {
+                ...state,
+                [action.id]: {
+                    ...state[action.id],
+                    error_received: action.payload.data.message
                 }
             };
             break;
@@ -34,18 +45,18 @@ export default function albumReducer(state = initialState, action) {
             };
             break;
         case 'ALBUM_DATA_LOADING_MORE':
-            return{
+            return {
                 ...state,
-                [action.id]:{
+                [action.id]: {
                     ...state[action.id],
                     loading_more: true
                 }
             };
             break;
         case 'ALBUM_DATA_PREFETCHING':
-            return{
+            return {
                 ...state,
-                [action.id]:{
+                [action.id]: {
                     ...state[action.id],
                     prefetching: true,
                     prefetched_data: false
@@ -53,9 +64,9 @@ export default function albumReducer(state = initialState, action) {
             };
             break;
         case 'ALBUM_DATA_PREFETCHED':
-            return{
+            return {
                 ...state,
-                [action.id]:{
+                [action.id]: {
                     ...state[action.id],
                     prefetching: false,
                     prefetched_data: {

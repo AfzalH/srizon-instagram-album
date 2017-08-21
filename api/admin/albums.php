@@ -145,7 +145,7 @@ function srizon_instagram_get_album( $req ) {
 		return $ret;
 	}
 
-	return new WP_Error( 'album_not_found', 'Album Not Found', [ 'status' => 404 ] );
+	return new WP_Error( 'album_not_found', 'Album Not Found. Make sure that the shortcode matches and existing album', [ 'status' => 404 ] );
 }
 
 /**
@@ -169,10 +169,16 @@ function srizon_instagram_update_album_settings( $req ) {
 function srizon_instagram_get_album_data( $req ) {
 	$json_data = json_decode( $req->get_body() );
 
-	$ret['result'] = 'success';
-	$ret['data']   = SrizonInstaAPI::getAlbumData( $json_data->id );
+	$album = SrizonInstaDB::getAlbum( (int) $json_data->id );
 
-	return $ret;
+	if($album){
+		$ret['result'] = 'success';
+		$ret['data']   = SrizonInstaAPI::getAlbumData( $json_data->id );
+
+		return $ret;
+	}
+	return new WP_Error( 'album_not_found', 'Album Not Found. Make sure that the shortcode matches and existing album', [ 'status' => 404 ] );
+	
 }
 
 /**
