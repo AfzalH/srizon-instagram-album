@@ -7113,9 +7113,9 @@ function albumReducer() {
                 data_loaded: true,
                 loading_more: false,
                 data: {
-                    data: [].concat(_toConsumableArray(state[action.id].data.data), _toConsumableArray(action.payload.data)),
+                    data: [].concat(_toConsumableArray(state[action.id].data.data), _toConsumableArray(action.payload.data)).slice(0, 17 * 3),
                     meta: action.payload.meta,
-                    pagination: action.payload.pagination
+                    pagination: state[action.id].data.data.length + action.payload.data.length >= 17 * 3 ? false : action.payload.pagination
                 }
             })));
             break;
@@ -7124,9 +7124,9 @@ function albumReducer() {
                 data_loaded: true,
                 loading_more: false,
                 data: {
-                    data: [].concat(_toConsumableArray(state[action.id].data.data), _toConsumableArray(action.payload.data)),
+                    data: [].concat(_toConsumableArray(state[action.id].data.data), _toConsumableArray(action.payload.data)).slice(0, 17 * 3),
                     meta: action.payload.meta,
-                    pagination: action.payload.pagination
+                    pagination: state[action.id].data.data.length + action.payload.data.length >= 17 * 3 ? false : action.payload.pagination
                 },
                 prefetching: false,
                 prefetched_data: false

@@ -85,9 +85,9 @@ export default function albumReducer(state = initialState, action) {
                     data_loaded: true,
                     loading_more: false,
                     data: {
-                        data: [...state[action.id].data.data, ...action.payload.data],
+                        data: [...state[action.id].data.data, ...action.payload.data].slice(0, 17 * 3),
                         meta: action.payload.meta,
-                        pagination: action.payload.pagination
+                        pagination: (state[action.id].data.data.length + action.payload.data.length) >= (17 * 3) ? false : action.payload.pagination
                     }
                 }
             };
@@ -100,9 +100,9 @@ export default function albumReducer(state = initialState, action) {
                     data_loaded: true,
                     loading_more: false,
                     data: {
-                        data: [...state[action.id].data.data, ...action.payload.data],
+                        data: [...state[action.id].data.data, ...action.payload.data].slice(0, 17 * 3),
                         meta: action.payload.meta,
-                        pagination: action.payload.pagination
+                        pagination: (state[action.id].data.data.length + action.payload.data.length) >= (17 * 3) ? false : action.payload.pagination
                     },
                     prefetching: false,
                     prefetched_data: false
