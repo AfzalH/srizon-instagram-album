@@ -5,10 +5,7 @@
     "/site/resources/app.css": "/site/resources/app.css",
     "/admin/resources/materialize.css": "/admin/resources/materialize.css",
     "/site/resources/materialize.css": "/site/resources/materialize.css",
-    "/admin/resources/react.min.js": "/admin/resources/react.min.js",
-    "/admin/resources/react-dom.min.js": "/admin/resources/react-dom.min.js",
     "/site/resources/react.min.js": "/site/resources/react.min.js",
     "/site/resources/react-dom.min.js": "/site/resources/react-dom.min.js",
-    "/admin/resources/materialize.js": "/admin/resources/materialize.js",
     "/site/resources/materialize.js": "/site/resources/materialize.js"
 }
