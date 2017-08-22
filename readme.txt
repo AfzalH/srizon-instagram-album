@@ -1,18 +1,18 @@
 === Srizon Instagram Album ===
 Contributors: afzal_du
-Donate link: https://www.srizon.com/srizon-instagram-album
+Donate link: https://srizon.com/
 Tags: Instagram, Album, Gallery, Photo Album, Photo Gallery, Instagram Connect, Instagram Feed, Instagram Album, Instagram Gallery
 Requires at least: 4.1
-Tested up to: 4.8
+Tested up to: 4.8.1
 Stable tag: 1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-This Plugin is designed to show your instagram photos into your WordPress site. You can also show public photos from other instagram users
+This Plugin is designed to show your instagram photos into your WordPress site. You can also show public photos from other instagram users or photos tagged with some hashtag
 
 == Description ==
 
-This Plugin is designed to show your instagram photos into your WordPress site. You can also show public photos from other instagram users.
+This Plugin is designed to show your instagram photos into your WordPress site. You can also show public photos from other instagram users  or photos tagged with some hashtag.
 
 == Installation ==
 
