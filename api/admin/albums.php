@@ -171,14 +171,14 @@ function srizon_instagram_get_album_data( $req ) {
 
 	$album = SrizonInstaDB::getAlbum( (int) $json_data->id );
 
-	if($album){
+	if ( $album ) {
 		$ret['result'] = 'success';
 		$ret['data']   = SrizonInstaAPI::getAlbumData( $json_data->id );
 
 		return $ret;
 	}
+
 	return new WP_Error( 'album_not_found', 'Album Not Found. Make sure that the shortcode matches and existing album', [ 'status' => 404 ] );
-	
 }
 
 /**
@@ -211,8 +211,8 @@ function srizon_instagram_sync_album( $req ) {
 
 add_action( 'rest_api_init', function () {
 	register_rest_route( 'srizon-instagram/v1', '/useralbum/', [
-		'methods'  => 'POST',
-		'callback' => 'srizon_instagram_save_user_album',
+		'methods'             => 'POST',
+		'callback'            => 'srizon_instagram_save_user_album',
 		'permission_callback' => 'srizon_instagram_permission_admin',
 	] );
 
@@ -235,8 +235,8 @@ add_action( 'rest_api_init', function () {
 	] );
 
 	register_rest_route( 'srizon-instagram/v1', '/album/(?P<id>[\d]+)', [
-		'methods'  => 'DELETE',
-		'callback' => 'srizon_instagram_delete_album',
+		'methods'             => 'DELETE',
+		'callback'            => 'srizon_instagram_delete_album',
 		'permission_callback' => 'srizon_instagram_permission_admin',
 	] );
 	register_rest_route( 'srizon-instagram/v1', '/album/(?P<id>[\d]+)', [
@@ -245,13 +245,13 @@ add_action( 'rest_api_init', function () {
 	] );
 
 	register_rest_route( 'srizon-instagram/v1', '/hashtagalbum/', [
-		'methods'  => 'POST',
-		'callback' => 'srizon_instagram_save_hashtag_album',
+		'methods'             => 'POST',
+		'callback'            => 'srizon_instagram_save_hashtag_album',
 		'permission_callback' => 'srizon_instagram_permission_admin',
 	] );
 	register_rest_route( 'srizon-instagram/v1', '/album-settings/', [
-		'methods'  => 'POST',
-		'callback' => 'srizon_instagram_update_album_settings',
+		'methods'             => 'POST',
+		'callback'            => 'srizon_instagram_update_album_settings',
 		'permission_callback' => 'srizon_instagram_permission_admin',
 	] );
 } );

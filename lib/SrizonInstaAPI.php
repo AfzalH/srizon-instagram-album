@@ -76,7 +76,8 @@ if ( ! class_exists( 'SrizonInstaAPI' ) ) {
 
 			if ( $timediff > $cachetime ) {
 				SrizonInstaDB::DeleteAlbumCache( $id );
-				$fresh_albumdata = self::getAlbumData($id);
+				$fresh_albumdata = self::getAlbumData( $id );
+
 				return $fresh_albumdata;
 			}
 

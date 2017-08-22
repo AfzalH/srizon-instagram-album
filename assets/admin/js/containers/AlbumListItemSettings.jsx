@@ -32,7 +32,7 @@ class AlbumListItemSettings extends React.Component {
     }
 
     render() {
-        const { album, updateAlbum, cancelForm} = this.props;
+        const {album, updateAlbum, cancelForm} = this.props;
         return (
             <div className="row bottom0">
                 <div className="col s12 plr0">
