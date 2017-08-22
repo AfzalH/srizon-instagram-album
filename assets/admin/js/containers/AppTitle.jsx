@@ -1,23 +1,24 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { toggleSettingsPanel } from '../actions/settingsAction';
+import {connect} from 'react-redux';
+import {toggleSettingsPanel} from '../actions/settingsAction';
+import RotatingText from  '../components/RotatingText';
 
 class AppTitle extends React.Component {
     constructor() {
         super();
-        this.state = { hover_on_user: false }
+        this.state = {hover_on_user: false}
     }
 
     userEntered() {
-        this.setState({ hover_on_user: true });
+        this.setState({hover_on_user: true});
     }
 
     userLeft() {
-        this.setState({ hover_on_user: false });
+        this.setState({hover_on_user: false});
     }
 
     render() {
-        const { connected_user, disconnectUser, user_removing, toggleSettingsPanel, show_settings } = this.props;
+        const {connected_user, disconnectUser, user_removing, toggleSettingsPanel, show_settings} = this.props;
         const settings_btn_bg = show_settings ? "grey" : "blue";
         return (
             <div className="row app-title">
@@ -27,7 +28,7 @@ class AppTitle extends React.Component {
                             <a
                                 className={"ml10 btn-floating btn-spin btn-floating-small waves-effect waves-light " + settings_btn_bg + " darken-3"}
                                 onClick={toggleSettingsPanel}><i
-                                    className="material-icons">settings</i></a> : null}
+                                className="material-icons">settings</i></a> : null}
                     </h5>
                 </div>
                 {connected_user ?
@@ -38,8 +39,8 @@ class AppTitle extends React.Component {
                                     <small>Disconnecting ...</small>
                                 </small> :
                                 <div className="chip clickable" onClick={disconnectUser}
-                                    onMouseEnter={this.userEntered.bind(this)} onMouseLeave={this.userLeft.bind(this)}>
-                                    <img src={connected_user.profile_picture} alt={connected_user.username} />
+                                     onMouseEnter={this.userEntered.bind(this)} onMouseLeave={this.userLeft.bind(this)}>
+                                    <img src={connected_user.profile_picture} alt={connected_user.username}/>
                                     {
                                         connected_user.full_name ?
                                             connected_user.full_name :
@@ -55,7 +56,14 @@ class AppTitle extends React.Component {
                     </div>
                     : ''}
                 <div className="col m12">
-                    <p>You're using the free version. <a href="https://srizon.com" target="_blank">Get Pro Version</a> for professional support and added feature. Created by <a href="https://srizon.com" target="_blank">Srizon Soft</a>. Post a <a href="https://srizon.com" target="_blank">review</a></p>
+                    <RotatingText interval={5}>
+                        <p key="1">You are using the free version.{' '}
+                            <a href="https://srizon.com" target="_blank">Get Pro Version</a>{' '}for professional support
+                            and added feature.
+                        </p>
+                        <p key="2">Created by <a href="https://srizon.com" target="_blank">Srizon Soft.</a></p>
+                        <p key="3">Post a{' '}<a href="https://srizon.com" target="_blank">Review</a>{' '}if you havn't already.</p>
+                    </RotatingText>
                 </div>
             </div>
         );
