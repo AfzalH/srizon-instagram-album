@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+npm run prod
 mkdir srizon-instagram-album
 cp -R ./admin ./srizon-instagram-album/
 cp -R ./api ./srizon-instagram-album/
