@@ -38,6 +38,11 @@ class AlbumCollage extends React.Component {
             currentImage: 0,
             lightboxIsOpen: false
         });
+        setTimeout(()=> {
+            this.setState({
+                cols: this.state.cols + 1
+            });
+        }, 100);
     }
 
     gotoPrevious() {

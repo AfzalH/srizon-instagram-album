@@ -9058,10 +9058,17 @@ var AlbumCollage = function (_React$Component) {
     }, {
         key: 'closeLightbox',
         value: function closeLightbox() {
+            var _this2 = this;
+
             this.setState({
                 currentImage: 0,
                 lightboxIsOpen: false
             });
+            setTimeout(function () {
+                _this2.setState({
+                    cols: _this2.state.cols + 1
+                });
+            }, 100);
         }
     }, {
         key: 'gotoPrevious',
@@ -9140,14 +9147,14 @@ var AlbumCollage = function (_React$Component) {
     }, {
         key: 'render',
         value: function render() {
-            var _this2 = this;
+            var _this3 = this;
 
             var album = this.props.album;
 
             var images = album.data.data.map(function (img) {
                 return {
                     src: img.images.standard_resolution.url,
-                    srcset: [_this2.getOriginal(img.images.standard_resolution.url) + ' ' + img.images.standard_resolution.width * 2 + 'w', img.images.standard_resolution.url + ' ' + img.images.standard_resolution.width + 'w', img.images.low_resolution.url + ' ' + img.images.low_resolution.width + 'w', img.images.thumbnail.url + ' ' + img.images.thumbnail.width + 'w'],
+                    srcset: [_this3.getOriginal(img.images.standard_resolution.url) + ' ' + img.images.standard_resolution.width * 2 + 'w', img.images.standard_resolution.url + ' ' + img.images.standard_resolution.width + 'w', img.images.low_resolution.url + ' ' + img.images.low_resolution.width + 'w', img.images.thumbnail.url + ' ' + img.images.thumbnail.width + 'w'],
                     sizes: ['(min-width: 480px) 50vw', '(min-width: 1024px) 33.3vw', '100vw'],
                     width: img.images.standard_resolution.width,
                     height: img.images.standard_resolution.height,
@@ -9266,7 +9273,7 @@ var Gallery = function (_React$Component) {
                 photoPreviewNodes = [],
                 contWidth = this.state.containerWidth - cols * (this.props.margin * 2);
 
-            contWidth = Math.floor(contWidth); // add some padding to prevent layout prob
+            contWidth = Math.floor(contWidth) - 1; // add some padding to prevent layout prob
             var remainder = this.props.photos.length % cols;
             if (remainder) {
                 // there are fewer photos than cols num in last row

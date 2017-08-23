@@ -3,6 +3,7 @@
 class SrizonInstaDB{
 	static function CreateDBTables() {
 		global $wpdb;
+		$charset_collate = $wpdb->get_charset_collate();
 		$t_albums = $wpdb->prefix . 'srzinst_albums';
 		$t_cache  = $wpdb->prefix . 'srzinst_cache';
 		$sql      = '
@@ -17,7 +18,7 @@ CREATE TABLE ' . $t_albums . ' (
   hashtag varchar(255),
   options text,
   PRIMARY KEY (id)
-);
+) '.$charset_collate.';
 CREATE TABLE ' . $t_cache . ' (
   id int(11) NOT NULL AUTO_INCREMENT,
   url varchar(511),
@@ -27,7 +28,7 @@ CREATE TABLE ' . $t_cache . ' (
   options text,
   index(url),
   PRIMARY KEY (id)
-);	
+) '.$charset_collate.';	
 ';
 		require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
 		dbDelta( $sql );
