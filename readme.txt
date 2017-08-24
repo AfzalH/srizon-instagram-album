@@ -14,7 +14,7 @@ This Plugin is designed to show your instagram photos into your WordPress site. 
 
 This Plugin is designed to show your instagram photos into your WordPress site. You can also show public photos from other instagram users  or photos tagged with some hashtag.
 
-For details and demo visit: https://srizon.com/product/srizon-instagram-album
+[Details and Demo Here](https://srizon.com/product/srizon-instagram-album)
 
 == Installation ==
 
