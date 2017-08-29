@@ -10,14 +10,14 @@ include_once 'settings.php';
 function srizon_instagram_username_to_id( $username, $access_token ) {
 
 	// try direct
-	$response = wp_remote_get( 'https://www.instagram.com/' . $username . '/?__a=1' );
+	$response = wp_remote_get( 'https://www.instagram.com/' . $username . '/?__a=1', [ 'timeout' => 30 ] );
 	if ( $response['response']['code'] == 200 ) {
 		$json = json_decode( $response['body'] );
 
 		return $json->user;
 	} else {
 		// try search
-		$response = wp_remote_get( 'https://api.instagram.com/v1/users/search?q=' . $username . '&access_token=' . $access_token );
+		$response = wp_remote_get( 'https://api.instagram.com/v1/users/search?q=' . $username . '&access_token=' . $access_token, [ 'timeout' => 30 ] );
 		if ( $response['response']['code'] == 200 ) {
 			$json = json_decode( $response['body'] );
 
