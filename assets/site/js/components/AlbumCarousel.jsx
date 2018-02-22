@@ -17,10 +17,8 @@ class AlbumCarousel extends React.Component {
     }
 
     getOriginal(url) {
-        let orig = url;
-        orig = replace(orig, '/s640x640', '');
-        orig = replace(orig, '/p640x640', '');
-        return orig;
+        let ua = url.split('/');
+        return ua[0] + '//' + ua[2] + '/' + ua[3] + '/' + ua[ua.length - 1];
     }
 
     render() {

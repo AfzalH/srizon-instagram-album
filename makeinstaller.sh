@@ -10,6 +10,6 @@ cp -R ./site ./srizon-instagram-album/
 cp ./readme.txt ./srizon-instagram-album/
 cp ./srizon-instagram-album.php ./srizon-instagram-album/
 
-zip -r srizon-instagram-album.1.0.zip srizon-instagram-album
+zip -r srizon-instagram-album.1.0.4.zip srizon-instagram-album
 
 rm -R srizon-instagram-album

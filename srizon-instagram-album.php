@@ -5,7 +5,7 @@ Plugin URI: https://srizon.com/product/srizon-instagram-album
 Description: This Plugin is designed to show your Instagram photos into your WordPress site. You can also show public photos from other instagram users.
 Text Domain: srizon-instagram-album
 Domain Path: /languages
-Version: 1.0
+Version: 1.0.4
 Author: Afzal
 Author URI: https://srizon.com/contact
 */
