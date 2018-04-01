@@ -106,8 +106,10 @@ class AlbumCollage extends React.Component {
     }
 
     getOriginal(url) {
-        let ua = url.split('/');
-        return ua[0] + '//' + ua[2] + '/' + ua[3] + '/' + ua[ua.length - 1];
+        return url;
+        // hack not working anymore. settling with standard resolution
+        // let ua = url.split('/');
+        // return ua[0] + '//' + ua[2] + '/' + ua[3] + '/' + ua[ua.length - 1];
     }
 
     render() {
